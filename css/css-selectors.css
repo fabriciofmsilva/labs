@@ -1,0 +1,116 @@
+/*
+ * Universal Selector
+ */
+
+* {
+  font-family: sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #333;
+}
+
+
+/*
+ * Element Type Selector
+ */
+
+p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+/*
+ * ID Selector
+ */
+
+#main {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+
+/*
+ * Class Selector
+ */
+
+.box {
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+
+/*
+ * Descendant Combinator
+ */
+
+#main .box {
+  float: left;
+  width: 23%;
+  margin: 1%;
+}
+
+
+/*
+ * Child Combinator
+ */
+
+#container > .box {
+  float: left;
+}
+
+
+/*
+ * General Sibling Combinator
+ */
+
+h1 ~ p {
+  margin-bottom: 20px;
+}
+
+
+/*
+ * Adjacent Sibling Combinator
+ */
+
+p + p {
+  text-indent: 1.5em;
+  margin-bottom: 0;
+}
+
+
+/*
+ * Attribute Selector
+ */
+
+input[type] {
+  width: 220px;
+  background-color: #333;
+}
+
+input[type="text"] {
+  width: 200px;
+  background-color: #444;
+}
+
+
+/*
+ * Pseudo-class
+ */
+
+a:hover {
+  color: red;
+}
+
+
+/*
+ * Pseudo-element
+ */
+
+.box:after {
+  display: block;
+  width: 20px;
+  height: 5px;
+  content: '';
+  background-color: #141414;
+}
