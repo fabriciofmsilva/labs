@@ -1,0 +1,73 @@
+/*
+ * Basic Font Properties
+ */
+ 
+body {
+  /*
+   * <family-name>
+   * <generic-family> [ serif | sans-serif | cursive | fantasy | monospace ]
+   */
+  font-family: Helvetica, Verdana, sans-serif;
+  /*
+   * [ auto | normal | none ]
+   */
+  font-kerning: auto;
+  /*
+   * <absolute-size> [ xx-small | x-small | small | medium | large | x-large | xx-large ]
+   * <relative-size> [ larger | smaller ]
+   * <length>
+   * <percentage>
+   */
+  font-size: medium;
+  /*
+   * none | <number>
+   */
+  font-size-adjust: none;
+  /*
+   * [ normal | ultra-condensed | extra-condensed | condensed | semi-condensed | semi-expanded | expanded | extra-expanded | ultra-expanded ]
+   */
+  font-stretch: normal;
+  /*
+   * [ normal | italic | oblique ]
+   */
+  font-style: normal;
+  /*
+   * none | [ weight || style ]
+   */
+  font-synthesis: weight style;
+  /*
+   * [normal | small-caps]
+   */
+  font-variant: normal;
+  /*
+   * normal | small-caps | all-small-caps | petite-caps | all-petite-caps | unicase | titling-caps
+   */
+  font-variant-caps: normal;
+  /*
+   * normal | none | [ <common-lig-values> || <discretionary-lig-values> || <historical-lig-values> || <contextual-alt-values> ]
+   */
+  font-variant-ligatures: normal;
+  /*
+   * normal | [ <numeric-figure-values> || <numeric-spacing-values> || <numeric-fraction-values> || ordinal || slashed-zero ]
+   */
+  font-variant-numeric: normal;
+  /*
+   * normal | sub | super
+   */
+  font-variant-position: normal;
+  /*
+   * [ normal | bold | bolder | lighter; Value: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 ]
+   */
+  font-weigth: normal;
+}
+
+/*
+ * Shorthand font property
+ */
+
+body {
+  /*
+   * [ [ <font-style> || <font-variant> || <font-weight> || <font-stretch ]? <font-size> [ / <line-height> ]? <font-family> ] | caption | icon | menu | message-box | small-caption | status-bar
+   */
+  font: normal normal normal 16px/1 Helvetica, Verdana, sans-serif;
+}
