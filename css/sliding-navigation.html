@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Navigation Effect Pure CSS</title>
+
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,300,400">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Open Sans", Helvetica, sans-serif;
+      font-size: 100%;
+      color: #fff;
+      background: #1d1d1d;
+    }
+
+    h2 {
+      height: 40px;
+      margin-left: 45px;
+      margin-bottom: 0;
+      font-size: 2em;
+      font-weight: 300;
+      color: #999;
+    }
+
+    h2 span {
+      font-style: italic;
+      color: #ff6;
+    }
+
+    p {
+      margin-top: .5em;
+      margin-left: 45px;
+      font-size: .875em;
+      color: #ff6;
+    }
+
+    p a {
+      color: #ff6;
+    }
+
+    #navigation-block {
+      position: absolute;
+      top: 10%;
+      left: 10%;
+    }
+
+    .sliding-navigation {
+      position: relative;
+      margin: 30px 0 30px 30px;
+      padding: 0;
+      font-size: .75em;
+      list-style: none;
+    }
+
+    .sliding-navigation:before {
+      position: absolute;
+      top: -20%;
+      left: -1px;
+      display: inline-block;
+      width: 2px;
+      height: 140%;
+      content: "";
+      background-image: linear-gradient(transparent 0, #414141 20%, #414141 80%, transparent 100%),
+                        linear-gradient(transparent 0, #000 25%, #000 75%, transparent 100%);
+      background-repeat: no-repeat;
+      background-position: left center, right center;
+      -webkit-background-size: 1px auto, 1px auto;;
+      background-size: 1px 100%, 1px 100%;;
+    }
+
+    .sliding-navigation:after {
+      position: absolute;
+      top: -20%;
+      left: -171px;
+      width: 170px;
+      height: 140%;
+      content: "";
+      background-color: #1d1d1d;
+      background-image: radial-gradient(farthest-side at right center, rgba(255, 255, 255, .03) 20%, rgba(255, 255, 255, 0));
+    }
+
+    .sliding-title,
+    .sliding-link {
+      display: block;
+      width: 150px;
+      margin: 0;
+      margin-bottom: 5px;
+      padding: 5px 15px;
+      box-shadow: inset 16px 0 12px -12px rgba(0, 0, 0, .4);
+    }
+
+    .sliding-title {
+      font-weight: normal;
+      color: #fff;
+      background: #333;
+      border: 1px solid #1a1a1a;
+      -webkit-animation: entry 1s 1;
+      animation: entry 1s 1;
+    }
+
+    .sliding-link {
+      color: #999;
+      text-decoration: none;
+      background: #222;
+      border: 1px solid #1a1a1a;
+      transition: all .25s ease;
+      -webkit-animation: entry 1s 1 ease;
+      animation: entry 1s 1 ease;
+    }
+
+    .sliding-item:nth-child(2) .sliding-link {
+      -webkit-animation-delay: .1s;
+      animation-delay: .1s;
+      -webkit-animation-duration: 1.15s;
+      -animation-duration: 1.15s;
+    }
+
+    .sliding-item:nth-child(3) .sliding-link {
+      -webkit-animation-delay: .2s;
+      animation-delay: .2s;
+      -webkit-animation-duration: 1.27s;
+      -animation-duration: 1.27s;
+    }
+
+    .sliding-item:nth-child(4) .sliding-link {
+      -webkit-animation-delay: .3s;
+      animation-delay: .3s;
+      -webkit-animation-duration: 1.366s;
+      animation-duration: 1.366s;
+    }
+
+    .sliding-item:nth-child(5) .sliding-link {
+      -webkit-animation-delay: .4s;
+      animation-delay: .4s;
+      -webkit-animation-duration: 1.4428s;
+      animation-duration: 1.4428s;
+    }
+
+    .sliding-item:nth-child(6) .sliding-link {
+      -webkit-animation-delay: .5s;
+      animation-delay: .5s;
+      -webkit-animation-duration: 1.50424s;
+      animation-duration: 1.50424s;
+    }
+
+    .sliding-link:hover {
+      padding-left: 25px;
+      color: #ff6;
+      transition: all .15s ease;
+    }
+
+    @-webkit-keyframes entry {
+      0% { margin-left: -180px; }
+      20% { margin-left: 25px; }
+      25% { margin-left: 25px; }
+      100% { margin-left: 0; }
+    }
+
+    @keyframes entry {
+      0% { margin-left: -180px; }
+      20% { margin-left: 25px; }
+      25% { margin-left: 25px; }
+      100% { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="navigation-block">
+    <h2>Navigation Effect <span>Pure CSS</span></h2>
+    <p>by <a href="http://www.fabriciofmsilva.com.br/">Fabrício Silva</a>, inspired on <a href="http://code.tutsplus.com/tutorials/how-to-create-a-mootools-homepage-inspired-navigation-effect-using-jquery--net-21">Tuts+</a></p>
+    <ul class="sliding-navigation">
+      <li class="sliding-item"><h3 class="sliding-title">Navigation Title</h3></li>
+      <li class="sliding-item"><a class="sliding-link" href="#">Link 1</a></li>
+      <li class="sliding-item"><a class="sliding-link" href="#">Link 2</a></li>
+      <li class="sliding-item"><a class="sliding-link" href="#">Link 3</a></li>
+      <li class="sliding-item"><a class="sliding-link" href="#">Link 4</a></li>
+      <li class="sliding-item"><a class="sliding-link" href="#">Link 5</a></li>
+    </ul>
+  </div>
+</body>
+</html>
