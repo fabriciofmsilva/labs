@@ -62,6 +62,34 @@ age = 29;
 
 const dev = 'Fabrício Silva';
 
+// VALUES
+// ------------------------------------------------------
+
+// NUMBERS
+
+var number = 1;
+var integer = 1;
+var floatPointer = 1.0;
+var notANumber = NaN;
+
+// STRINGS
+
+var string = "This is a String";
+var name = "Fabrício Silva";
+
+// BOOLEAN
+
+var truthy = true;
+var falsy = false;
+
+// NULL
+
+var notValue = null;
+
+// UNDEFINED
+
+var notDefinied;
+
 
 // ------------------------------------------------------
 // GENERAL GUIDE
