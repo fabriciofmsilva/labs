@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Progress Element</title>
+</head>
+<body>
+  <h1>Progress Element</h1>
+  <h2>Exemples</h2>
+  <progress value="0.4"></progress>
+  <progress value="60" max="100"></progress>
+  <progress></progress>
+
+  <h2>JavaScript</h2>
+  <progress id="progress" value="0" max="100"></progress>
+  <span id="end"></span>
+  <br>
+  <button id="start">Start!</button>
+  <button id="reset" style="display: none;">Reset!</button>
+
+  <script>
+    var progressBar = document.getElementById('progress');
+    var startButton = document.getElementById('start');
+    var resetButton = document.getElementById('reset');
+    var end = document.getElementById('end');
+
+    function startProgress() {
+      if ( progressBar.value < 100) {
+        progressBar.value += 1;
+        setTimeout('startProgress()', (Math.random() * 10));
+      } else {
+        startButton.addEventListener('click', restartProgress, false);
+        startButton.innerHTML = 'Restart!';
+        end.innerHTML = 'Finish!';
+        resetButton.style.display = "inline-block";
+      }
+    }
+
+    function restartProgress() {
+      if ( progressBar.value ) {
+        resetButton.style.display = "none";
+        startButton.removeEventListener('click', restartProgress, false);
+        progressBar.value = 0;
+        end.innerHTML = '';
+        startProgress();
+      }
+    }
+
+    function resetProgress() {
+      startButton.innerHTML = 'Start!';
+      startButton.removeEventListener('click', restartProgress, false);
+      progressBar.value = 0;
+      end.innerHTML = '';
+      resetButton.style.display = "none";
+    }
+
+    startButton.addEventListener('click', startProgress, false);
+    resetButton.addEventListener('click', resetProgress, false);
+  </script>
+</body>
+</html>
