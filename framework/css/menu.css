@@ -1,0 +1,40 @@
+    .container {
+      max-width: 960px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    .menu {
+      position: relative;
+    }
+
+    .menu-button {
+      position: absolute;
+      top: 0;
+      left: 15px;
+      z-index: 9;
+      padding: 4px 6px;
+      color: #fff;
+      text-decoration: none;
+      background-color: #222;
+      border-radius: 4px;
+    }
+
+    .menu-list {
+      box-sizing: border-box;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 200px;
+      margin: 0;
+      padding: 50px 20px;
+      background-color: #222;
+      list-style: none;
+      transition: all .2s ease;
+      transform: translate3d(0,0,0);
+    }
+
+    .menu-link {
+      color: #fff;
+      text-decoration: none;
+    }
