@@ -1,4 +1,16 @@
 .modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9;
+  content: '';
+  background-color: rgba(0,0,0,.5);
+  transition: background .3s ease-in-out;
+}
+
+.modal-dialog {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -10,17 +22,16 @@
   transform: translate(-50%, -50%);
 }
 
-.modal p {
+.modal-dialog p {
   margin: auto;
 }
 
-.shadow {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 9;
-  content: '';
-  background-color: rgba(0,0,0,.5);
+.modal__open {
+  display: block;
+  transition: background .3s ease-in-out;
+}
+
+.modal__close {
+  display: none;
+  transition: background .3s ease-in-out;
 }
