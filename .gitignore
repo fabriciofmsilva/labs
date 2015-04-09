@@ -4,6 +4,9 @@ _site
 _delete
 .ruby-version
 
+# Class ignore
+*.class
+
 # Numerous always-ignore extensions
 *.diff
 *.err
