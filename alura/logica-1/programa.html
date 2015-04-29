@@ -1,0 +1,40 @@
+<meta charset="UTF-8">
+
+<script>
+//  document.write("olá mundo <br>");
+//  document.write("esse é o meu segundo programa");
+//  document.write("Minha idade é: ");
+//  document.write(28);
+//  document.write("Eu nasci em: ");
+//  document.write(2015 - 28);
+//  document.writ e("A média das nossas idades é: " + ((25 + 32 + 26) / 3));
+
+  var pulaLinha = function () {
+    document.write("<br>");
+  };
+
+  var mostra = function (frase) {
+    document.write(frase);
+    pulaLinha();
+  };
+
+//  mostra("Usando funções para melhorar o código");
+
+  var ano = 2015;
+
+  mostra("Eu nasci em: " + (ano - 25));
+  mostra("Adriano nasceu em: " + (ano - 26));
+  mostra("Paulo nasceu em: " + (ano - 32));
+
+  var eu = 27;
+  var adriano = 26;
+  var paulo = 32;
+
+  var total = eu + adriano + paulo;
+  var media = total / 3;
+
+  mostra("A soma das idades é: " + total);
+  mostra("A média é: " + Math.round(media));
+
+  console.log("essa mensagem aparece apenas no log!");
+</script>
