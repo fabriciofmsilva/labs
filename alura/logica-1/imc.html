@@ -12,21 +12,20 @@
 
   var calculaIMC = function (altura, peso) {
     var imc = peso / (altura * altura);
-    // mostra("O IMC calculado é: " + imc);
     return imc;
   };
 
-  // var peso = 75;
-  // var altura = 1.72;
-  // var imc = peso / (altura * altura);
-  // mostra("meu IMC é: " + imc);
   var meuIMC = calculaIMC(1.72, 75);
 
-  var pesoDoPrimo = 83;
-  var alturaDoPrimo = 1.76;
-  // var imcDoPrimo = pesoDoPrimo / (alturaDoPrimo * alturaDoPrimo);
-  // mostra("O IMC do meu primo é: " + imcDoPrimo);
-  var imcDoPrimo = calculaIMC(alturaDoPrimo, pesoDoPrimo);
-  mostra("O IMC do meu primo é: " + imcDoPrimo);
-  mostra("Ele ainda está " + (imcDoPrimo - 18.5) + " pontos acima do limite de magreza.");
+  if(meu IMC < 18.5) {
+    mostra("Seu IMC indica que você está ABAIXO do peso.");
+  }
+
+  if(meu IMC > 35) {
+    mostra("Seu IMC indica que você está ACIMA do peso.");
+  }
+
+  if(meuIMC > 18.5 && meuIMC < 35) {
+    mostra("OK! Seu IMC está entre os dois limites.");
+  }
 </script>
