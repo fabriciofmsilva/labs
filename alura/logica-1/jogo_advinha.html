@@ -11,16 +11,17 @@
   };
 
   var numeroPensado = Math.round(Math.random() * 100);
-  var chute = prompt("Já pensei. Qual você pensa que é?");
+  var numeroDaTentativa = 1;
 
-  if(chute == numeroPensado) {
-    mostra("Uau! Você acertou, pois eu pensei no " + numeroPensado);
-  } else {
-    mostra("Você errou! Eu tinha pensado no " + numeroPensado);
-    if(chute > numeroPensado) {
-      mostra("O número que eu pensei era menor que o seu!");
+  while(numeroDaTentativa <= 3) {
+    var chute = prompt("Já pensei. Qual você pensa que é?");
+
+    if(chute == numeroPensado) {
+      mostra("Uau! Você acertou, pois eu pensei no " + numeroPensado);
+      break;
     } else {
-      mostra("O número que eu pensei era maior que o seu!");
+      mostra("Você errou! Será que ainda tem mais tentativas?");
     }
+    numeroDaTentativa++;
   }
 </script>
