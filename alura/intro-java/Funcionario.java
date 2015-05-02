@@ -43,6 +43,43 @@ class Data {
   }
 }
 
+class Empresa {
+  String nome;
+  String cnpj;
+  Funcionario[] empregados;
+  int livre = 0;
+
+  void adiciona(Funcionario f) {
+    this.empregados[this.livre] = f;
+    this.livre++;
+  }
+
+  void mostraEmpregados() {
+    for(int i = 0; i < this.empregados.length; i++) {
+      if(this.empregados[i] == null) continue;
+      System.out.println("Funcionário na posição: " + i);
+      System.out.println("R$" + this.empregados[i].salario);
+    }
+  }
+
+  void mostraTodasAsInformacoes() {
+    for(int i = 0; i < this.empregados.length; i++) {
+      if(this.empregados[i] == null) continue;
+      System.out.println("Funcionário na posição: " + i);
+      this.empregados[i].mostra();
+    }
+  }
+
+  boolean contem(Funcionario f) {
+    for(int i = 0; i < this.livre; i++) {
+      if(f == this.empregados[i]) {
+        return true
+      }
+    }
+    return false;
+  }
+}
+
 class TestaFuncionario {
   public static void main(String[] args) {
     Funcionario f1 = new Funcionario();
@@ -57,6 +94,42 @@ class TestaFuncionario {
 
     f1.rg = "123456789";
     f1.mostra();
+  }
+}
+
+class TesteEmpresa {
+  public static void main(String[] args) {
+    Empresa empresa = new Empresa();
+    empresa.empregados = new Funcionario[10];
+
+    Funcionario f1 = new Funcionario();
+    f1.nome = "Fabrício";
+    f1.salario = 1000;
+    f1.departamento = "TI";
+    f1.dataEntrada = new Data();
+    f1.dataEntrada.preencheData(2, 5, 2015);
+    f1.rg = "123456789";
+    empresa.adiciona(f1);
+
+    Funcionario f2 = new Funcionario();
+    f2.nome = "Francisco";
+    f2.salario = 1700;
+    f2.departamento = "Adm";
+    f2.dataEntrada = new Data();
+    f2.dataEntrada.preencheData(2, 5, 2015);
+    f2.rg = "123456789";
+    empresa.adiciona(f2);
+
+    empresa.mostraTodasAsInformacoes();
+
+    // empresa.empregados[0].mostra();
+    // empresa.empregados[1].mostra();
+
+    // for(int 1 = 0; i < 5; i++) {
+    //   Funcionario f = new Funcionario();
+    //   f.salario = 1000 + i * 100;
+    //   empresa.adiciona(f);
+    // }
   }
 }
 
