@@ -1,0 +1,104 @@
+<meta charset="utf-8">
+
+<p>Digite 6 números de 1 a 60</p>
+<input id="numero" type="text">
+<input id="adicionar" type="submit" value="Adicionar valor">
+
+<script>
+var numerosSorteados = [1, 2, 3, 4, 5, 6];
+var numerosDoUsuario = [];
+
+var numero = document.getElementById("numero");
+var botaoAdicionarNumero = document.getElementById("adicionar");
+
+var adicionarNumero = function() {
+  var numeroDigitado = numero.value;
+  if(numeroDigitado >= 1 && numeroDigitado <= 60) {
+    if(numerosDoUsuario.length > 5) {
+      alert("Já digitou os 6 números");
+      return;
+    } else {
+      for(var i = 0; i < numerosDoUsuario.length; i++) {
+        if(numerosDoUsuario[i] == numeroDigitado) {
+          alert("Número já digitado! Digite outro número");
+          return;
+        }
+      }
+      if(numerosDoUsuario.length == 5) {
+        numerosDoUsuario.push(numeroDigitado);
+        comparaNumeros();
+      } else {
+        numerosDoUsuario.push(numeroDigitado);
+      }
+    }
+  } else {
+    alert("Numero inválido");
+    return;
+  }
+  console.log(numerosDoUsuario)
+};
+
+var comparaNumeros = function() {
+  var quantidadeDeNumerosAcertados = 0;
+  var texto = " números!";
+  for(var j = 0; j < numerosSorteados.length; j++) {
+    for(var k = 0; k < numerosDoUsuario.length; k++) {
+      if(numerosSorteados[j] == numerosDoUsuario[k]) {
+        quantidadeDeNumerosAcertados += 1;
+      }
+    }
+  }
+  if(quantidadeDeNumerosAcertados == 1) {
+    texto = " numero!";
+  }
+  alert("Você acertou " + quantidadeDeNumerosAcertados + texto);
+};
+
+botaoAdicionarNumero.onclick = adicionarNumero;
+</script>
+
+<!-- Solução a Alura
+
+<meta charset="UTF-8">
+<script>
+var pulaLinha = function() {
+    document.write("<br><hr><br>");
+}
+
+var mostra = function(frase) {
+    document.write(frase);
+    pulaLinha();
+};
+
+var quantidadeAcertos = function(jogados, sorteados) {
+    var acertos = 0;
+    for(i = 0; i < 6; i++) {
+        for(j = 0; j < 6; j++) {
+            if(jogados[i] === sorteados[j]) {
+                acertos++;
+            }
+        }
+    }
+    return acertos;
+}
+
+alert("Jogue na mega-sena! Diga quais são os 6 números do seu jogo.");
+var numerosJogados = [];
+for(i = 0; i < 6; i++) {
+    numerosJogados[i] = parseInt(prompt("Diga qual o " + (i + 1) + " número do seu jogo:"));
+}
+
+alert("Muito bom! Agora vou sortear os números premiados. Clique em ok para eu fazer o sorteio.");
+var numerosSorteados = [];
+for(i = 0; i < 6; i++) {
+    numerosSorteados[i] = Math.round( Math.random() * 60 );
+}
+
+var acertos = quantidadeAcertos(numerosJogados, numerosSorteados);
+
+mostra("Você jogou os números " + numerosJogados);
+mostra("Os números sorteados foram " + numerosSorteados);
+mostra("Você acertou " + acertos + " número(s)");
+
+</script>
+-->
