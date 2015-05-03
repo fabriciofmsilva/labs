@@ -1,19 +1,59 @@
 class Funcionario {
-  String nome;
-  String departamento;
-  double salario;
-  Data dataEntrada;
-  String rg;
+  private String nome;
+  private String departamento;
+  private double salario;
+  private Data dataEntrada;
+  private String rg;
 
-  void recebeAumento(double aumento) {
+  public void recebeAumento(double aumento) {
     this.salario += aumento;
   }
 
-  double calculaGanhoAnual() {
+  public double getGanhoAnual() {
     return this.salario * 12;
   }
 
-  void mostra() {
+  public String getNome() {
+    return this.nome;
+  }
+
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
+
+  public String getDepartamento() {
+    return this.departamento;
+  }
+
+  public void setDepartamento(String departamento) {
+    this.departamento = departamento;
+  }
+
+  public double getSalario() {
+    return this.salario;
+  }
+
+  public void setSalario(double salario) {
+    this.salario = salario;
+  }
+
+  public Data getDataEntrada() {
+    return this.dataEntrada;
+  }
+
+  public void setDataEntrada(Data dataEntrada) {
+    this.dataEntrada = dataEntrada;
+  }
+
+  public String getRg() {
+    return this.rg;
+  }
+
+  public void setRg(String rg) {
+    this.rg = rg;
+  }
+
+  public void mostra() {
     System.out.println("Nome: " + this.nome);
     System.out.println("Departamento: " + this.departamento);
     System.out.println("Salário: " + this.salario);
@@ -23,7 +63,7 @@ class Funcionario {
     System.out.println("Data de entrada: " + this.dataEntrada.getFormatada());
     System.out.println("RG: " + this.rg);
     System.out.println("Salario atual: " + this.salario);
-    System.out.println("Ganho Anual: " + this.calculaGanhoAnual());
+    System.out.println("Ganho Anual: " + this.getGanhoAnual());
   }
 }
 
@@ -44,17 +84,39 @@ class Data {
 }
 
 class Empresa {
-  String nome;
-  String cnpj;
-  Funcionario[] empregados;
-  int livre = 0;
+  private Funcionario[] empregados;
+  private String nome;
+  private String cnpj;
+  private int livre = 0;
 
-  void adiciona(Funcionario f) {
+  public Empresa(String nome, String cnpj) {
+    this.nome = nome;
+    this.cnpj = cnpj;
+    this.empregados = new Funcionario[10];
+  }
+
+  public String getCnpj() {
+    return this.cnpj;
+  }
+
+  public String getNome() {
+    return this.nome;
+  }
+
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
+
+  public void setCnpj(String cnpj) {
+    this.cnpj = cnpj;
+  }
+
+  public void adiciona(Funcionario f) {
     this.empregados[this.livre] = f;
     this.livre++;
   }
 
-  void mostraEmpregados() {
+  public void mostraEmpregados() {
     for(int i = 0; i < this.empregados.length; i++) {
       if(this.empregados[i] == null) continue;
       System.out.println("Funcionário na posição: " + i);
@@ -62,7 +124,7 @@ class Empresa {
     }
   }
 
-  void mostraTodasAsInformacoes() {
+  public void mostraTodasAsInformacoes() {
     for(int i = 0; i < this.empregados.length; i++) {
       if(this.empregados[i] == null) continue;
       System.out.println("Funcionário na posição: " + i);
@@ -70,13 +132,17 @@ class Empresa {
     }
   }
 
-  boolean contem(Funcionario f) {
+  public boolean contem(Funcionario f) {
     for(int i = 0; i < this.livre; i++) {
       if(f == this.empregados[i]) {
-        return true
+        return true;
       }
     }
     return false;
+  }
+
+  public Functionario getFuncionario(int posicao) {
+    return this.empregados[posicao];
   }
 }
 
@@ -84,19 +150,20 @@ class TestaFuncionario {
   public static void main(String[] args) {
     Funcionario f1 = new Funcionario();
 
-    f1.nome = "Hugo";
-    f1.salario = 100;
+    f1.setNome("Hugo");
+    f1.setSalario(100);
+    System.out.println(f1.getSalario());
     f1.recebeAumento(50);
-    f1.departamento = "TI";
+    f1.setDepartamento("TI");
 
-    f1.dataEntrada = new Data();
-    f1.dataEntrada.preencheData(1, 5, 2015);
+    f1.setDataEntrada(new Data());
+    //f1.setDataEntrada(dataEntrada.preencheData(1, 5, 2015));
 
-    f1.rg = "123456789";
+    f1.setRg("123456789");
     f1.mostra();
   }
 }
-
+/*
 class TesteEmpresa {
   public static void main(String[] args) {
     Empresa empresa = new Empresa();
@@ -152,3 +219,4 @@ class ComparaFuncionarios {
     }
   }
 }
+*/
