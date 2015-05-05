@@ -1,0 +1,30 @@
+<style>
+  canvas {
+    border: 1px solid #ccc;
+  }
+</style>
+<canvas id="tela" width="600" height="400"></canvas>
+<canvas id="tela2" width="600" height="400"></canvas>
+
+<script>
+var tela = document.getElementById("tela");
+var c = tela.getContext("2d");
+
+c.fillStyle = "#FCD116";
+c.fillRect(0, 0, 600, 200);
+
+c.fillStyle = "#003893";
+c.fillRect(0, 200, 600, 100);
+
+c.fillStyle = "#CE1126";
+c.fillRect(0, 300, 600, 100);
+
+var tela2 = document.getElementById("tela2");
+var c2 = tela2.getContext("2d");
+
+c2.fillStyle = "#fc3d32";
+c2.fillRect(200, 0, 400, 200);
+
+c2.fillStyle = "#007e3a";
+c2.fillRect(200, 200, 400, 200);
+</script>
