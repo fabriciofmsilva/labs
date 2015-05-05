@@ -4,6 +4,16 @@ class Conta2 {
   private double saldo;
   private double limite;
 
+  public Conta2(int numero, double limite) {
+    this(numero, limite, 0);
+  }
+
+  public Conta2(int numero, double limite, double saldoInicial) {
+    this.numero = numero;
+    this.limite = limite;
+    this.saldo = saldoInicial;
+  }
+
   public void saca(double valor) {
     if(valor > this.saldo + this.limite) {
       System.out.println("Saque inválido");

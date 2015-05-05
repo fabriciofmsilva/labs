@@ -1,7 +1,8 @@
 class TesteModificador {
   public static void main(String[] args) {
-    Conta2 joao = new Conta2();
-    joao.numero = 123;
+
+    Conta2 joao = new Conta2(123, 100.0, 500.0);
+    //joao.numero = 123;
     joao.setLimite(100);
 
     joao.deposita(500.0);
