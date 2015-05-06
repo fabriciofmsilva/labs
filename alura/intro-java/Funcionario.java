@@ -4,12 +4,22 @@ class Funcionario {
   private double salario;
   private Data dataEntrada;
   private String rg;
+  public int identificador;
+
+  private static int proximoIdentificador = 0;
 
   public Functionario(String nome) {
     this.nome = nome;
+    this.identificador = proximoIdentificador++;
   }
 
-  public Functionario() { }
+  public Functionario() {
+    this.identificador = proximoIdentificador++;
+  }
+
+  public int getIdentificador() {
+    return this.identificador;
+  }
 
   public void recebeAumento(double aumento) {
     this.salario += aumento;
