@@ -85,6 +85,10 @@ aside a {
   color: inherit;
 }
 
+aside li {
+  display: inline-block;
+}
+
 footer {
   color: #f2fffc;
   background-color: #000;
