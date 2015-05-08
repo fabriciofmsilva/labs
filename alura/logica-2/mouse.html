@@ -1,0 +1,34 @@
+<canvas id="tela" width="600" height="400"></canvas>
+
+<script>
+var tela = document.getElementById("tela");
+var c = tela.getContext("2d");
+
+c.fillStyle = "grey";
+c.fillRect(0, 0, 600, 400);
+
+var desenhaCirculo = function(x, y, cor) {
+    c.fillStyle = cor;
+    c.beginPath();
+    c.arc(x, y, 10, 0, 2 * 3.14);
+    c.fill();
+};
+
+var atira = function(event) {
+  event.preventDefault();
+
+  var x = event.pageX - tela.offsetLeft;
+  var y = event.pageY - tela.offsetTop;
+
+  if(event.which === 1) {
+    desenhaCirculo(x, y, "blue");
+  } else if(event.which === 3) {
+    desenhaCirculo(x, y, "red");
+  }
+
+  console.log("posicao do clique: " + x + ", " + y + ". botao: " + event.which);
+};
+
+tela.onclick = atira;
+tela.oncontextmenu = atira;
+</script>
