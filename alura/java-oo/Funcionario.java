@@ -1,4 +1,4 @@
-class Funcionario {
+abstract class Funcionario {
   private String nome;
   protected double salario;
 
@@ -6,8 +6,10 @@ class Funcionario {
     this.salario = salario;
   }
 
-  public double getBonus() {
-    return this.salario * 0.2;
+  abstract public double getBonus();
+
+  public String getNome() {
+    return nome;
   }
 }
 
@@ -41,9 +43,6 @@ class TotalizadorDeBonus {
 
 class TestaFunctionario {
   public static void main(String[] args) {
-    Funcionario joao = new Funcionario();
-    joao.setSalario(1000.0);
-    System.out.println(joao.getBonus());
 
     Gerente joaquim = new Gerente();
     joaquim.setSalario(2000.0);
@@ -51,7 +50,6 @@ class TestaFunctionario {
     System.out.println(joaquim.getBonus());
 
     TotalizadorDeBonus totalizador = new TotalizadorDeBonus();
-    totalizador.adiciona(joao);
     totalizador.adiciona(joaquim);
     System.out.println(totalizador.getTotal());
   }

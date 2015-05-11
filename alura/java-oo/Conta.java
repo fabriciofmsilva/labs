@@ -1,4 +1,4 @@
-class Conta {
+abstract class Conta {
   protected double saldo;
 
   public double getSaldo() {
@@ -13,14 +13,12 @@ class Conta {
     this.saldo -= valor;
   }
 
-  public void atualiza(double taxa) {
-    this.saldo += this.saldo * taxa;
-  }
+  abstract public void atualiza(double taxaSelic);
 }
 
 class ContaCorrente extends Conta {
-  public void atualiza(double taxa) {
-    this.saldo += this.saldo * taxa * 2;
+  public void atualiza(double taxaSelic) {
+    this.saldo += this.saldo * taxaSelic * 2;
   }
 }
 
@@ -29,8 +27,8 @@ class ContaPoupanca extends Conta {
     this.saldo += valor - 0.10;
   }
 
-  public void atualiza(double taxa) {
-    this.saldo += this.saldo * taxa * 3;
+  public void atualiza(double taxaSelic) {
+    this.saldo += this.saldo * taxaSelic * 3;
   }
 }
 
@@ -56,7 +54,7 @@ class AtualizadorDeContas {
 
 class TestaConta {
   public static void main(String[] args) {
-    Conta c = new Conta();
+    ContaCorrente c = new ContaCorrente();
     ContaCorrente cc = new ContaCorrente();
     ContaPoupanca cp = new ContaPoupanca();
 
@@ -76,7 +74,7 @@ class TestaConta {
 
 class TestaAtualizadorDeContas {
   public static void main (String[] args) {
-    Conta c = new Conta();
+    ContaCorrente c = new ContaCorrente();
     ContaCorrente cc = new ContaCorrente();
     ContaPoupanca cp = new ContaPoupanca();
 
