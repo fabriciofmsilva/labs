@@ -21,7 +21,7 @@ h2 {
   font-size: 30px;
 }
 
-main div {
+.container {
   width: 720px;
   margin-right: auto;
   margin-left: auto;
@@ -29,7 +29,7 @@ main div {
   padding-bottom: 30px;
 }
 
-main h1 {
+.titulo-principal {
   margin: 0;
   padding: 25px;
   color: #fff;
@@ -50,7 +50,7 @@ footer {
   padding: 20px;
 }
 
-blockquote {
+.citacao {
   width: 250px;
   margin-top: 20px;
   margin-right: 40px;
@@ -69,27 +69,42 @@ em {
   font-style: italic;
 }
 
-aside {
+article {
+  margin-bottom: 20px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #ccc;
+}
+
+.navegacao {
   color: #f2fffc;
   text-align: center;
   background-color: #3c1d3d;
 }
 
-aside h1 {
+.navegacao h1 {
   margin-bottom: 25px;
   font-size: 30px;
 }
 
-aside a {
+.navegacao a {
   font-family: "Open Sans Condensed", sans-serif;
   color: inherit;
 }
 
-aside li {
+.icones-redes-sociais li {
   display: inline-block;
 }
 
-footer {
+.rodape-pagina {
   color: #f2fffc;
   background-color: #000;
+}
+
+.leia-mais {
+  display: block;
+  margin: 16px;
+  padding: 8px;
+  font-size: 24px;
+  text-align: center;
+  background-color: #E6E7E8;
 }
