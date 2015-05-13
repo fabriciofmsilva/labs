@@ -7,6 +7,9 @@ _delete
 # Class ignore
 *.class
 
+# C out ignore
+*.out
+
 # Numerous always-ignore extensions
 *.diff
 *.err
