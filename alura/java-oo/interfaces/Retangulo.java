@@ -8,7 +8,7 @@ public class Retangulo implements AreaCalculavel {
   }
 
   @Override
-  public double calculaArea() {
+  public double calcularArea() {
     return this.largura * this.altura;
   }
 }

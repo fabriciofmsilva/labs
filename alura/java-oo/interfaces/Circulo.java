@@ -6,7 +6,7 @@ public class Circulo implements AreaCalculavel {
   }
 
   @Override
-  public double calculaArea() {
+  public double calcularArea() {
     return Math.PI * raio * raio;
   }
 }
