@@ -18,3 +18,18 @@ UPDATE compras SET valor = valor + 10 WHERE data < '2009-06-01';
 UPDATE compras SET observacoes = 'ENTREGUE ANTES DE 2011', recebido = TRUE WHERE data BETWEEN '2009-07-01' AND '2010-07-01';
 DELETE FROM compras WHERE data BETWEEN '2009-03-05' AND '2009-03-20';
 SELECT * FROM compras WHERE NOT valor = 108.00;
+#
+ALTER TABLE compras ADD COLUMN forma_pagto ENUM('CARTAO', 'BOLETO', 'DINHEIRO');
+SELECT * FROM compras;
+UPDATE compras SET forma_pagto = 'BOLETO' WHERE forma_pagto IS NULL;
+ALTER TABLE compras MODIFY COLUMN recebido TINYINT(1) DEFAULT '0';
+ALTER TABLE compras MODIFY COLUMN observacoes VARCHAR(255) NOT NULL;
+-- CREATE TABLE compras (
+--   id int NOT NULL AUTO_INCREMENT,
+--   valor decimal(10,2),
+--   data datetime,
+--   observacoes text,
+--   recebido tinyint(1) DEFAULT 1,
+--   forma_pagto ENUM('DINHEIRO', 'CARTAO', 'BOLETO')
+--   PRIMARY KEY (id)
+-- );
