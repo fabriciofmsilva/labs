@@ -33,3 +33,8 @@ ALTER TABLE compras MODIFY COLUMN observacoes VARCHAR(255) NOT NULL;
 --   forma_pagto ENUM('DINHEIRO', 'CARTAO', 'BOLETO')
 --   PRIMARY KEY (id)
 -- );
+#
+SELECT AVG(valor) FROM compras WHERE DATA < '2009-05-12';
+SELECT forma_pagto, SUM(valor) FROM compras WHERE data < '2010-10-10' GROUP BY forma_pagto;
+SELECT COUNT(valor) FROM compras WHERE data < '2009-05-12' AND recebido = 1;
+SELECT forma_pagto, recebido, SUM(valor) FROM compras GROUP BY forma_pagto, recebido;
