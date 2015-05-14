@@ -15,6 +15,7 @@ h2 {
 
 h1 {
   font-size: 60px;
+  text-transform: uppercase;
 }
 
 h2 {
@@ -89,10 +90,30 @@ article {
 .navegacao a {
   font-family: "Open Sans Condensed", sans-serif;
   color: inherit;
+  text-transform: lowercase;
 }
 
 .icones-redes-sociais li {
   display: inline-block;
+}
+
+.icones-redes-sociais a {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  text-indent: -9999px;
+}
+
+.github {
+  background-image: url(github.png);
+}
+
+.twitter {
+  background-image: url(twitter.png);
+}
+
+.linkedin {
+  background-image: url(linkedin.png);
 }
 
 .rodape-pagina {
