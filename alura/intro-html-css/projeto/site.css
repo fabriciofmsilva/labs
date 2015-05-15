@@ -4,6 +4,11 @@ body {
   background-color: #f2fffc;
 }
 
+main {
+  float: left;
+  width: 85%;
+}
+
 main a {
   color: 851944;
 }
@@ -20,6 +25,7 @@ h1 {
 
 h2 {
   font-size: 30px;
+  clear: both;
 }
 
 .container {
@@ -62,6 +68,14 @@ footer {
   box-sizing: border-box;
 }
 
+.fiat {
+  float: right;
+}
+
+.petrobras {
+  float: left;
+}
+
 strong {
   font-weight: bold;
 }
@@ -76,10 +90,26 @@ article {
   border-bottom: 1px solid #ccc;
 }
 
+footer {
+  clear: both;
+}
+
+.minha-foto {
+  float: right;
+  width: 15%;
+  border: 10px solid #000;
+  box-sizing: border-box;
+}
+
 .navegacao {
+  float: right;
+  clear: right;
+  width: 15%;
   color: #f2fffc;
   text-align: center;
   background-color: #3c1d3d;
+  border: 10px solid #000;
+  box-sizing: border-box;
 }
 
 .navegacao h1 {
