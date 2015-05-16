@@ -38,3 +38,21 @@ SELECT AVG(valor) FROM compras WHERE DATA < '2009-05-12';
 SELECT forma_pagto, SUM(valor) FROM compras WHERE data < '2010-10-10' GROUP BY forma_pagto;
 SELECT COUNT(valor) FROM compras WHERE data < '2009-05-12' AND recebido = 1;
 SELECT forma_pagto, recebido, SUM(valor) FROM compras GROUP BY forma_pagto, recebido;
+#
+CREATE TABLE compradores (
+  id INT NOT NULL AUTO_INCREMENT,
+  nome VARCHAR(100) NOT NULL,
+  endereco VARCHAR(100) NOT NULL,
+  telefone VARCHAR(20) NOT NULL,
+  PRIMARY KEY (id)
+);
+INSERT INTO compradores (nome, endereco, telefone) VALUES ('Mauricio', 'Rua Vergueiro', '1234-5678');
+INSERT INTO compradores (nome, endereco, telefone) VALUES ('Adriano', 'Avenida Paulista', '2222-3344');
+ALTER TABLE compras ADD COLUMN comprador_id INT;
+ALTER TABLE compras ADD FOREIGN KEY (comprador_id) REFERENCES compradores(id);
+UPDATE compras SET comprador_id = 1 WHERE id <= 51;
+UPDATE compras SET comprador_id = 2 WHERE id > 52;
+SELECT nome, valor FROM compras INNER JOIN compradores ON compras.comprador_id = compradores.id WHERE data < '2010-08-09';
+SELECT * FROM compras INNER JOIN compradores ON compras.comprador_id = compradores.id WHERE compradores.id = 1;
+SELECT compras.* FROM compras INNER JOIN compradores ON compras.comprador_id = compradores.id WHERE nome LIKE 'Mauricio%';
+SELECT compradores.nome, SUM(valor) FROM compras INNER JOIN compradores ON compras.comprador_id = compradores.id GROUP BY compradores.nome;
