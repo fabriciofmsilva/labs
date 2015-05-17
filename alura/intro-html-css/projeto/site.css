@@ -32,8 +32,8 @@ h2 {
   width: 720px;
   margin-right: auto;
   margin-left: auto;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 40px;
+  padding-bottom: 80px;
 }
 
 .titulo-principal {
@@ -94,21 +94,34 @@ footer {
   clear: both;
 }
 
+.rodape-pagina {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
 .minha-foto {
+  position: absolute;
+  top: 0;
+  right: 0;
   float: right;
-  width: 15%;
-  border: 10px solid #000;
+  border-bottom: 10px solid #000;
+  border-left: 10px solid #000;
   box-sizing: border-box;
 }
 
 .navegacao {
+  position: relative;
+  top: 310px;
   float: right;
   clear: right;
   width: 15%;
   color: #f2fffc;
   text-align: center;
   background-color: #3c1d3d;
-  border: 10px solid #000;
+  border-bottom: 10px solid #000;
+  border-left: 10px solid #000;
   box-sizing: border-box;
 }
 
