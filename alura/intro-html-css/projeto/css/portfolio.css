@@ -1,0 +1,17 @@
+.portfolio-item {
+  float: left;
+  display: block;
+  width: 45%;
+  min-height: 200px;
+  margin-right: 16px;
+  margin-bottom: 16px;
+  padding: 16px;
+  background-color: #fafffc;
+  border: 8px solid #000;
+  box-sizing: border-box;
+}
+
+.portfolio-item img {
+  display: block;
+  max-width: 100%;
+}
