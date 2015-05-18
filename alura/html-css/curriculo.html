@@ -3,27 +3,15 @@
   <head>
     <meta charset="UTF-8">
     <title>Currículo Fulano da Silva</title>
-    <style>
-      h2 {
-        color: #ddd;
-        background-color: #5599dd;
-      }
-
-      #email {
-        font-style: italic;
-        text-decoration: underline;
-      }
-
-      .exp {
-        text-indent: 50px;
-      }
-    </style>
+    <link rel="stylesheet" href="curriculo.css">
   </head>
   <body>
-    <h1>Fulano da Silva</h1>
-    <p>28 anos, casado</p>
-    <p>(99)9999-9999</p>
-    <p id="email">fulano@email.com.br</p>
+    <section id="cabecalho">
+      <h1>Fulano da Silva</h1>
+      <p>28 anos, casado</p>
+      <p>(99)9999-9999</p>
+      <p id="email"><a href="mailto:fulano@email.com.br">fulano@email.com.br</a></p>
+    </section>
 
     <h2>Objetivos</h2>
     <p>Programação/Análise de Sistemas</p>
@@ -34,11 +22,13 @@
     <p>Meu principal interesse é participar de equipes ágeis que se preocupem com qualidade de código</p>
 
     <h2>Conhecimentos</h2>
-    <p>Servlet, JSP, JSF, JPA, Struts, Spring MVC</p>
-    <p>Hibernate, JPA, JDBC</p>
-    <p>Tomcat, JBoss, Glassfish</p>
-    <p>Spring, Seam, Pico</p>
-    <p>JUnit, Mockito, EasyMock</p>
+    <ul>
+      <li>Servlet, JSP, JSF, JPA, Struts, Spring MVC</li>
+      <li>Hibernate, JPA, JDBC</li>
+      <li>Tomcat, JBoss, Glassfish</li>
+      <li>Spring, Seam, Pico</li>
+      <li>JUnit, Mockito, EasyMock</li>
+    </ul>
 
     <h2>Formação Acadêmica</h2>
     <p>Faculdade de Funilaria e Pintura de Computação</p>
@@ -51,13 +41,13 @@
 
     <h2>Experiências Anteriores</h2>
 
-    <h3>Pamonharia de Piracicaba - jun/2010 - atual</h3>
-    <p class="exp">Na Pamonharia de Piracicaba participo de migração de um ERP Desktop em Delphi para uma versão Web utilizando Java com as tecnologias, tomcat, JSF, JPA e JMS</p>
+    <h3><a href="http://www.caelum.com.br/">Pamonharia de Piracicaba</a> - jun/2010 - atual</h3>
+    <p class="exp">Na Pamonharia de Piracicaba participo de migração de um ERP Desktop em Delphi para uma versão Web utilizando Java com as tecnologias, <span class="tec">tomcat</span>, <span class="tec">JSF</span>, <span class="tec">JPA</span> e <span class="tec">JMS</span></p>
 
-    <h3>Mineradora Minério - ago/2008 - jun/2010</h3>
-    <p class="exp">Análise e desenvolvimento do sistema de integração entre a o posto de coleta e a matriz da empresa utilizando a linguagem Java, e as tecnologias, RMI, Jax-WS, JDBC e Spring</p>
+    <h3><a href="http://www.caelum.com.br/">Mineradora Minério</a> - ago/2008 - jun/2010</h3>
+    <p class="exp">Análise e desenvolvimento do sistema de integração entre a o posto de coleta e a matriz da empresa utilizando a linguagem Java, e as tecnologias, <span class="tec">RMI</span>, <span class="tec">Jax-WS</span>, <span class="tec">JDBC</span> e <span class="tec">Spring</span></p>
 
-    <h3>Consultoria Consultus - jan/2002 - ago/2008</h3>
-    <p class="exp">Manutenção Corretiva e Desenvolvimento de diversos sistemas para os clientes da empresa entre as principais linguagens trabalhadas estão, PHP, Delphi, Java e as principais tecnologias foram Servlet, JSP, Struts 1.x, JDBC, Hibernate, EJB 2.x</p>
+    <h3><a href="http://www.caelum.com.br/">Consultoria Consultus</a> - jan/2002 - ago/2008</h3>
+    <p class="exp">Manutenção Corretiva e Desenvolvimento de diversos sistemas para os clientes da empresa entre as principais linguagens trabalhadas estão, PHP, Delphi, Java e as principais tecnologias foram <span class="tec">Servlet</span>, <span class="tec">JSP</span>, <span class="tec">Struts 1.x</span>, <span class="tec">JDBC</span>, <span class="tec">Hibernate</span>, <span class="tec">EJB 2.x</span></p>
   </body>
 </html>

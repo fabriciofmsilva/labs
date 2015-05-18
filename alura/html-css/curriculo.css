@@ -1,0 +1,25 @@
+body {
+  width: 960px;
+  margin-right: auto;
+  margin-left: auto;
+  font-family: Ubuntu, Helvetica, sans-serif;
+}
+
+h2 {
+  padding: 5px;
+  color: #ddd;
+  background-color: #5599dd;
+}
+
+#cabecalho {
+  text-align: center;
+}
+
+#email {
+  font-style: italic;
+  text-decoration: underline;
+}
+
+.exp {
+  text-indent: 50px;
+}
