@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 int main() {
+
   // imprime o cabecalho do nosso jogo
   printf("******************************************\n");
   printf("* Bem vindo ao nosso jogo de adivinhação *\n");
@@ -8,5 +9,10 @@ int main() {
 
   int numerosecreto = 42;
 
-  printf("O número %d é o secreto. Não conta pra ninguém!\n", numerosecreto);
+  int chute;
+
+  printf("Qual é o seu chute? ");
+  scanf("%d", &chute);
+  printf("Seu chute foi %d", chute);
+
 }
