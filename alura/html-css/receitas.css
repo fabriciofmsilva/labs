@@ -1,0 +1,41 @@
+body {
+  width: 940px;
+  margin-right: auto;
+  margin-left: auto;
+  font-family: Helvetica, Arial, sans-serif;
+  background-color: #f5f0cd;
+}
+
+h2 {
+  padding: 5px;
+  color: #fff;
+  background-color: #b3a742;
+}
+
+#td-nutrientes {
+  width: 40%;
+  margin-right: auto;
+  margin-left: auto;
+  border: 1px solid #000;
+}
+
+#td-nutrientes th {
+  background-color: #F8EA6B;
+}
+
+#td-nutrientes tr:nth-child(even) {
+  background-color: #F8EAB3;
+}
+
+#td-nutrientes tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 50px;
+}
+
+#topo {
+  text-align: center;
+}
