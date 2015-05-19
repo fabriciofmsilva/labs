@@ -8,6 +8,12 @@ public class Conta {
   private int agencia;
   private int numero;
 
+  /**
+   * realiza um saque na conta dado o valor passado
+   *
+   * @param valor valor a ser sacado
+   * @throws Exception caso saldo seja insuficiente
+   */
   public void saca(double valor) throws Exception {
     if(saldo >= valor) {
       this.saldo -= valor;
