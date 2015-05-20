@@ -30,6 +30,17 @@ figure:hover {
   transform: rotate(-5deg);
 }
 
+#conteudo {
+  float: right;
+  width: 740px;
+}
+
+#banner {
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
 #td-nutrientes {
   width: 40%;
   margin-right: auto;
@@ -49,11 +60,34 @@ figure:hover {
   background-color: #fff;
 }
 
-nav ul li {
-  display: inline;
-  margin-right: 50px;
-}
-
 #topo {
   text-align: center;
+}
+
+#titulo {
+  text-align: center;
+}
+
+nav {
+  float: left;
+  width: 200px;
+}
+
+nav ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+nav ul li {
+  margin-bottom: 5px;
+  background-color: #c7be9b;
+}
+
+nav ul li:hover {
+  background-color: #9c8f67;
+}
+
+nav ul li a {
+  color: #000;
+  text-decoration: none;
 }
