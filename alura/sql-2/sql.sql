@@ -17,3 +17,7 @@ SELECT c.nome, AVG(n.nota) FROM nota n JOIN resposta r ON r.id = n.resposta_id J
 SELECT e.pergunta, COUNT(r.id) FROM exercicio e JOIN resposta r ON e.id = r.exercicio_id GROUP BY e.id;
 SELECT e.pergunta, COUNT(r.id) FROM exercicio e JOIN resposta r ON e.id = r.exercicio_id GROUP BY e.id ORDER BY COUNT(r.id) DESC;
 SELECT a.nome, c.nome, AVG(n.nota) FROM nota n JOIN resposta r ON r.id = n.resposta_id JOIN exercicio e ON e.id = r.exercicio_id JOIN secao s ON s.id = e.secao_id JOIN curso c ON c.id = s.curso_id JOIN aluno a ON a.id = r.aluno_id GROUP BY c.nome, a.nome;
+# aula 4
+SELECT a.nome, c.nome, AVG(n.nota) FROM nota n JOIN resposta r ON r.id = n.resposta_id JOIN exercicio e ON e.id = r.exercicio_id JOIN secao s ON s.id = e.secao_id JOIN curso c ON c.id = s.curso_id JOIN aluno a ON a.id = r.aluno_id GROUP BY c.nome, a.nome HAVING AVG(n.nota) < 5;
+SELECT c.nome, COUNT(m.id) FROM curso c JOIN matricula m ON c.id = m.curso_id GROUP BY c.nome HAVING COUNT(m.id) > 1;
+SELECT c.nome, COUNT(s.id) FROM curso c JOIN secao s ON c.id = s.curso_id GROUP BY c.nome HAVING COUNT(s.id) > 3;
