@@ -24,4 +24,8 @@ SELECT c.nome, COUNT(s.id) FROM curso c JOIN secao s ON c.id = s.curso_id GROUP 
 # aula 5
 SELECT DISTINCT tipo FROM matricula;
 SELECT c.nome, COUNT(m.id) FROM curso c JOIN matricula m ON c.id = m.curso_id WHERE m.tipo IN ('PAGA_PF', 'PAGA_PJ') GROUP BY c.nome;
-SELECT e.pergunta, COUNT(r.id) FROM exercicio e JOIN resposta r ON e.id = r.exercicio_id JOIN secao s on s.id = e.secao_id JOIN curso c on s.curso_id = c.id WHERE c.id IN (1, 3) GROUP BY e.pergunta;
+SELECT e.pergunta, COUNT(r.id) FROM exercicio e JOIN resposta r ON e.id = r.exercicio_id JOIN secao s ON s.id = e.secao_id JOIN curso c ON s.curso_id = c.id WHERE c.id IN (1, 3) GROUP BY e.pergunta;
+# aula 6
+SELECT a.nome, AVG(n1.nota) AS media, AVG(n1.nota) - (SELECT AVG(n2.nota) FROM nota n2) FROM nota n1 JOIN resposta r ON r.id = n1.resposta_id JOIN exercicio e ON e.id = r.exercicio_id join secao s ON s.id = e.secao_id join aluno a ON a.id = r.aluno_id GROUP BY a.nome;
+SELECT a.nome, AVG(n1.nota) AS media, AVG(n1.nota) - (SELECT AVG(n2.nota) FROM nota n2) FROM nota n1 JOIN resposta r ON r.id = n1.resposta_id JOIN exercicio e ON e.id = r.exercicio_id join secao s ON s.id = e.secao_id join aluno a ON a.id = r.aluno_id WHERE a.id IN (SELECT m.aluno_id FROM matricula m WHERE DATA > NOW() - INTERVAL 3 MONTH) GROUP BY a.nome;
+SELECT c.nome, COUNT(m.id), COUNT(m.id) / (SELECT COUNT(m2.id) FROM matricula m2) FROM curso c JOIN matricula m ON c.id = m.curso_id GROUP BY c.nome;
