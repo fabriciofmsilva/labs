@@ -29,3 +29,6 @@ SELECT e.pergunta, COUNT(r.id) FROM exercicio e JOIN resposta r ON e.id = r.exer
 SELECT a.nome, AVG(n1.nota) AS media, AVG(n1.nota) - (SELECT AVG(n2.nota) FROM nota n2) FROM nota n1 JOIN resposta r ON r.id = n1.resposta_id JOIN exercicio e ON e.id = r.exercicio_id join secao s ON s.id = e.secao_id join aluno a ON a.id = r.aluno_id GROUP BY a.nome;
 SELECT a.nome, AVG(n1.nota) AS media, AVG(n1.nota) - (SELECT AVG(n2.nota) FROM nota n2) FROM nota n1 JOIN resposta r ON r.id = n1.resposta_id JOIN exercicio e ON e.id = r.exercicio_id join secao s ON s.id = e.secao_id join aluno a ON a.id = r.aluno_id WHERE a.id IN (SELECT m.aluno_id FROM matricula m WHERE DATA > NOW() - INTERVAL 3 MONTH) GROUP BY a.nome;
 SELECT c.nome, COUNT(m.id), COUNT(m.id) / (SELECT COUNT(m2.id) FROM matricula m2) FROM curso c JOIN matricula m ON c.id = m.curso_id GROUP BY c.nome;
+# aula 7
+SELECT a.nome, r.resposta_dada FROM aluno a LEFT JOIN resposta r ON a.id = r.aluno_id;
+SELECT a.nome, r.resposta_dada FROM aluno a LEFT JOIN resposta r ON a.id = r.aluno_id AND r.exercicio_id = 1;
