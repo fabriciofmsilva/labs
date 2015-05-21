@@ -1,0 +1,41 @@
+<html>
+<style>
+.icon {
+  display: inline-block;
+  fill: currentColor;
+  height: 10em;
+  width: 10em;
+}
+.blue { fill: blue; }
+.red { fill: red; }
+.green { fill: green; }
+.black { fill: black; }
+
+img {
+  display: inline-block;
+  height: 10em;
+  width: 10em;
+}
+
+img path {
+  fill: red;
+}
+
+.icon-undo {
+background-image: url('fileg.svg#undo');
+}
+</style>
+<body>
+<svg class="icon blue"><use xlink:href="file.svg#undo"></use></svg>
+<svg class="icon red"><use xlink:href="file.svg#redo"></use></svg>
+<svg class="icon green"><use xlink:href="file.svg#forward"></use></svg>
+<svg class="icon black"><use xlink:href="file.svg#reply"></use></svg>
+
+<img src="fileg.svg#undo" alt="Undo">
+<img class="redg" src="fileg.svg#redo" alt="Undo">
+<img src="fileg.svg#forward" alt="Undo">
+<img src="fileg.svg#reply" alt="Undo">
+
+<div class="icon icon-undo"></div>
+</body>
+</html>
