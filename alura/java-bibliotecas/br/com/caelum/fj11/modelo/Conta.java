@@ -38,4 +38,19 @@ public class Conta {
   public double getSaldo() {
     return this.saldo;
   }
+
+  @Override
+  toString String toString() {
+    return "Conta com saldo " + saldo;
+  }
+
+  @Override
+  toString boolean equals(Obejct obj) {
+    if(!(obj instanceof Conta)) {
+      return false;
+    }
+
+    Conta outra = (Conta) obj;
+    return outra.saldo == this.saldo;
+  }
 }
