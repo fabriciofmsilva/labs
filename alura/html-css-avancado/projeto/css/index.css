@@ -1,3 +1,80 @@
+.titulo-principal {
+  position: relative;
+}
+
+.palavra-home {
+    font-family: "Shadows Into Light", cursive;
+    font-weight: bold;
+    color: #D5447E;
+    position: absolute;
+}
+.eficiencia {
+    top: 20%;
+    left: 75%;
+}
+.boas-praticas {
+    top: 70%;
+    left: 20%;
+}
+.codigo-limpo {
+    top: 45%;
+    left: 10%;
+}
+.css3 {
+    top: 50%;
+    left: 30%;
+}
+.html5 {
+    top: 40%;
+    left: 80%;
+}
+.javascript {
+    top: 10%;
+    left: 60%;
+}
+.acessibilidade {
+    top: 30%;
+    left: 25%;
+}
+.responsivo {
+    top: 15%;
+    left: 15%;
+}
+.otimizacoes {
+    top: 60%;
+    left: 70%;
+}
+.agilidade {
+    top: 10%;
+    left: 30%;
+}
+.design {
+    top: 35%;
+    left: 65%;
+}
+
+.inicio-post {
+  position: absolute;
+  top: 4em;
+  right: 4em;
+  left: 30%;
+  height: 8em;
+  padding: 1.5em;
+  color: #000;
+  background-color: #f2fffc;
+}
+
+.blog li {
+  width: 30%;
+}
+
+.blog .mais-recente {
+  background-color: #F2FFFC;
+}
+.blog .mais-recente a {
+  color: #F26;
+}
+
 .foto-home {
     height: 200px;
 }
@@ -56,13 +133,14 @@
 }
 .trabalhos li {
     float: left;
-    width: 33.333%;
+    width: 33.3333%;
 }
 .trabalhos img {
     width: 100%;
     display: block;
 }
 .blog {
+  position: relative;
     background-color: #999;
     color: #FFF;
     border-bottom: .5em solid #851944;
