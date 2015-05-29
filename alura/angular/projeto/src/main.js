@@ -6,7 +6,8 @@ app.config(function($routeProvider) {
   });
 
   $routeProvider.when('/funcionarios', {
-    templateUrl: 'partials/funcionarios.tpl.html'
+    templateUrl: 'partials/funcionarios.tpl.html',
+    controller: 'FunctionariosController'
   });
 
   $routeProvider.otherwise({
