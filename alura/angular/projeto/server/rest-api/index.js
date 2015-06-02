@@ -1,9 +1,9 @@
 var ID_FUNCIONARIO_INC = 3;
 var funcionarios = [
-	{id: 1, nome: 'Funcionário Exemplo 1'}, 
-	{id: 2, nome: 'Funcionário Exemplo 2'}, 
+	{id: 1, nome: 'Funcionário Exemplo 1'},
+	{id: 2, nome: 'Funcionário Exemplo 2'},
 	{id: 3, nome: 'Funcionário Exemplo 3'}
-] 
+]
 
 exports.listaFuncionarios = function(req, res) {
 	console.log('API: listaFuncionarios');
