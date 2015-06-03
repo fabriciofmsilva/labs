@@ -1,4 +1,4 @@
-var app = angular.module('Funcionarios',['ngRoute', 'ngResource', 'services']);
+var app = angular.module('Funcionarios',['ngRoute', 'ngResource', 'services', 'minhasDiretivas']);
 
 app.config(function($routeProvider) {
   $routeProvider.when('/', {
