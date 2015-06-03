@@ -6,9 +6,24 @@
 
     <ul>
       <li ng-repeat="filme in filmes">
-        <p>{{ filme.titulo }}</p>
+        <a href="#" ng-click="mostraFilme(filme)">{{ filme.titulo }}</a>
       </li>
     </ul>
+
+    <div ng-if="filmeSelecionado">
+      <dl>
+        <dd>Titulo</dd>
+        <dt>{{ filmeSelecionado.titulo }}</dt>
+
+        <dd>Diretor</dd>
+        <dt>{{ filmeSelecionado.diretor }}</dt>
+
+        <dd>Ano</dd>
+        <dt>{{ filmeSelecionado.ano }}</dt>
+      </dl>
+
+      <a href="#" ng-click="deletaFilme(filmeSelecionado)">Deletar filme {{ filmeSelecionado.titulo }}</a>
+    </div>
 
     <form ng-submit="adicionaFilme()">
       Titulo: <input ng-model="filme.titulo">

@@ -17,6 +17,14 @@ exports.grava = function(req, res) {
     if(error) {
       return console.log(error);
     }
-    res.send('Filme ' + filme.titulo + ' adicionado com sucesso!');
+    res.send(filme);
+  });
+};
+
+exports.deleta = function(req, res) {
+  var id = req.params.id;
+
+  Filme.findByIdAndRemove(id, function(error, filme) {
+    res.send('Filme ' + filme.titulo + ' removido com sucesso');
   });
 };
