@@ -1,8 +1,9 @@
-var app = angular.module('Funcionarios',['ngRoute', 'ngResource']);
+var app = angular.module('Funcionarios',['ngRoute', 'ngResource', 'services']);
 
 app.config(function($routeProvider) {
   $routeProvider.when('/', {
-    templateUrl: 'partials/bem-vindo.tpl.html'
+    templateUrl: 'partials/bem-vindo.tpl.html',
+    controller: 'BemVindoController'
   });
 
   $routeProvider.when('/funcionarios', {
