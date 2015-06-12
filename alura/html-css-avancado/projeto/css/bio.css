@@ -53,3 +53,39 @@
 .citacao-bio:nth-of-type(odd):focus {
   transform: scale(1.2) rotate(5deg);
 }
+
+.habilidades {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  border-collapse: separate;
+  border-spacing: .25em;
+}
+
+.habilidades th,
+.habilidades td {
+  padding: 1em;
+}
+
+.habilidades th {
+  font-weight: bold;
+  color: #fff;
+  background-color: #851944;
+}
+
+.habilidades thead th {
+  background-color: #3c1d3d;
+}
+
+.habilidades td {
+  background-color: #eee;
+}
+
+.habilidades [colspan] {
+  font-style: italic;
+  text-align: center;
+}
+
+.habilidades [rowspan] {
+  vertical-align: middle;
+}
+
