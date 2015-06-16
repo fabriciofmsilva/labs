@@ -4,6 +4,7 @@ body {
   overflow-x: hidden;
 }
 body {
+  display: block;
   perspective: 6px;
 }
 
@@ -241,13 +242,27 @@ h2 {
     color: #FFF;
 }
 .trabalhos ul {
-    overflow: hidden;
-    border: .5em solid black;
+    display: flex;
 }
+
 .trabalhos li {
-    float: left;
-    width: 33.3333%;
+  flex: 1;
+  border: .5em solid #000;
 }
+
+.trabalhos li:first-child {
+  order: 2;
+  transform: scale(1.2);
+}
+
+.trabalhos li:nth-child(2) {
+  order: 1;
+}
+
+.trabalhos li:last-child {
+  order: 3;
+}
+
 .trabalhos img {
     width: 100%;
     display: block;

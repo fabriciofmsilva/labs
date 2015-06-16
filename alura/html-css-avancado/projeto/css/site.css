@@ -3,6 +3,8 @@ body {
     background-color: #F2FFFC;
     font-size: 120%;
     line-height: 1.5;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 h1,
@@ -153,6 +155,7 @@ em {
 }
 
 main {
+  flex-grow: 1;
     width: calc(100% - 0.9 * 300px);
     float: left;
     padding-bottom: 80px;
@@ -166,10 +169,7 @@ main {
 }
 
 .navegacao-site {
-    width: calc(0.9 * 300px);
-    float: right;
-    position: relative;
-    top: 300px;
+  padding-top: calc(300px + 1em);
 }
 
 .minha-foto {
