@@ -18,3 +18,6 @@ INSERT INTO categorias (nome) VALUES ("guloseimas");
 ALTER TABLE produtos ADD COLUMN categoria_id INTEGER;
 UPDATE produtos SET categoria_id = 3;
 UPDATE produtos SET categoria_id = 4 WHERE id = 20;
+# usados
+ALTER TABLE produtos ADD COLUMN usado BOOLEAN default 0;
+SELECT * FROM produtos;
