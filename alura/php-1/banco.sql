@@ -5,3 +5,8 @@ SELECT * FROM produtos;
 INSERT INTO produtos VALUES (1, 'carro', 20000);
 INSERT INTO produtos VALUES (2, 'morocicleta', 10000);
 INSERT INTO produtos (nome, preco) VALUES ('bicicleta', 300);
+# update
+ALTER TABLE produtos ADD COLUMN descricao TEXT;
+SELECT * FROM produtos;
+UPDATE produtos SET descricao = "Descricao deste produto";
+SELECT * FROM produtos;
