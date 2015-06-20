@@ -10,6 +10,10 @@ function listaProdutos($conexao) {
 
 function insereProduto($conexao, $nome, $preco) {
   $query = "INSERT INTO produtos (nome, preco) VALUES ('{$nome}', {$preco})";
-  $resultadoDaInsercao = mysqli_query($conexao, $query);
-  return $resultadoDaInsercao;
+  return mysqli_query($conexao, $query);
+}
+
+function removeProduto($conexao, $id) {
+  $query = "DELETE FROM produtos WHERE id = {$id}";
+  return mysqli_query($conexao, $query);
 }
