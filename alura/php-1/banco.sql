@@ -10,3 +10,11 @@ ALTER TABLE produtos ADD COLUMN descricao TEXT;
 SELECT * FROM produtos;
 UPDATE produtos SET descricao = "Descricao deste produto";
 SELECT * FROM produtos;
+# categorias
+CREATE TABLE categorias (id INTEGER AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(255));
+INSERT INTO categorias (nome) VALUES ("esporte"), ("escolar"), ("mobilidade");
+SELECT * FROM categorias;
+INSERT INTO categorias (nome) VALUES ("guloseimas");
+ALTER TABLE produtos ADD COLUMN categoria_id INTEGER;
+UPDATE produtos SET categoria_id = 3;
+UPDATE produtos SET categoria_id = 4 WHERE id = 20;
