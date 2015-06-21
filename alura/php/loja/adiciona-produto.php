@@ -1,4 +1,5 @@
 <?php
+require_once("classe/Categoria.php");
 require_once("classe/Produto.php");
 require_once("logica-usuario.php");
 verificaUsuario();
@@ -6,11 +7,12 @@ require_once("banco-produto.php");
 require_once("cabecalho.php");
 
 $produto = new Produto;
-
+$categoria = new Categoria;
+$categoria->id = $_POST['categoria_id'];
 $produto->nome = $_POST["nome"];
 $produto->preco = $_POST["preco"];
 $produto->descricao = $_POST["descricao"];
-$produto->categoria_id = $_POST["categoria_id"];
+$produto->categoria = $categoria;
 if(array_key_exists('usado', $_POST)) {
   $usado = "true";
 } else {
