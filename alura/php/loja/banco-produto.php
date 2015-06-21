@@ -10,19 +10,19 @@ function listaProdutos($conexao) {
   return $produtos;
 }
 
-function insereProduto($conexao, $nome, $preco, $descricao, $categoria_id, $usado) {
-  $nome = msqli_real_escape_string($conexao, $nome);
-  $preco = msqli_real_escape_string($conexao, $preco);
-  $descricao = msqli_real_escape_string($conexao, $descricao);
-  $query = "INSERT INTO produtos (nome, preco, descricao, categoria_id, usado) VALUES ('{$nome}', {$preco}, '{$descricao}', {$categoria_id}, {$usado})";
+function insereProduto($conexao, Produto $produto) {
+  //$nome = msqli_real_escape_string($conexao, $nome);
+  //$preco = msqli_real_escape_string($conexao, $preco);
+  //$descricao = msqli_real_escape_string($conexao, $descricao);
+  $query = "INSERT INTO produtos (nome, preco, descricao, categoria_id, usado) VALUES ('{$produto->nome}', {$produto->preco}, '{$produto->descricao}', {$produto->categoria_id}, {$produto->usado})";
   return mysqli_query($conexao, $query);
 }
 
-function alteraProduto($conexao, $id, $nome, $preco, $descricao, $categoria_id, $usado) {
-  $nome = msqli_real_escape_string($conexao, $nome);
-  $preco = msqli_real_escape_string($conexao, $preco);
-  $descricao = msqli_real_escape_string($conexao, $descricao);
-  $query = "UPDATE produtos SET nome = '{$nome}', preco = {$preco}, descricao = '{$descricao}', categoria_id = {$categoria_id}, usado = {$usado} WHERE id = {$id}";
+function alteraProduto($conexao, Produto $produto) {
+  //$nome = msqli_real_escape_string($conexao, $nome);
+  //$preco = msqli_real_escape_string($conexao, $preco);
+  //$descricao = msqli_real_escape_string($conexao, $descricao);
+  $query = "UPDATE produtos SET nome = '{$produto->nome}', preco = {$produto->preco}, descricao = '{$produto->descricao}', categoria_id = {$produto->categoria_id}, usado = {$produto->usado} WHERE id = {$produto->id}";
   return mysqli_query($conexao, $query);
 }
 
