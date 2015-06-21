@@ -9,11 +9,17 @@ function listaProdutos($conexao) {
 }
 
 function insereProduto($conexao, $nome, $preco, $descricao, $categoria_id, $usado) {
+  $nome = msqli_real_escape_string($conexao, $nome);
+  $preco = msqli_real_escape_string($conexao, $preco);
+  $descricao = msqli_real_escape_string($conexao, $descricao);
   $query = "INSERT INTO produtos (nome, preco, descricao, categoria_id, usado) VALUES ('{$nome}', {$preco}, '{$descricao}', {$categoria_id}, {$usado})";
   return mysqli_query($conexao, $query);
 }
 
 function alteraProduto($conexao, $id, $nome, $preco, $descricao, $categoria_id, $usado) {
+  $nome = msqli_real_escape_string($conexao, $nome);
+  $preco = msqli_real_escape_string($conexao, $preco);
+  $descricao = msqli_real_escape_string($conexao, $descricao);
   $query = "UPDATE produtos SET nome = '{$nome}', preco = {$preco}, descricao = '{$descricao}', categoria_id = {$categoria_id}, usado = {$usado} WHERE id = {$id}";
   return mysqli_query($conexao, $query);
 }
