@@ -1,6 +1,6 @@
-<?php include("cabecalho.php");
-      include("conecta.php");
-      include("banco-produto.php");
+<?php
+require_once("cabecalho.php");
+require_once("banco-produto.php");
 
 $id = $_POST["id"];
 $nome = $_POST["nome"];
@@ -21,4 +21,4 @@ if(alteraProduto($conexao, $id, $nome, $preco, $descricao, $categoria_id, $usado
   <p class="text-danger">O produto <?= $nome ?> não foi alterado: <?= $msg ?></p>
 <?php } ?>
 
-<?php include("rodape.php"); ?>
+<?php require_once("rodape.php"); ?>

@@ -1,9 +1,8 @@
 <?php
-include("logica-usuario.php");
+require_once("logica-usuario.php");
 verificaUsuario();
-include("cabecalho.php");
-include("conecta.php");
-include("banco-produto.php");
+require_once("banco-produto.php");
+require_once("cabecalho.php");
 
 $nome = $_POST["nome"];
 $preco = $_POST["preco"];
@@ -23,4 +22,4 @@ if(insereProduto($conexao, $nome, $preco, $descricao, $categoria_id, $usado)) { 
   <p class="text-danger">O produto <?= $nome ?> não foi adicionado: <?= $msg ?></p>
 <?php } ?>
 
-<?php include("rodape.php"); ?>
+<?php require_once("rodape.php"); ?>

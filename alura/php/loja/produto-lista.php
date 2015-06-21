@@ -1,7 +1,6 @@
 <?php
-include("conecta.php");
-include("banco-produto.php");
-include("cabecalho.php");
+require_once("banco-produto.php");
+require_once("cabecalho.php");
 ?>
 
 <table class="table table-striped table-bordered">
@@ -27,4 +26,4 @@ include("cabecalho.php");
   ?>
 </table>
 
-<?php include("rodape.php"); ?>
+<?php require_once("rodape.php"); ?>
