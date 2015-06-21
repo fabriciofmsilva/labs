@@ -1,21 +1,12 @@
 <?php
-include("logica-usuario.php");
 include("conecta.php");
 include("banco-produto.php");
 include("cabecalho.php");
-
-$produtos = listaProdutos($conexao);
-?>
-
-<?php if(isset($_SESSION["success"])) { ?>
-  <p class="alert-success"><?= $_SESSION["success"] ?></p>
-<?php } ?>
-<?php
-  unset($_SESSION["success"]);
 ?>
 
 <table class="table table-striped table-bordered">
   <?php
+    $produtos = listaProdutos($conexao);
     foreach($produtos as $produto) :
   ?>
   <tr>
