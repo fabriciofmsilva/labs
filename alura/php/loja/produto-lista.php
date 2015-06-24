@@ -9,15 +9,15 @@ require_once("cabecalho.php");
     foreach($produtos as $produto) :
   ?>
   <tr>
-    <td><?= $produto->nome ?></td>
-    <td><?= $produto->preco ?></td>
+    <td><?= $produto->getNome() ?></td>
+    <td><?= $produto->getPreco() ?></td>
     <td><?= $produto->valorComDesconto() ?></td>
-    <td><?= substr($produto->descricao, 0, 40) ?></td>
-    <td><?= $produto->categoria->nome ?></td>
-    <td><a class="btn btn-primary" href="produto-altera-formulario.php?id=<?=$produto->id?>">alterar</a></td>
+    <td><?= substr($produto->getDescricao(), 0, 40) ?></td>
+    <td><?= $produto->getCategoria()->getNome() ?></td>
+    <td><a class="btn btn-primary" href="produto-altera-formulario.php?id=<?=$produto->getId()?>">alterar</a></td>
     <td>
       <form action="remove-produto.php" method="post">
-        <input name="id" type="hidden" value="<?=$produto->id?>">
+        <input name="id" type="hidden" value="<?=$produto->getId()?>">
         <button class="btn btn-danger">remover</button>
       </form>
     </td>
