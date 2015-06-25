@@ -1,6 +1,6 @@
 <?php
-require_once("classe/Categoria.php");
-require_once("classe/Produto.php");
+require_once("class/Categoria.php");
+require_once("class/Produto.php");
 require_once("logica-usuario.php");
 verificaUsuario();
 require_once("banco-produto.php");
