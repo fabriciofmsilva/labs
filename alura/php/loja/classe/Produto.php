@@ -7,6 +7,22 @@
     private $categoria;
     private $usado;
 
+    function __construct($nome = "Produto indefinido", $preco = 99999, $descricao = "contate o administrador", Categoria $categoria, $usado = "usado") {
+      $this->nome = $nome;
+      $this->setPreco($preco);
+      $this->descricao = $descricao;
+      $this->categoria = $categoria;
+      $this->usado = $usado;
+    }
+
+    function __toString() {
+      return $this->getNome().":".$this->getPreco()."<br>";
+    }
+
+    // function __destruct() {
+    //   echo "o objeto $this->nome foi destruido";
+    // }
+
     public function valorComDesconto($valor = 0.05) {
       if ($valor > 0 && $valor <= 0.5) {
         $this->setPreco($this->preco - $this->preco * $valor);
