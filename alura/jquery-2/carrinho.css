@@ -41,6 +41,10 @@ td {
   background-color: #fe0;
 }
 
+.hovering {
+  background-color: #ccc;
+}
+
 
 .propaganda td {
 	background: #9F0;

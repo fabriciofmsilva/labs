@@ -48,6 +48,14 @@ var undo = function() {
   atualizaDados();
 };
 
+var daDestaque = function() {
+  $(this).addClass('hovering');
+};
+
+var tiraDestaque = function() {
+  $(this).removeClass('hovering');
+};
+
 var aposInicializado = function() {
   atualizaDados();
   $('.undo').click(undo);
@@ -58,5 +66,7 @@ var aposInicializado = function() {
       umaPropaganda().insertAfter($(this));
     });
   });
+
+  $('.carrinho tbody tr').hover(daDestaque, tiraDestaque);
 };
 $(aposInicializado);
