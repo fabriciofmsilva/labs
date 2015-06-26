@@ -24,3 +24,6 @@ SELECT * FROM produtos;
 # php 2
 CREATE TABLE usuarios (id INTEGER AUTO_INCREMENT PRIMARY KEY, email VARCHAR(255), senha VARCHAR(255));
 INSERT INTO usuarios (email, senha) VALUES ("guilherme.silveira@alura.com.br", "e10adc3949ba59abbe56e057f20f883e");
+# heranca
+ALTER TABLE produtos ADD COLUMN isbn VARCHAR(255);
+ALTER TABLE produtos ADD COLUMN tipoProduto VARCHAR(255);

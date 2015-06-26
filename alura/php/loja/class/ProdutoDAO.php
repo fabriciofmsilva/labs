@@ -14,7 +14,12 @@ class ProdutoDAO {
       $categoria = new Categoria;
       $categoria->setNome($produto_atual['categoria_nome']);
 
-      $produto = new Produto($produto_atual['nome'], $produto_atual['preco'], $produto_atual['descricao'], $categoria, $produto_atual['usado']);
+      if($produto_atual['tipoProduto'] == "Livro") {
+        $produto = new Livro($produto_atual['nome'], $produto_atual['preco'], $produto_atual['descricao'], $categoria, $produto_atual['usado']);
+        $produto->setIsbn($produto_atual['isbn']);
+      } else {
+        $produto = new Produto($produto_atual['nome'], $produto_atual['preco'], $produto_atual['descricao'], $categoria, $produto_atual['usado']);
+      }
 
       $produto->setId($produto_atual['id']);
 
@@ -24,7 +29,15 @@ class ProdutoDAO {
   }
 
   function insereProduto(Produto $produto) {
-    $query = "INSERT INTO produtos (nome, preco, descricao, categoria_id, usado) VALUES ('{$produto->getNome()}', {$produto->getPreco()}, '{$produto->getDescricao()}', {$produto->getCategoria()->getId()}, {$produto->getUsado()})";
+    if($produto->temIsbn()) {
+      $isbn = $produto->getIsbn();
+    } else {
+      $isbn = null;
+    }
+
+    $tipoProduto = get_class($produto);
+
+    $query = "INSERT INTO produtos (nome, preco, descricao, categoria_id, usado, isbn, tipoProduto) VALUES ('{$produto->getNome()}', {$produto->getPreco()}, '{$produto->getDescricao()}', {$produto->getCategoria()->getId()}, {$produto->getUsado()}, '{$isbn}', '{$tipoProduto}')";
     return mysqli_query($this->conexao, $query);
   }
 

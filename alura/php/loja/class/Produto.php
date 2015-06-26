@@ -23,6 +23,10 @@
     //   echo "o objeto $this->nome foi destruido";
     // }
 
+    public function temIsbn() {
+      return $this instanceof Livro;
+    }
+
     public function valorComDesconto($valor = 0.05) {
       if ($valor > 0 && $valor <= 0.5) {
         $this->setPreco($this->preco - $this->preco * $valor);
@@ -79,5 +83,6 @@
     public function getUsado() {
       return $this->usado;
     }
+
   }
 ?>
