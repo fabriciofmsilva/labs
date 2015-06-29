@@ -15,6 +15,10 @@
       $this->usado = $usado;
     }
 
+    abstract public function atualizaBaseadoEm($params);
+
+    abstract public function calculaPrecoDeVenda();
+
     public function calculaImposto() {
       return $this->getPreco() * 0.195;
     }

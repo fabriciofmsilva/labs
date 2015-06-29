@@ -14,10 +14,8 @@ class ProdutoDAO {
       $categoria = new Categoria;
       $categoria->setNome($produto_atual['categoria_nome']);
 
-      if($produto_atual['tipoProduto']) {
-        $produto = new $produto_atual['tipoProduto']($produto_atual['nome'], $produto_atual['preco'], $produto_atual['descricao'], $categoria, $produto_atual['usado']);
-        $produto->setIsbn($produto_atual['isbn']);
-      }
+      $produto = new $produto_atual['tipoProduto']($produto_atual['nome'], $produto_atual['preco'], $produto_atual['descricao'], $categoria, $produto_atual['usado']);
+      $produto->setIsbn($produto_atual['isbn']);
 
       $produto->setId($produto_atual['id']);
 
