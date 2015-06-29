@@ -15,6 +15,10 @@
       $this->usado = $usado;
     }
 
+    public function calculaImposto() {
+      return $this->getPreco() * 0.195;
+    }
+
     function __toString() {
       return $this->getNome().":".$this->getPreco()."<br>";
     }
