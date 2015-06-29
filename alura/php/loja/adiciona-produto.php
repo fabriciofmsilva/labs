@@ -14,11 +14,10 @@ if(array_key_exists('usado', $_POST)) {
   $usado = "false";
 }
 
-if($_POST['tipoProduto'] == 'Livro') {
-  $produto = new Livro($_POST["nome"], $_POST["preco"], $_POST["descricao"], $categoria, $usado);
+$aceita = array('LivroFisico', 'Ebook');
+if(in_array($_POST['tipoProduto'], $aceita)) {
+  $produto = new $_POST['tipoProduto']($_POST["nome"], $_POST["preco"], $_POST["descricao"], $categoria, $usado);
   $produto->setIsbn($_POST['isbn']);
-} else {
-  $produto = new Produto($_POST["nome"], $_POST["preco"], $_POST["descricao"], $categoria, $usado);
 }
 
 $produtoDao = new ProdutoDAO($conexao);
