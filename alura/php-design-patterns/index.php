@@ -9,12 +9,13 @@
   require "CalculadoraDeImpostos.php";
   require "CalculadoraDeDescontos.php";
   require "Imposto.php";
+  require "TemplateDeImpostoCondicional.php";
   require "ICMS.php";
   require "ISS.php";
-  require "KCV.php";
-  require "ICCC.php";
+  require "IKCV.php";
+  require "ICPP.php";
 
-  $reforma = new Orcamento(301);
+  $reforma = new Orcamento(490);
 
   $calculadora = new CalculadoraDeImpostos();
 
@@ -26,11 +27,11 @@
 
   echo "<br>";
 
-  echo $calculadora->calcula($reforma, new KCV());
+  echo $calculadora->calcula($reforma, new IKCV());
 
   echo "<br>";
 
-  echo $calculadora->calcula($reforma, new ICCC());
+  echo $calculadora->calcula($reforma, new ICPP());
 
   // Descontos
 
