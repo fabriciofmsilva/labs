@@ -19,7 +19,7 @@
 
   $calculadora = new CalculadoraDeImpostos();
 
-  echo $calculadora->calcula($reforma, new ICMS());
+  echo $calculadora->calcula($reforma, new ICMS(new IKCV()));
 
   echo "<br>";
 
