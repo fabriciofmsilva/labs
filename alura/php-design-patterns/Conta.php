@@ -1,7 +1,35 @@
 <?php
+  interface EstadoDaConta {
+    public function saca(Conta $conta, $valor);
+    public function deposita(Conta $conta, $valor);
+  }
+
+  class Positivo implements EstadoDaConta {
+    public void saca(Conta $conta, $valor) {
+      $conta->saldo -= $valor;
+      if($conta->saldo < 0) $conta->estado = new Negativo();
+    }
+
+    public void deposita(Conta $conta, $valor) {
+      $conta->saldo += $valor * 0.98;
+    }
+  }
+
+  class Negativo implements EstadoDaConta {
+    public function saca(Conta $conta, $valor) {
+      throw new Exception("Sua conta está no vermelho. Não é possível sacar!");
+    }
+
+    public function deposita(Conta $conta, $valor) {
+      $conta->saldo += $valor * 0.95;
+      if($conta->saldo > 0) $conta->estado = new Positivo();
+    }
+  }
+
   class Conta {
     private $titular;
     private $saldo;
+    protected $estado;
 
     function __construct($titular, $saldo) {
       $this->titular = $titular;
@@ -22,6 +50,14 @@
 
     public function setSaldo($valor) {
       $this->saldo = $valor;
+    }
+
+    public function saca($valor) {
+      $estado->saca($this, $valor);
+    }
+
+    public function deposita($valor) {
+      $estado->deposita($this, $valor);
     }
   }
 

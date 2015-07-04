@@ -14,8 +14,35 @@
   require "ISS.php";
   require "IKCV.php";
   require "ICPP.php";
+  require "EstadoDeUmOrcamento.php";
+  require "Aprovado.php";
+  require "Reprovado.php";
+  require "EmAprovacao.php";
+  require "Finalizado.php";
 
   $reforma = new Orcamento(490);
+
+  echo $reforma->getValor();
+
+  echo "<br>";
+
+  $reforma->aplicaDescontoExtra();
+
+  echo $reforma->getValor();
+
+  echo "<br>";
+
+  $reforma->aprova();
+
+  $reforma->aplicaDescontoExtra();
+
+  echo $reforma->getValor();
+
+  echo "<br>";
+
+  $reforma->finaliza();
+
+  //$reforma->aplicaDescontoExtra();
 
   $calculadora = new CalculadoraDeImpostos();
 
