@@ -8,10 +8,17 @@
     private $observacoes;
     private $dataDeEmissao;
 
+    private $acoesAoGerar;
+
     function __construct() {
       $this->valorBruto = 0;
       $this->impostos = 0;
       $this->itens = array();
+      $this->acoesAoGerar = array();
+    }
+
+    public function addAcao(acoesAoGerarNota $acao) {
+      $this->acoesAoGerar[] = $acao;
     }
 
     public function comEmpresa($nomeEmpresa) {
@@ -42,6 +49,10 @@
 
     public function build() {
       $nf = new NotaFiscal($this->empresa, $this->cnpj, $this->itens, $this->valorBruto, $this->impostos, $this->observacoes, $this->dataEmissao);
+
+      foreach($this->acoesAoGerar as $acao) {
+        $acao->executa($nf);
+      }
 
       return $nf;
     }
