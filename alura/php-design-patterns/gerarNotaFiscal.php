@@ -1,13 +1,11 @@
 <?php
   date_default_timezone_set("Brazil/East");
 
-  require "AcoesAoGerarNota.php";
-  require "NotaFiscal.php";
-  require "Item.php";
-  require "NotaFiscalBuilder.php";
-  require "Impressora.php";
-  require "NotaFiscalDAO.php";
-  require "EnviadorDeSMS.php";
+  function carregaClasse($nomeClasse) {
+    require $nomeClasse.".php";
+  }
+
+  spl_autoload_register("carregaClasse");
 
   $geradorDeNotas = new NotaFiscalBuilder();
   $geradorDeNotas->comEmpresa("Alura");
