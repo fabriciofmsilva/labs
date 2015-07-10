@@ -1,1 +1,1 @@
-angular.module('Alurapic', []);
+angular.module('Alurapic', ['minhasDiretivas']);
