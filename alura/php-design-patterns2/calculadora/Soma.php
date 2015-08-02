@@ -14,5 +14,17 @@
 
       return $valorEsquerda + $valorDireita;
     }
+
+    public function aceita(Impressora $Impressora) {
+      $Impressora->visitaSoma($this);
+    }
+
+    public function getEsquerda() {
+      return $this->esquerdo;
+    }
+
+    public function getDireita() {
+      return $this->direito;
+    }
   }
 ?>

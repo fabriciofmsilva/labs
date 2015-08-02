@@ -9,5 +9,13 @@
     public function avalia() {
       return $this->numero;
     }
+
+    public function getNumero() {
+      return $this->numero;
+    }
+
+    public function aceita(Impressora $Impressora) {
+      $Impressora->visitaNumero($this);
+    }
   }
 ?>

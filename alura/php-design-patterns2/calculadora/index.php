@@ -12,7 +12,13 @@
 
   $esquerdo = new Soma(new Numero(1), new Numero(3));
   $direito = new Subtracao(new Numero(2), new Numero(2));
+
+  $impressora = new Impressora();
   $soma = new Soma($esquerdo, $direito);
+
+  $soma->aceita($impressora);
+
+  echo " = ";
 
   echo $soma->avalia();
 ?>
