@@ -1,5 +1,7 @@
 <?php
 
+  date_default_timezone_set("Brazil/East");
+
   function carregaClasse($classe) {
     require $classe.".php";
   }
@@ -16,9 +18,18 @@
   $impressora = new Impressora();
   $soma = new Soma($esquerdo, $direito);
 
+  $data = new Relogio();
+  echo $data->getDia()."/".$data->getMes();
+  echo "<br />";
+
   $soma->aceita($impressora);
 
   echo " = ";
 
   echo $soma->avalia();
+
+  $mapa = new GoogleMaps();
+
+  echo $mapa->getMapa();
+
 ?>
