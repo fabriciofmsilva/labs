@@ -35,6 +35,7 @@ int main() {
     printf("\n");
 
     char chute;
+    printf("Qual letra? ");
     scanf(" %c", &chute);
 
     chutes[tentativas] = chute;
