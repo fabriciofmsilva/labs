@@ -10,7 +10,6 @@ public class TestaMenorPreco {
     precos[4] = 17000;
 
     int maisBarato = 0;
-    //int atual = 0;
 
     for(int atual = 0; atual < precos.length; atual++) {
       if(precos[atual] < precos[maisBarato]) {
