@@ -27,6 +27,9 @@ int main() {
   char chutes[26];
   int tentativas = 0;
 
+  printf("%d %d\n", &chutes[0], chutes);
+  printf("%d %d %d\n", &chutes[0], &chutes[1], &chutes[2]);
+
   abertura();
 
   do {
@@ -37,7 +40,7 @@ int main() {
       int achou = 0;
 
       // a letra ja foi chuteada?
-      for(int j = 0; i < tentativas; j++) {
+      for(int j = 0; j < tentativas; j++) {
         if(chutes[j] == palavrasecreta[i]) {
           achou = 1;
           break;
