@@ -7,9 +7,11 @@
     <script>
       angular.module('app', []);
       angular.module('app').controller('zumbisController', function($scope) {
-        $scope.cep = '12345-678';
-        $scope.bairro = 'Bairro';
-        $scope.ocorrencias = 123;
+        $scope.ocorrencias = [];
+
+        $scope.adiciona = function(ocorrencia) {
+          $scope.ocorrencias.push(angular.copy(ocorrencia));
+        };
       });
     </script>
   </head>
@@ -18,20 +20,34 @@
       <div class="well">
         <h1>Ocorrências de zumbis</h1>
       </div>
+      <table ng-if="ocorrencias.length > 0">
+        <thead>
+          <th>CEP</th>
+          <th>Bairro</th>
+          <th>Número</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="ocorrencia in ocorrencias">
+            <td>{{ ocorrencia.cep }}</td>
+            <td>{{ ocorrencia.bairro }}</td>
+            <td>{{ ocorrencia.numero }}</td>
+          </tr>
+        </tbody>
+      </table>
       <form name="formZumbi">
         <div class="form-group">
           <label>CEP</label>
-          <input class="form-control" type="text" ng-model="cep" ng-pattern="/^[0-9]{5}-[0-9]{3}$/">
+          <input class="form-control" type="text" ng-model="ocorrencia.cep" ng-pattern="/^[0-9]{5}-[0-9]{3}$/">
         </div>
         <div class="form-group">
           <label>Bairro</label>
-          <input class="form-control" type="text" ng-model="bairro" ng-minlength="4">
+          <input class="form-control" type="text" ng-model="ocorrencia.bairro" ng-minlength="4">
         </div>
         <div class="form-group">
           <label>Número de ocorrências</label>
-          <input class="form-control" type="text" ng-model="ocorrencias" required>
+          <input class="form-control" type="text" ng-model="ocorrencia.numero" required>
         </div>
-        <button class="btn btn-primary" type="submit" ng-disabled="formZumbi.$invalid">Salvar</button>
+        <button class="btn btn-primary" type="submit" ng-click="adiciona(ocorrencia)" ng-disabled="formZumbi.$invalid">Salvar</button>
       </form>
     </div>
   </body>
