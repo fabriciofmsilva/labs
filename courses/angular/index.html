@@ -10,7 +10,7 @@
       <div class="well">
         <h1>Ocorrências de zumbis</h1>
       </div>
-      <form name="form">
+      <form name="formZumbi">
         <div class="form-group">
           <label>CEP</label>
           <input class="form-control" type="text" ng-model="cep" ng-pattern="/^[0-9]{5}-[0-9]{3}$/">
@@ -23,7 +23,7 @@
           <label>Número de ocorrências</label>
           <input class="form-control" type="text" ng-model="ocorrencias" required>
         </div>
-        <button class="btn btn-primary" type="submit">Salvar</button>
+        <button class="btn btn-primary" type="submit" ng-disabled="formZumbi.$invalid">Salvar</button>
       </form>
     </div>
   </body>
