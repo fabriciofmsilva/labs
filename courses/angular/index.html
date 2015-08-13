@@ -13,16 +13,15 @@
       <form name="form">
         <div class="form-group">
           <label>CEP</label>
-          <input class="form-control" type="text" ng-model="cep">
-          {{ cep }}
+          <input class="form-control" type="text" ng-model="cep" ng-pattern="/^[0-9]{5}-[0-9]{3}$/">
         </div>
         <div class="form-group">
           <label>Bairro</label>
-          <input class="form-control" type="text">
+          <input class="form-control" type="text" ng-model="bairro" ng-minlength="4">
         </div>
         <div class="form-group">
           <label>Número de ocorrências</label>
-          <input class="form-control" type="text">
+          <input class="form-control" type="text" ng-model="ocorrencias" required>
         </div>
         <button class="btn btn-primary" type="submit">Salvar</button>
       </form>
