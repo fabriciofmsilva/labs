@@ -4,52 +4,10 @@
     <title>AngularJS</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
-    <script>
-      angular.module('app', []);
-      angular.module('app').controller('zumbisController', function($scope) {
-        $scope.ocorrencias = [];
-
-        $scope.adiciona = function(ocorrencia) {
-          $scope.ocorrencias.push(angular.copy(ocorrencia));
-        };
-      });
-
-      angular.module('app').directive('ngBlur', function() {
-        return {
-          restrict: 'A',
-          require: 'ngModel',
-          link: function($scope, $element, $attrs, ngModel) {
-            $element.on('blur', function() {
-              if(ngModel.$invalid) {
-                $element.addClass('error');
-              } else {
-                $element.removeClass('error');
-              }
-            });
-          }
-        }
-      });
-
-      angular.module('app').directive('ngZumbiSubmit', function() {
-        return {
-          restrict: 'E',
-          require: '^form',
-          scope: {
-            submit: '&'
-          },
-          template: '<button class="btn btn-primary" type="submit">Salvar</button>',
-          link: function($scope, $element, $attrs, formCtrl) {
-            $element.on('click', function() {
-              if(formCtrl.$valid) {
-                $scope.submit();
-              } else {
-                alert('Formulário está inválido');
-              }
-            });
-          }
-        }
-      });
-    </script>
+    <script src="app.js"></script>
+    <script src="zumbis.controller.js"></script>
+    <script src="ng-blur.directive.js"></script>
+    <script src="ng-zumbi-submit.directive.js"></script>
     <style>
       .error {
         border-color: red;
