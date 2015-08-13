@@ -4,9 +4,17 @@
     <title>AngularJS</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script>
+      angular.module('app', []);
+      angular.module('app').controller('zumbisController', function($scope) {
+        $scope.cep = '12345-678';
+        $scope.bairro = 'Bairro';
+        $scope.ocorrencias = 123;
+      });
+    </script>
   </head>
-  <body ng-app>
-    <div class="container">
+  <body ng-app="app">
+    <div class="container" ng-controller="zumbisController">
       <div class="well">
         <h1>Ocorrências de zumbis</h1>
       </div>
