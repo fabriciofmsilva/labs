@@ -9,12 +9,8 @@
       angular.module('app').controller('zumbisController', function($scope) {
         $scope.ocorrencias = [];
 
-        $scope.adiciona = function(ocorrencia, formIsValid) {
-          if(formIsValid) {
-            $scope.ocorrencias.push(angular.copy(ocorrencia));
-          } else {
-            alert('Formulário inválido!');
-          }
+        $scope.adiciona = function(ocorrencia) {
+          $scope.ocorrencias.push(angular.copy(ocorrencia));
         };
       });
 
@@ -28,6 +24,26 @@
                 $element.addClass('error');
               } else {
                 $element.removeClass('error');
+              }
+            });
+          }
+        }
+      });
+
+      angular.module('app').directive('ngZumbiSubmit', function() {
+        return {
+          restrict: 'E',
+          require: '^form',
+          scope: {
+            submit: '&'
+          },
+          template: '<button class="btn btn-primary" type="submit">Salvar</button>',
+          link: function($scope, $element, $attrs, formCtrl) {
+            $element.on('click', function() {
+              if(formCtrl.$valid) {
+                $scope.submit();
+              } else {
+                alert('Formulário está inválido');
               }
             });
           }
@@ -72,7 +88,7 @@
           <label>Número de ocorrências</label>
           <input class="form-control" type="text" ng-model="ocorrencia.numero" required ng-blur>
         </div>
-        <button class="btn btn-primary" type="submit" ng-click="adiciona(ocorrencia, formZumbi.$valid)">Salvar</button>
+        <ng-zumbi-submit submit="adiciona(ocorrencia)"></ng-zumbi-submit>
       </form>
     </div>
   </body>
