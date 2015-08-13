@@ -1,4 +1,4 @@
-angular.module('app').controller('zumbisController', function($scope) {
+angular.module('app').controller('zumbisCtrl', function($scope) {
   $scope.ocorrencias = [];
 
   $scope.adiciona = function(ocorrencia) {
