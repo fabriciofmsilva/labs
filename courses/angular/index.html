@@ -13,7 +13,28 @@
           $scope.ocorrencias.push(angular.copy(ocorrencia));
         };
       });
+
+      angular.module('app').directive('ngBlur', function() {
+        return {
+          restrict: 'A',
+          require: 'ngModel',
+          link: function($scope, $element, $attrs, ngModel) {
+            $element.on('blur', function() {
+              if(ngModel.$invalid) {
+                $element.addClass('error');
+              } else {
+                $element.removeClass('error');
+              }
+            });
+          }
+        }
+      });
     </script>
+    <style>
+      .error {
+        border-color: red;
+      }
+    </style>
   </head>
   <body ng-app="app">
     <div class="container" ng-controller="zumbisController">
@@ -37,15 +58,15 @@
       <form name="formZumbi">
         <div class="form-group">
           <label>CEP</label>
-          <input class="form-control" type="text" ng-model="ocorrencia.cep" ng-pattern="/^[0-9]{5}-[0-9]{3}$/">
+          <input class="form-control" type="text" ng-model="ocorrencia.cep" ng-pattern="/^[0-9]{5}-[0-9]{3}$/" ng-blur>
         </div>
         <div class="form-group">
           <label>Bairro</label>
-          <input class="form-control" type="text" ng-model="ocorrencia.bairro" ng-minlength="4">
+          <input class="form-control" type="text" ng-model="ocorrencia.bairro" ng-minlength="4" ng-blur>
         </div>
         <div class="form-group">
           <label>Número de ocorrências</label>
-          <input class="form-control" type="text" ng-model="ocorrencia.numero" required>
+          <input class="form-control" type="text" ng-model="ocorrencia.numero" required ng-blur>
         </div>
         <button class="btn btn-primary" type="submit" ng-click="adiciona(ocorrencia)" ng-disabled="formZumbi.$invalid">Salvar</button>
       </form>
