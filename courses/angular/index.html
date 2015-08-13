@@ -9,8 +9,12 @@
       angular.module('app').controller('zumbisController', function($scope) {
         $scope.ocorrencias = [];
 
-        $scope.adiciona = function(ocorrencia) {
-          $scope.ocorrencias.push(angular.copy(ocorrencia));
+        $scope.adiciona = function(ocorrencia, formIsValid) {
+          if(formIsValid) {
+            $scope.ocorrencias.push(angular.copy(ocorrencia));
+          } else {
+            alert('Formulário inválido!');
+          }
         };
       });
 
@@ -41,7 +45,7 @@
       <div class="well">
         <h1>Ocorrências de zumbis</h1>
       </div>
-      <table ng-if="ocorrencias.length > 0">
+      <table class="table" ng-if="ocorrencias.length > 0">
         <thead>
           <th>CEP</th>
           <th>Bairro</th>
@@ -68,7 +72,7 @@
           <label>Número de ocorrências</label>
           <input class="form-control" type="text" ng-model="ocorrencia.numero" required ng-blur>
         </div>
-        <button class="btn btn-primary" type="submit" ng-click="adiciona(ocorrencia)" ng-disabled="formZumbi.$invalid">Salvar</button>
+        <button class="btn btn-primary" type="submit" ng-click="adiciona(ocorrencia, formZumbi.$valid)">Salvar</button>
       </form>
     </div>
   </body>
