@@ -10,7 +10,7 @@ public class TestaMenorPreco {
       new Produto("Fusca", 17000)
     };
 
-    int maisBarato = buscaMenor(produtos);
+    int maisBarato = buscaMenor(produtos, 0, 4);
 
     System.out.println(maisBarato);
     System.out.println("O carro " + produtos[maisBarato].getNome()
@@ -18,10 +18,9 @@ public class TestaMenorPreco {
                         + produtos[maisBarato].getPreco());
   }
 
-  private static int buscaMenor(Produto[] produtos) {
-    int maisBarato = 0;
-    int termino = produtos.length - 1;
-    for(int atual = 0; atual <= termino; atual++) {
+  private static int buscaMenor(Produto[] produtos, int inicio, int termino) {
+    int maisBarato = inicio;
+    for(int atual = inicio; atual <= termino; atual++) {
       if(produtos[atual].getPreco() < produtos[maisBarato].getPreco()) {
         maisBarato = atual;
       }
@@ -29,10 +28,9 @@ public class TestaMenorPreco {
     return maisBarato;
   }
 
-  private static int buscaMaior(Produto[] produtos) {
-    int maisCaro = 0;
-    int termino = produtos.length - 1;
-    for(int atual = 0; atual <= termino; atual++) {
+  private static int buscaMaior(Produto[] produtos, int inicio,  int termino) {
+    int maisCaro = inicio;
+    for(int atual = inicio; atual <= termino; atual++) {
       if(produtos[atual].getPreco() > produtos[maisCaro].getPreco()) {
         maisCaro = atual;
       }
