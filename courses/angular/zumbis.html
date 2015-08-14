@@ -19,7 +19,7 @@
   <form name="formZumbi">
     <div class="form-group">
       <label>CEP</label>
-      <input class="form-control" type="text" ng-model="ocorrencia.cep" ng-pattern="/^[0-9]{5}-[0-9]{3}$/" ng-blur>
+      <input class="form-control" type="text" ng-model="ocorrencia.cep" ng-cep-validator ng-blur>
     </div>
     <div class="form-group">
       <label>Bairro</label>
