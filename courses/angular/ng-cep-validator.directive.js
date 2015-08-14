@@ -1,4 +1,4 @@
-angular.module('app').directive('ngCepValidator', function($http) {
+angular.module('app').directive('ngCepValidator', function($http, $rootScope) {
   return {
     restrict: 'A',
     require: 'ngModel',
@@ -8,7 +8,7 @@ angular.module('app').directive('ngCepValidator', function($http) {
           if(value.match(/^[0-9]{5}-[0-9]{3}$/)) {
             $http.get('http://api.postmon.com.br/v1/cep/' + value)
               .then(function(response) {
-                console.log(response);
+                $rootScope.$broadcast('cep', response.data);
               });
             ngModel.$setValidity($attrs.ngModel, true);
           } else {
