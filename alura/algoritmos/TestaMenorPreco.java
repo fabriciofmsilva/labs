@@ -20,7 +20,8 @@ public class TestaMenorPreco {
 
   private static int buscaMenor(Produto[] produtos) {
     int maisBarato = 0;
-    for(int atual = 0; atual <= 4; atual++) {
+    int termino = produtos.length - 1;
+    for(int atual = 0; atual <= termino; atual++) {
       if(produtos[atual].getPreco() < produtos[maisBarato].getPreco()) {
         maisBarato = atual;
       }
@@ -30,7 +31,8 @@ public class TestaMenorPreco {
 
   private static int buscaMaior(Produto[] produtos) {
     int maisCaro = 0;
-    for(int atual = 0; atual <= 4; atual++) {
+    int termino = produtos.length - 1;
+    for(int atual = 0; atual <= termino; atual++) {
       if(produtos[atual].getPreco() > produtos[maisCaro].getPreco()) {
         maisCaro = atual;
       }
