@@ -10,7 +10,7 @@ public class TestaOrdenacao {
       new Produto("Fusca", 17000)
     };
 
-    for(int atual = 0; atual < produtos.length; atual++) {
+    for(int atual = 0; atual < produtos.length - 1; atual++) {
       int menor = buscaMenor(produtos, atual, produtos.length - 1);
       Produto produtoAtual = produtos[atual];
       Produto produtoMenor = produtos[menor];
