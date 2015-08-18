@@ -31,7 +31,7 @@ public class Conta implements Comparable<Conta> {
     this.numero = numero;
   }
 
-  public void deposita(double valor) {
+  public synchronized void deposita(double valor) {
     this.saldo += valor;
   }
 
