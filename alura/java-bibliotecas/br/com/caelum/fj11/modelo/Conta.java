@@ -2,11 +2,11 @@ package br.com.caelum.fj11.modelo;
 
 import br.com.caelum.fj11.excecao;
 
-public class Conta {
+public class Conta implements Comparable<Conta> {
   private double saldo;
   private String titular;
   private int agencia;
-  private int numero;
+  protected int numero;
 
   /**
    * realiza um saque na conta dado o valor passado
@@ -21,6 +21,14 @@ public class Conta {
     else {
       throw new SaldoInsuficienteException(saldo);
     }
+  }
+
+  public int getNumero() {
+    return this.numero;
+  }
+
+  public void setNumero(Int numero) {
+    this.numero = numero;
   }
 
   public void deposita(double valor) {
@@ -40,17 +48,38 @@ public class Conta {
   }
 
   @Override
-  toString String toString() {
+  public String toString() {
     return "Conta com saldo " + saldo;
   }
 
   @Override
-  toString boolean equals(Obejct obj) {
-    if(!(obj instanceof Conta)) {
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
       return false;
-    }
+    if (getClass() != obj.getClass())
+      return false;
+    Conta other = (Conta) obj;
+    if (numero != other.numero)
+      return false;
+    return true;
+  }
 
-    Conta outra = (Conta) obj;
-    return outra.saldo == this.saldo;
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    long temp;
+    temp = Double.doubleToLongBits(saldo);
+    result = prime * result + (int) (temp ^ (temp >>> 32));
+    return result;
+  }
+
+  @Override
+  public int compareTo(Conta outra) {
+    if(this.saldo < outra.saldo) return -1;
+    if(this.saldo > outra.saldo) return 1;
+    return 0;
   }
 }
