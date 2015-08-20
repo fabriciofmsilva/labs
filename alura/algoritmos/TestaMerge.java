@@ -51,6 +51,11 @@ public class TestaMerge {
 
     }
 
+    while(atualDoAlberto < notasDoAlberto.length) {
+      resultado[atual] = notasDoAlberto[atualDoAlberto];
+      atualDoAlberto++;
+    }
+
     return resultado;
   }
 
