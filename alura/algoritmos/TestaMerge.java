@@ -19,7 +19,7 @@ public class TestaMerge {
     Nota[] rank = junta(notasDoMauricio, notasDoAlberto);
 
     for(Nota nota : rank) {
-      System.out.println(nota.getAluno());
+      System.out.println(nota.getAluno() + " " + nota.getValor());
     }
 
   }
