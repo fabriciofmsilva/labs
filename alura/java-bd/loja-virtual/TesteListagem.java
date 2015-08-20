@@ -5,7 +5,7 @@ import java.sql.SQLException;
 public class TestaListagem {
 
   public static void main(String[] args) throws SQLException {
-    Connection connection = DriverManager.getConnection("jdbc:hsqldb://localhost/loja-virtual", "SA", "");
+    Connection connection = Database.getConnection();
 
     Statement statement = connection.createStatemet();
     boolean resultado = statement.execute("select * from Produto");
