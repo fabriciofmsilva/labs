@@ -24,8 +24,34 @@ public class TestaMerge {
 
   }
 
-  private static junta(Nota[] notas1, Nota[] notas2) {
-    return null;
+  private static Nota[] junta(Nota[] notasDoMauricio, Nota[] notasDoAlberto) {
+    int total = notasDoMauricio.length + notasDoAlberto.length;
+    Nota[] resultado = new Nota[total];
+
+    int atualDoMauricio = 0;
+    int atualDoAlberto = 0;
+    int atual = 0;
+
+    while(atualDoMauricio < notasDoMauricio.length &&
+          atualDoAlberto < notasDoAlberto.length) {
+
+      Nota nota1 = notasDoMauricio[atualDoMauricio];
+      Nota nota2 = notasDoAlberto[atualDoAlberto];
+
+      if(nota1.getValor() < nota2.getValor()) {
+        // mauricio
+        resultado[atual] = nota1;
+        atualDoMauricio++;
+      } else {
+        // alberto
+        resultado[atual] = nota2;
+        atualDoAlberto++;
+      }
+      atual++;
+
+    }
+
+    return resultado;
   }
 
 }
