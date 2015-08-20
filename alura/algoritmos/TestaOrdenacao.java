@@ -11,12 +11,12 @@ public class TestaOrdenacao {
     };
 
     // selectionSort(produtos, produtos.length);
-    novoSort(produtos, produtos.length);
+    insertionSort(produtos, produtos.length);
     imprime(produtos);
 
   }
 
-  private static void novoSort(Produto[] produtos, int quantidadeDeElementos) {
+  private static void insertionSort(Produto[] produtos, int quantidadeDeElementos) {
     for(int atual = 1; atual < quantidadeDeElementos; atual++) {
       int analise = atual;
       while(analise > 0 && produtos[analise].getPreco() < produtos[analise-1].getPreco()) {
