@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+char** mapa;
+int linhas;
+int colunas;
+
 int main() {
-  // matriz de 5 x 10
-  char mapa[5][10+1];
 
   FILE* f;
   f = fopen("mapa.txt", "r");
@@ -12,20 +14,27 @@ int main() {
     exit(1);
   }
 
+  fscanf(f, "%d %d", &linhas, &colunas);
+  printf("linhas %d colunas %d\n", linhas, colunas);
+
+  mapa = malloc(sizeof(char*) * linhas);
+  for(int i = 0; i < linhas; i++) {
+    mapa[i] = malloc(sizeof(char) * (colunas + 1));
+  }
+
   for(int i = 0; i < 5; i++) {
     fscanf(f, "%s", mapa[i]);
   }
-
-  // for(int i = 0; i < 5; i++) {
-  //   for(int j = 0; j < 10; j++) {
-  //     printf("%c", mapa[i][j]);
-  //   }
-  //   printf("\n");
-  // }
 
   for(int i = 0; i < 5; i++) {
     printf("%s\n", mapa[i]);
   }
 
   fclose(f);
+
+  for(int i = 0; i < linhas; i++) {
+    free(mapa[i]);
+  }
+  free(mapa);
+
 }
