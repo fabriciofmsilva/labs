@@ -18,14 +18,18 @@ namespace CaixaEletronico
 
     private void button1_Click(object sender, EventArgs e)
     {
-      int numeroDaConta;
-      numeroDaConta = 1;
-
       double saldo = 100.0;
       double valor = 10.0;
-      double saldoAposSaque = saldo - valor;
-
-      MessageBox.Show("O saldo atual é: " + saldoAposSaque);
+      bool podeSacar = (valor <= saldo) && (valor >= 0);
+      if(podeSacar)
+      {
+        saldo = saldo - valor;
+        MessageBox.Show("Saque realizado com sucesso");
+      }
+      else
+      {
+        MessageBox.Show("Saldo insuficiente");
+      }
     }
   }
 }
