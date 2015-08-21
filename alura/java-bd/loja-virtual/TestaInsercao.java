@@ -5,14 +5,32 @@ import java.sql.Statement;
 public class TestaInsercao {
 
   public static void main(String[] args) throws SQLException {
-    String nome = "Notebook";
-    String descricao = "  Notebook i5";
 
-    Connection connection = Database.getConnection();
+    try(Connection connection = Database.getConnection()) {
+      connection.setAutoCommit(false);
+      String sql = "insert into Produto (nome, descricao) values(?, ?)";
 
-    String sql = "insert into Produto (nome, descricao) values(?, ?)";
-    PreparedStatement statement = connection.prepareStatement(sql,
-        Statement.RETURN_GENERATE_KEYS);
+      try(PreparedStatement statement = connection.prepareStatement(sql,
+            Statement.RETURN_GENERATE_KEYS)) {
+        adiciona("TV LCD", "32 polegadas", statement);
+        adiciona("Blueray", "Full HDMI", statement);
+        connection.commit();
+      } catch(Exception ex) {
+        ex.printStackTrace();
+        connection.rollback();
+        System.out.println("Rollback efetuado");
+      }
+
+    }
+
+  }
+
+  private static void adiciona(String nome, String descricao, PreparedStatement statement) throws SQLException {
+
+    if(nome.equals("Blueray")) {
+      throw new IllegalArgumentException("Problema ocorrido");
+    }
+
     statement.setString(1, nome);
     statement.setString(2, descricao);
 
@@ -26,8 +44,6 @@ public class TestaInsercao {
     }
 
     resultSet.close();
-    statement.close();
-    connection.close();
   }
 
 }
