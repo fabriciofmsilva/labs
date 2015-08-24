@@ -18,18 +18,18 @@ namespace CaixaEletronico
 
     private void button1_Click(object sender, EventArgs e)
     {
-      double saldo = 100.0;
-      double valor = 10.0;
-      bool podeSacar = (valor <= saldo) && (valor >= 0);
-      if(podeSacar)
+      double valorInvestido = 2000.0;
+      int i = 1;
+      while(i <= 12)
       {
-        saldo = saldo - valor;
-        MessageBox.Show("Saque realizado com sucesso");
+        valorInvestido *= 1.01;
+        i += 1;
       }
-      else
+      for(int i = 1; i <= 12; i++)
       {
-        MessageBox.Show("Saldo insuficiente");
+        valorInvestido *= 1.01;
       }
+      MessageBox.Show("O valor investido agora é: " + valorInvestido);
     }
   }
 }
