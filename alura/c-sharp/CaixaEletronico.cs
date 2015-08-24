@@ -18,18 +18,17 @@ namespace CaixaEletronico
 
     private void button1_Click(object sender, EventArgs e)
     {
-      double valorInvestido = 2000.0;
-      int i = 1;
-      while(i <= 12)
-      {
-        valorInvestido *= 1.01;
-        i += 1;
-      }
-      for(int i = 1; i <= 12; i++)
-      {
-        valorInvestido *= 1.01;
-      }
-      MessageBox.Show("O valor investido agora é: " + valorInvestido);
+      Conta umaConta = new Conta();
+      umaConta.numero = 1;
+      umaConta.titular = "Joaquim José";
+      umaConta.saldo = 2000.0;
+
+      Conta outraConta = new Conta();
+      outraConta.numero = 2;
+      outraConta.titular = "Silva Xavier";
+      outraConta.saldo = 1500.0;
+
+      MessageBox.Show("O titular da conta 1 é: " + umaConta.titular);
     }
   }
 }
