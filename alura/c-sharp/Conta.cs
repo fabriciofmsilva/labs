@@ -12,5 +12,21 @@ namespace CaixaEletronico
     public string titular;
 
     public double saldo;
+
+    public void Saca(double valor)
+    {
+      this.saldo -= valor;
+    }
+
+    public void Deposita(double valor)
+    {
+      this.saldo += valor;
+    }
+
+    public void Transfere(double valor, Conta destino)
+    {
+      this.Saca(valor);
+      destino.Deposita(valor);
+    }
   }
 }

@@ -18,17 +18,15 @@ namespace CaixaEletronico
 
     private void button1_Click(object sender, EventArgs e)
     {
-      Conta umaConta = new Conta();
-      umaConta.numero = 1;
-      umaConta.titular = "Joaquim José";
-      umaConta.saldo = 2000.0;
+      Conta guilherme = new Conta();
+      Conta mauricio = new Conta();
 
-      Conta outraConta = new Conta();
-      outraConta.numero = 2;
-      outraConta.titular = "Silva Xavier";
-      outraConta.saldo = 1500.0;
+      guilherme.saldo = 1500.00;
+      mauricio.saldo = 2000.00;
 
-      MessageBox.Show("O titular da conta 1 é: " + umaConta.titular);
+      guilherme.Transfere(200.0, mauricio);
+      MessageBox.Show("O saldo atual é: " + guilherme.saldo);
+      MessageBox.Show("O saldo do Maurício é: " + mauricio.saldo);
     }
   }
 }
