@@ -9,9 +9,9 @@ namespace CaixaEletronico
   {
     public int numero;
 
-    public string titular;
-
     public double saldo;
+
+    public Cliente cliente;
 
     public void Saca(double valor)
     {
