@@ -11,6 +11,14 @@ int acabou() {
 }
 
 void move(char direcao) {
+
+  if(direcao != 'a' &&
+     direcao != 'w' &&
+     direcao != 'd' &&
+     direcao != 'd') {
+    return;
+  }
+
   m.matriz[heroi.x][heroi.y] = '.';
 
   switch(direcao) {
