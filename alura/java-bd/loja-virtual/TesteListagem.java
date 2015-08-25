@@ -5,25 +5,29 @@ import java.sql.SQLException;
 public class TestaListagem {
 
   public static void main(String[] args) throws SQLException {
-    Connection connection = Database.getConnection();
+    Database database = new Database();
 
-    Statement statement = connection.createStatemet();
-    boolean resultado = statement.execute("select * from Produto");
-    ResultSet resultSet = statement.getResultSet();
-    while(resultSet.next()) {
-      int id = resultSet.getInt("id");
-      String nome = resultSet.getString("nome");
-      String descricao = resultSet.getString("descricao");
+    for(int i = 0; i < 100; i++) {
+      Connection connection = database.getConnection();
 
-      System.out.println(id);
-      System.out.println(nome);
-      System.out.println(descricao);
+      Statement statement = connection.createStatemet();
+      boolean resultado = statement.execute("select * from Produto");
+      ResultSet resultSet = statement.getResultSet();
+      while(resultSet.next()) {
+        int id = resultSet.getInt("id");
+        String nome = resultSet.getString("nome");
+        String descricao = resultSet.getString("descricao");
+
+        System.out.println(id);
+        System.out.println(nome);
+        System.out.println(descricao);
+      }
+      resultSet.close();
+      statement.close();
+
+      System.out.println(resultado);
+
+      connection.close();
     }
-    resultSet.close();
-    statement.close();
-
-    System.out.println(resultado);
-
-    connection.close();
   }
 }

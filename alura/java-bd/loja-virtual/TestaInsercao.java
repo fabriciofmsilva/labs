@@ -6,7 +6,7 @@ public class TestaInsercao {
 
   public static void main(String[] args) throws SQLException {
 
-    try(Connection connection = Database.getConnection()) {
+    try(Connection connection = new Database.getConnection()) {
       connection.setAutoCommit(false);
       String sql = "insert into Produto (nome, descricao) values(?, ?)";
 
