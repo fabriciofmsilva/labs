@@ -19,15 +19,13 @@ namespace CaixaEletronico
     private void button1_Click(object sender, EventArgs e)
     {
       Conta conta = new Conta();
+      conta.Deposita(1000.0);
 
-      Cliente cliente = new Cliente();
-      conta.cliente = cliente;
-
-      cliente.nome = "victor";
-      conta.cliente.rg = "12345678-9";
-
-      MessageBox.Show(conta.cliente.nome);
-      MessageBox.Show(cliente.rg);
+      conta.Saca(100.0);
+      conta.Saca(200.0);
+      conta.Titular = new Cliente();
+      conta.Titual.nome = "victor";
+      MessageBox.Show("O saldo atual é: " + conta.Saldo);
     }
   }
 }

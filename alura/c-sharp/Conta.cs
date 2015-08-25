@@ -7,22 +7,20 @@ namespace CaixaEletronico
 {
   class Conta
   {
-    public int numero;
+    public int Numero { get; set; }
 
-    public double saldo;
+    public double Saldo { get; private set; }
 
-    public Cliente cliente;
+    public Cliente Titular { get; set; }
 
     public void Saca(double valor)
     {
-      if(this.saldo >= valor) {
-        this.saldo -= valor;
-      }
+      this.Saldo -= valor + 0.1;
     }
 
     public void Deposita(double valor)
     {
-      this.saldo += valor;
+      this.Saldo += valor;
     }
 
     public void Transfere(double valor, Conta destino)
