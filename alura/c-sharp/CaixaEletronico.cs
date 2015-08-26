@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace CaixaEletronico
+namespace CaixaEletronicoWindowsForm
 {
   public partial class Form1 : Form
   {
@@ -16,13 +16,16 @@ namespace CaixaEletronico
       InitializeComponent();
     }
 
-    private void button1_Click(object sender, EventArgs e)
+    private void Form1_Load(object sender, EventArgs e)
     {
-      Cliente cliente = new Cliente("Guilherme Silveira");
-
       Conta conta = new Conta();
+      conta.Titular = "Victor";
+      conta.Deposita(250.0);
+      conta.Numero = 1;
 
-      MessageBox.Show(cliente.Nome);
+      textoTitular.Text = conta.Titular;
+      textoSaldo.Text = Convert.ToString(conta.Saldo);
+      textoNumero.Text = Convert.ToString(conta.Numero);
     }
   }
 }
