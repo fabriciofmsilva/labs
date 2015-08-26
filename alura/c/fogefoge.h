@@ -8,3 +8,5 @@ int ehdirecao(char direcao);
 int acabou();
 
 void fantasmas();
+int praondefantasmavai(int xatual, int yatual,
+                       int* xdestino, int* ydestino);
