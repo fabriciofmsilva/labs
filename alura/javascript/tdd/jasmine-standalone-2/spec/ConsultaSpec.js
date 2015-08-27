@@ -1,47 +1,56 @@
 describe("Consulta", function() {
 
-  it("nao deve cobrar nada se a consulta for um retorno", function() {
+  var guilherme;
 
-    var guilherme = new Paciente("Guilherme", 28, 72, 1.80);
-    var consulta = new Consulta(guilherme, [], true, true);
+  beforeEach(function () {
+    guilherme = new PacienteBuilder().constroi();
+  });
 
-    expect(consulta.preco()).toEqual(0);
+  describe("consultas do tipo retorno", function() {
+
+    it("nao deve cobrar nada se a consulta for um retorno", function() {
+
+      var consulta = new Consulta(guilherme, [], true, true);
+
+      expect(consulta.preco()).toEqual(0);
+
+    });
 
   });
 
-  it("deve cobrar 25 por cada procedimento comum", function() {
+  describe("consultas com procedimentos", function() {
 
-    var guilherme = new Paciente("Guilherme", 28, 72, 1.80);
-    var consulta = new Consulta(guilherme, ['proc1', 'proc2'], false, false);
+    it("deve cobrar 25 por cada procedimento comum", function() {
 
-    expect(consulta.preco()).toEqual(50);
+      var consulta = new Consulta(guilherme, ['proc1', 'proc2'], false, false);
 
-  });
+      expect(consulta.preco()).toEqual(50);
 
-  it("deve cobrar preco especifico dependendo do procedimento", function() {
+    });
 
-    var guilherme = new Paciente("Guilherme", 28, 72, 1.80);
-    var consulta = new Consulta(guilherme, ['procedimento-comum', 'raio-x', 'procedimento-comum', 'gesso'], false, false);
+    it("deve cobrar preco especifico dependendo do procedimento", function() {
 
-    expect(consulta.preco()).toEqual(25 + 55 + 25 + 32);
+      var consulta = new Consulta(guilherme, ['procedimento-comum', 'raio-x', 'procedimento-comum', 'gesso'], false, false);
 
-  });
+      expect(consulta.preco()).toEqual(25 + 55 + 25 + 32);
 
-  it("deve dobrar o preco da consulta particular", function() {
+    });
 
-    var guilherme = new Paciente("Guilherme", 28, 72, 1.80);
-    var consulta = new Consulta(guilherme, ['proc1', 'proc2'], true, false);
+    it("deve dobrar o preco da consulta particular", function() {
 
-    expect(consulta.preco()).toEqual(100);
+      var consulta = new Consulta(guilherme, ['proc1', 'proc2'], true, false);
 
-  });
+      expect(consulta.preco()).toEqual(100);
 
-  it("deve dobrar o preco da consulta particular mesmo com procedimentos especiais", function() {
+    });
 
-    var guilherme = new Paciente("Guilherme", 28, 72, 1.80);
-    var consulta = new Consulta(guilherme, ['procedimento-comum', 'raio-x', 'procedimento-comum', 'gesso'], true, false);
+    it("deve dobrar o preco da consulta particular mesmo com procedimentos especiais", function() {
 
-    expect(consulta.preco()).toEqual(50 + 110 + 50 + 64);
+      var consulta = new Consulta(guilherme, ['procedimento-comum', 'raio-x', 'procedimento-comum', 'gesso'], true, false);
+
+      expect(consulta.preco()).toEqual(50 + 110 + 50 + 64);
+
+    });
 
   });
 
