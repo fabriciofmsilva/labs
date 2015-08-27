@@ -13,5 +13,9 @@ namespace CaixaEletronico
       this.Saldo -= valor + 0.1;
     }
 
+    public void CalculaInvestimento()
+    {
+    }
+
   }
 }
