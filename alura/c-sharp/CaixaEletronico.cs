@@ -18,16 +18,17 @@ namespace CaixaEletronicoWindowsForm
 
     private void Form1_Load(object sender, EventArgs e)
     {
-      Conta c1 = new Conta();
-      c1.Deposita(10);
-      ContaPoupanca c2 = new ContaPoupanca;
-      c2.Deposita(100);
+      Conta[] contas = new Conta[2];
+      contas[0] = new Conta();
+      contas[1] = new ContaPoupanca();
 
-      TotalizadorDeContas t = new TotalizadorDeContas();
-      t.adiciona(c1);
-      t.adiciona(c2);
+      contas[0].Deposita(10);
+      contas[1].Deposita(100);
 
-      MessageBox.Show("O total é: " + t.Total);
+      foreach(Conta conta in contas)
+      {
+        MessageBox("O saldo da conta é: " + conta.Saldo);
+      }
     }
   }
 }
