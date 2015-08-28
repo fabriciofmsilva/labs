@@ -11,6 +11,7 @@ namespace CaixaEletronicoWindowsForm
 {
   public partial class Form1 : Form
   {
+    Conta[] contas;
     public Form1()
     {
       InitializeComponent();
@@ -18,17 +19,29 @@ namespace CaixaEletronicoWindowsForm
 
     private void Form1_Load(object sender, EventArgs e)
     {
-      Conta[] contas = new Conta[2];
+      contas = new Conta[2];
       contas[0] = new Conta();
-      contas[1] = new ContaPoupanca();
+      contas[0].Numero = 1;
+      contas[0].Titular = "Victor";
 
-      contas[0].Deposita(10);
-      contas[1].Deposita(100);
+      contas[1] = new Conta();
+      contas[1].Numero = 2;
+      contas[1].Titular = "Mario";
 
       foreach(Conta conta in contas)
       {
-        MessageBox("O saldo da conta é: " + conta.Saldo);
+        comboContas.Items.Add(conta.Titular);
       }
+    }
+
+    private void comboContas_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      int indiceSelecionado = comboContas.SelectedIndex;
+      Conta contaSeleciona = contas[indiceSelecionado];
+
+      textoTitular.Text = contaSeleciona.Titular;
+      textoNumero.Text = Convert.ToString(contaSeleciona.Numero);
+      textoSaldo.Text = Convert.ToString(contaSeleciona.Saldo);
     }
   }
 }
