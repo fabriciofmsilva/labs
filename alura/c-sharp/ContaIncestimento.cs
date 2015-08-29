@@ -5,21 +5,17 @@ using System.Text;
 
 namespace CaixaEletronico
 {
-  class ContaPoupanca : Conta, Tributavel
+  class ContaInvestimento : Conta, Tributavel
   {
 
     public override void Saca(double valor)
     {
-      this.Saldo -= valor + 0.1;
-    }
-
-    public void CalculaInvestimento()
-    {
+      this.Saldo -= valor;
     }
 
     public double CalculaTributo()
     {
-      return this.Saldo * 0.02;
+      return this.Saldo * 0.03;
     }
 
   }

@@ -18,17 +18,16 @@ namespace OiMundo
 
     private void button1_Click(Object sender, EventArgs e)
     {
-      ContaCorrente contaCorrente = new ContaCorrente();
-      ContaPoupanca contaPoupanca = new ContaPoupanca();
+      ContaPoupanca cp = new ContaPoupanca();
+      ContaInvestimento ci = new ContaInvestimento();
+      cp.Deposita(10);
+      ci.Deposita(100);
 
-      contaCorrente.Deposita(100);
-      contaPoupanca.Deposita(100);
+      TotalizadorDeTributos t = new TotalizadorDeTributos();
+      t.Acumula(cp);
+      t.Acumula(ci);
 
-      Conta conta = contaPoupanca;
-
-      contaCorrente.Saca(10);
-
-      MessageBox.Show("Saldo atual: " + contaCorrente.Saldo);
+      MessageBox.Show("Tributos: " t.Total);
     }
   }
 }
