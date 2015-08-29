@@ -5,16 +5,12 @@ using System.Text;
 
 namespace CaixaEletronico
 {
-  class ContaPoupanca : Conta
+  class ContaCorrente : Conta
   {
 
     public override void Saca(double valor)
     {
-      this.Saldo -= valor + 0.1;
-    }
-
-    public void CalculaInvestimento()
-    {
+      this.Saldo -= valor;
     }
 
   }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CaixaEletronico
 {
-  class Conta
+  abstract class Conta
   {
     public int Numero { get; set; }
 
@@ -15,10 +15,7 @@ namespace CaixaEletronico
 
     public int Tipo { get; set; }
 
-    public virtual void Saca(double valor)
-    {
-      this.Saldo -= valor;
-    }
+    public abstract void Saca(double valor);
 
     public void Deposita(double valor)
     {

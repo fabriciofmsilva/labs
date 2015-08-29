@@ -18,15 +18,17 @@ namespace OiMundo
 
     private void button1_Click(Object sender, EventArgs e)
     {
-      var guilherme = new Cliente("Guilherme");
-      if(guilherme.PodeAbrirConta())
-      {
-        MessageBox.Show("Pode Abrir Nova Conta");
-      }
-      else
-      {
-        MessageBox.Show("Não Pode Abrir Nova Conta");
-      }
+      ContaCorrente contaCorrente = new ContaCorrente();
+      ContaPoupanca contaPoupanca = new ContaPoupanca();
+
+      contaCorrente.Deposita(100);
+      contaPoupanca.Deposita(100);
+
+      Conta conta = contaPoupanca;
+
+      contaCorrente.Saca(10);
+
+      MessageBox.Show("Saldo atual: " + contaCorrente.Saldo);
     }
   }
 }
