@@ -23,7 +23,7 @@ public class TestaIntercalaEmUmArray {
   }
 
   private static Nota[] intercala(Nota[] notas, int inicial, int miolo, int termino) {
-    Nota[] resultado = new Nota[notas.length];
+    Nota[] resultado = new Nota[termino - inicial];
     int atual = 0;
     int atual1 = inicial;
     int atual2 = miolo;
@@ -52,7 +52,11 @@ public class TestaIntercalaEmUmArray {
       atual++;
     }
 
-    return resultado;
+    for(int contador = 0; contador < atual; contador++) {
+      notas[inicial + contador] = resultado[contador];
+    }
+
+    return notas;
   }
 
 }
