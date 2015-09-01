@@ -7,7 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace CaixaEletronicoWindowsForm
+using Caelum.CaixaEletronico.Contas;
+using Caelum.CaixaEletronico.Usuarios;
+
+namespace Caelum.CaixaEletronico
 {
   public partial class Form1 : Form
   {
