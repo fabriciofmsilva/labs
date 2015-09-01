@@ -18,11 +18,23 @@ namespace OiMundo
 
     private void button1_Click(Object sender, EventArgs e)
     {
-      ContaCorrente c = new ContaCorrente();
-      MessageBox.Show("Total: " + ContaCorrente.TotalDeContas);
-      ContaCorrente c2 = new ContaCorrente();
-      MessageBox.Show("Total: " + ContaCorrente.TotalDeContas);
-      MessageBox.Show("Próximo " + ContaCorrente.ProximoNumero());
+      double valorSaque = Convert.ToDouble(textoValorSaque.Text);
+
+      try
+      {
+        this.conta.Saca(valorSaque);
+        MessageBox.Show("Dinheiro Liberado");
+      }
+      catch (SaldoInsuficienteException exception)
+      {
+        MessageBox.Show("Saldo Insuficiente");
+      }
+      catch (ArgumentException)
+      {
+        MessageBox.Show("Valor inválido para o saque");
+      }
+
+      MostraConta();
     }
   }
 }

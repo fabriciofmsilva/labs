@@ -15,7 +15,22 @@ namespace CaixaEletronico
 
     public int Tipo { get; set; }
 
-    public abstract void Saca(double valor);
+    public void Saca(double valor)
+    {
+      if(valor < 0)
+      {
+        throw new ArgumentException();
+      }
+
+      if(this.Saldo >= valor)
+      {
+        this.Saldo -= valor;
+      }
+      else
+      {
+        throw new SaldoInsuficienteException();
+      }
+    }
 
     public void Deposita(double valor)
     {
