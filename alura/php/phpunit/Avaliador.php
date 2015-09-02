@@ -1,7 +1,7 @@
 <?php
   class Avaliador {
 
-    public $maiorValor = -INF;
+    public $maiorValor = -9999;
     public $menorValor = INF;
     public $media = 0;
 
@@ -16,7 +16,7 @@
         }
         $total += $lance->getValor();
       }
-      $media = $total / count($leião->getLances());
+      $this->media = $total / count($leilao->getLances());
     }
 
     public function getMaiorLance() {
