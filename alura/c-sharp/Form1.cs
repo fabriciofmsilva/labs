@@ -18,23 +18,14 @@ namespace OiMundo
 
     private void button1_Click(Object sender, EventArgs e)
     {
-      double valorSaque = Convert.ToDouble(textoValorSaque.Text);
+      Cliente cliente1 = new Cliente("Guilherme");
+      cliente1.Rg = "1234-5";
 
-      try
-      {
-        this.conta.Saca(valorSaque);
-        MessageBox.Show("Dinheiro Liberado");
-      }
-      catch (SaldoInsuficienteException exception)
-      {
-        MessageBox.Show("Saldo Insuficiente");
-      }
-      catch (ArgumentException)
-      {
-        MessageBox.Show("Valor inválido para o saque");
-      }
+      Cliente cliente2 = new Cliente("Guilherme");
+      cliente2.Rg = "1234-5";
 
-      MostraConta();
+      cliente1.Equals(cliente2);
+      cliente1.ToString();
     }
   }
 }

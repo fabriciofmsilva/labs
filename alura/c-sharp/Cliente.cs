@@ -31,5 +31,16 @@ namespace Caelum.CaixaEletronico.Usuarios
     {
       return this.idade >= 18;
     }
+
+    public override bool Equals(object obj)
+    {
+      Cliente cliente = (Cliente)obj;
+      return this.Rg.Equals(cliente.Rg);
+    }
+
+    public override string ToString()
+    {
+      return "Cliente Nome: " + this.nome + " Rg: " + this.Rg;
+    }
   }
 }
