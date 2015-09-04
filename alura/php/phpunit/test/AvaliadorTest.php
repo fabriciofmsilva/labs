@@ -1,8 +1,6 @@
 <?php
-  require "Usuario.php";
-  require "Lance.php";
-  require "Leilao.php";
-  require "Avaliador.php";
+  require_once "Avaliador.php";
+  require_once "ConstrutorDeLeilao.php";
 
   class AvaliadorTest extends PHPUnit_Framework_TestCase {
 
@@ -13,15 +11,17 @@
     }
 
     public function testDeveAceitarLancesEmOrdemDecrescente() {
-      $leilao = new Leilao("Playstation 4");
 
       $renan = new Usuario("Renan");
       $caio = new Usuario("Caio");
       $felipe = new Usuario("Felipe");
 
-      $leilao->propoe(new Lance($renan, 400));
-      $leilao->propoe(new Lance($caio, 350));
-      $leilao->propoe(new Lance($felipe, 250));
+      $construtor = new ConstrutorDeLeilao();
+      $leilao = $construtor->para("Playstation 4")
+                  ->lance($renan, 400)
+                  ->lance($caio, 350)
+                  ->lance($felipe, 250)
+                  ->constroi();
 
       $this->leiloeiro->avalia($leilao);
 
@@ -32,15 +32,17 @@
     }
 
     public function testDeveAceitarLancesEmOrdemCrescente() {
-      $leilao = new Leilao("Playstation 4");
 
       $renan = new Usuario("Renan");
       $caio = new Usuario("Caio");
       $felipe = new Usuario("Felipe");
 
-      $leilao->propoe(new Lance($felipe, 250));
-      $leilao->propoe(new Lance($caio, 350));
-      $leilao->propoe(new Lance($renan, 400));
+      $construtor = new ConstrutorDeLeilao();
+      $leilao = $construtor->para("Playstation 4")
+                  ->lance($felipe, 250)
+                  ->lance($caio, 350)
+                  ->lance($renan, 400)
+                  ->constroi();
 
       $this->leiloeiro->avalia($leilao);
 
@@ -106,15 +108,22 @@
     }
 
     public function testDeveEncontrarOsTresMaioresLances() {
-      $leilao = new Leilao("Playstation 4");
+      // $leilao = new Leilao("Playstation 4");
 
       $renan = new Usuario("Renan");
       $mauricio = new Usuario("Mauricio");
 
-      $leilao->propoe(new Lance($renan, 200));
-      $leilao->propoe(new Lance($mauricio, 300));
-      $leilao->propoe(new Lance($renan, 400));
-      $leilao->propoe(new Lance($mauricio, 500));
+      $construtor = new ConstrutorDeLeilao();
+      $leilao = $construtor->para("Playstation 4")
+                  ->lance($renan, 200)
+                  ->lance($mauricio, 300)
+                  ->lance($renan, 400)
+                  ->lance($mauricio, 500)
+                  ->constroi();
+      // $leilao->propoe(new Lance($renan, 200));
+      // $leilao->propoe(new Lance($mauricio, 300));
+      // $leilao->propoe(new Lance($renan, 400));
+      // $leilao->propoe(new Lance($mauricio, 500));
 
       $this->leiloeiro->avalia($leilao);
 
@@ -152,6 +161,18 @@
 
       $this->assertEquals(0, count($maiores));
     }
+
+    // public function tearDown() {
+    //   var_dump("fim");
+    // }
+
+    // public static function setUpBeforeClass() {
+    //   var_dump("before class");
+    // }
+
+    // public static function tearDownAfterClass() {
+    //   var_dump("after class");
+    // }
 
   }
 ?>
