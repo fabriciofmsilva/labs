@@ -14,7 +14,8 @@ namespace Caelum.CaixaEletronico
 {
   public partial class Form1 : Form
   {
-    Conta[] contas;
+    private Conta[] contas;
+    private int quatidadeDeContas;
     public Form1()
     {
       InitializeComponent();
@@ -45,6 +46,20 @@ namespace Caelum.CaixaEletronico
       textoTitular.Text = contaSeleciona.Titular;
       textoNumero.Text = Convert.ToString(contaSeleciona.Numero);
       textoSaldo.Text = Convert.ToString(contaSeleciona.Saldo);
+    }
+
+    private void button1_Click(object sender, EventArgs e)
+    {
+      CadastroDeContas cadastro = new CadastroDeContas(this);
+      cadastro.ShowDialog();
+    }
+
+    public void AdicionaConta(Conta conta)
+    {
+      this.contas[this.quatidadeDeContas] = conta;
+      this.quatidadeDeContas++;
+
+      comboContas.Items.Add(conta);
     }
   }
 }

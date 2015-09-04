@@ -7,7 +7,7 @@ using Caelum.CaixaEletronico.Usuarios;
 
 namespace Caelum.CaixaEletronico.Contas
 {
-  abstract class Conta
+  public abstract class Conta
   {
     public int Numero { get; set; }
 
