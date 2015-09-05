@@ -23,29 +23,18 @@ namespace OiMundo
 
     private void button1_Click(Object sender, EventArgs e)
     {
-      var contas = new List<Conta>();
-      var c1 = new ContaCorrente();
+      var contas = new HashSet<Conta>();
+      var c1 = new ContaCorrent();
       c1.Titular = "Mauricio";
+
       contas.Add(c1);
-
-      Conta copiaC1 = contas[0];
-
-      var c2 = new ContaCorrente();
-      c2.Titular = "Victor";
-
-      MessageBox.Show("Está lá: " + contas.Contains(c1));
-      MessageBox.Show("Está lá: " + contas.Contains(c2));
-
-      contas.Add(c2);
-      //contas.Remove(c1);
-      contas.RemoveAt(0);
-
-      MessageBox.Show("numero de contas: " + contas.Count);
+      contas.Add(c1);
 
       foreach(var c in contas)
       {
         MessageBox.Show(c.Titular);
       }
+
     }
   }
 }
