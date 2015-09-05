@@ -7,6 +7,10 @@
     private $maiores;
 
     public function avalia(Leilao $leilao) {
+      if(count($leilao->getLances()) <= 0) {
+        throw new InvalidArgumentException("Um leilão precisa ter pelo menos um lance");
+      }
+
       $total = 0;
       foreach($leilao->getLances() as $lance) {
         if($lance->getValor() > $this->maiorValor) {

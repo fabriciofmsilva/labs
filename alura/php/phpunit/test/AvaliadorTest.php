@@ -148,7 +148,7 @@
       $this->assertEquals(300, $this->leiloeiro->getMaiores()[0]->getValor());
       $this->assertEquals(200, $this->leiloeiro->getMaiores()[1]->getValor());
     }
-
+/*
     public function testDeveDevolverListaVaziaCasoNaoHajaLances() {
       $leilao = new Leilao("Playstation 4");
 
@@ -160,6 +160,19 @@
       $maiores = $this->leiloeiro->getMaiores();
 
       $this->assertEquals(0, count($maiores));
+    }
+*/
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testDeveRecusarLeilaoSemLances() {
+
+      $construtor = new ConstrutorDeLeilao();
+      $leilao = $construtor->para("Playstation 4")
+                  ->constroi();
+
+      $this->leiloeiro->avalia($leilao);
+
     }
 
     // public function tearDown() {
