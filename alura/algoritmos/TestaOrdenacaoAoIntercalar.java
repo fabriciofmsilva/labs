@@ -15,16 +15,20 @@ public class TestaOrdenacaoAoIntercalar {
       new Nota("lucia", 9.3)
     };
 
-    intercala(notas, 0, 1, 2);
-    intercala(notas, 2, 3, 4);
-    intercala(notas, 0, 2, 4);
-    intercala(notas, 4, 5, 6);
-    intercala(notas, 6, 7, 8);
-    intercala(notas, 4, 6, 8);
-    intercala(notas, 0, 4, 8);
-    intercala(notas, 0, 8, 9);
+    ordena(notas, 0, notas.length);
+
     for(Nota nota : notas) {
       System.out.println(nota.getAluno() + " " + nota.getValor());
+    }
+  }
+
+  private static void ordena(Nota[] notas, int inicial, int termino) {
+    int quantidade = termino - inicial;
+    if(quantidade > 1) {
+      int meio = (inicial + termino) / 2;
+      ordena(notas, inicial, meio);
+      ordena(notas, meio, termino);
+      intercala(notas, inicial, meio, termino);
     }
   }
 
