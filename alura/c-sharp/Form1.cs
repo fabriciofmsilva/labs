@@ -23,17 +23,35 @@ namespace OiMundo
 
     private void button1_Click(Object sender, EventArgs e)
     {
-      var contas = new HashSet<Conta>();
-      var c1 = new ContaCorrent();
-      c1.Titular = "Mauricio";
+      string titulo = "Arquitetura e " + "Design de Software";
+      titulo += "!";
 
-      contas.Add(c1);
-      contas.Add(c1);
+      MessageBox.Show(titulo);
 
-      foreach(var c in contas)
+      int idade = 42;
+      string nome = "Guilherme";
+      string mensagem = string.Format("Olá {0} sua idade é: {1}", nome, idade);
+
+      MessageBox.Show(mensagem);
+
+      string texto = "guilher,42,sao paulo,brasil";
+      string[] partes = texto.split(',');
+      foreach(string parte in partes)
       {
-        MessageBox.Show(c.Titular);
+        MessageBox.Show(parte);
       }
+
+      string curso = "fn11";
+      curso = curso.ToUpper().Replace("1", "2");
+      MessageBox.Show(curso);
+
+      string nomeCompleto = "Guilherme Silveira";
+      string primeiroNome = nomeCompleto.Substring(0, 9);
+      MessageBox.Show(primeiroNome);
+
+      int posicaoDoS = nomeCompleto.IndexOf("s");
+      string segundoNome = nomeCompleto.Substring(posicaoDoS);
+      MessageBox.Show(segundoNome);
 
     }
   }
