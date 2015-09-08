@@ -1,4 +1,4 @@
-public class TestaPivota {
+public class TestaOrdenacaoRapida {
 
   public static void main(String[] args) {
     Nota guilherme = new Nota("guilherme", 7);
@@ -14,15 +14,22 @@ public class TestaPivota {
       guilherme
     };
 
-    int novaPosicao = particiona(notas, 0, notas.length);
-
-    System.out.println("O pivo foi parar em " + novaPosicao);
+    ordena(notas, 0, notas.length);
 
     for(int atual = 0; atual < notas.length; atual++) {
       Nota nota = notas[atual];
       System.out.println(nota.getAluno() + " " + nota.getValor());
     }
 
+  }
+
+  private static void ordena(Nota[] notas, int de, int ate) {
+    int elementos = ate - de;
+    if(elementos > 1) {
+      int posicaoDoPivo = particiona(notas, de, ate);
+      ordena(notas, de, posicaoDoPivo);
+      ordena(notas, posicaoDoPivo + 1, ate);
+    }
   }
 
   private static int particiona(Nota[] notas, int inicial, int termino) {
