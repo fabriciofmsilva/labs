@@ -14,7 +14,9 @@ public class TestaPivota {
       guilherme
     };
 
-    quebraNoPivo(notas, 0, notas.length);
+    int novaPosicao = quebraNoPivo(notas, 0, notas.length);
+
+    System.out.println("O pivo foi parar em " + novaPosicao);
 
     for(int atual = 0; atual < notas.length; atual++) {
       Nota nota = notas[atual];
@@ -23,17 +25,19 @@ public class TestaPivota {
 
   }
 
-  private static void quebraNoPivo(Nota[] notas, int inicial, int termino) {
+  private static int quebraNoPivo(Nota[] notas, int inicial, int termino) {
     int menoresEncontrados = 0;
 
     Nota pivo = notas[termino - 1];
     for(int analisando = 0; analisando < termino - 1; analisando++) {
       Nota atual = notas[analisando];
       if(atual.getValor() <= pivo.getValor()) {
+        troca(notas, analisando, menoresEncontrados);
         menoresEncontrados++;
       }
     }
     troca(notas, termino - 1, menoresEncontrados);
+    return menoresEncontrados;
 
   }
 
