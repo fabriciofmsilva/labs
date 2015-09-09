@@ -15,12 +15,23 @@ public class TestaOrdenacaoRapida {
     };
 
     ordena(notas, 0, notas.length);
+    int encontrei = busca(notas, 0, notas.length, 9.3);
+    System.out.println("Encontrei a nota em " + encontrei + ".");
 
     for(int atual = 0; atual < notas.length; atual++) {
       Nota nota = notas[atual];
       System.out.println(nota.getAluno() + " " + nota.getValor());
     }
 
+  }
+
+  private static int busca(Nota[] notas, int de, int ate, double buscando) {
+    for(int atual = de; atual < ate; atual++) {
+      if(notas[atual].getValor() == buscando) {
+        return atual;
+      }
+    }
+    return -1;
   }
 
   private static void ordena(Nota[] notas, int de, int ate) {

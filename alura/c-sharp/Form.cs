@@ -35,5 +35,14 @@ namespace Editor
         entrada.Close();
       }
     }
+
+    private void button1_Click(object sender, EventArgs e)
+    {
+      Stream saida = File.Open("entrada.txt", FileMode.Create);
+      StreamWriter escritor = new StreamWriter(saida);
+      escritor.Write(texto.Text);
+      escritor.Close();
+      saida.Close();
+    }
   }
 }
