@@ -16,42 +16,36 @@ namespace OiMundo
       InitializeComponent();
     }
 
+    private Conta ContaComSaldo(double saldo)
+    {
+      Conta c = new ContaCorrente();
+      c.Deposita(saldo);
+      return c;
+    }
+
     private void Form1_Load(object sender, EventArgs e)
     {
+      var contas = new List<Conta>();
+      contas.Add(ContaComSaldo(2300));
+      contas.Add(ContaComSaldo(1000));
+      contas.Add(ContaComSaldo(2500));
 
+      var filtradas = from c in contas
+                      where c.Saldo > 2000
+                      select c;
+
+      foreach(Conta c in filtradas)
+      {
+        Messabox.Show("O saldo e: " + c.Saldo);
+      }
+
+      double saldoTotal = filtradas.Sum(c => c.Saldo);
+      Messabox.Show("O total é: " + saldoTotal);
     }
 
     private void button1_Click(Object sender, EventArgs e)
     {
-      string titulo = "Arquitetura e " + "Design de Software";
-      titulo += "!";
 
-      MessageBox.Show(titulo);
-
-      int idade = 42;
-      string nome = "Guilherme";
-      string mensagem = string.Format("Olá {0} sua idade é: {1}", nome, idade);
-
-      MessageBox.Show(mensagem);
-
-      string texto = "guilher,42,sao paulo,brasil";
-      string[] partes = texto.split(',');
-      foreach(string parte in partes)
-      {
-        MessageBox.Show(parte);
-      }
-
-      string curso = "fn11";
-      curso = curso.ToUpper().Replace("1", "2");
-      MessageBox.Show(curso);
-
-      string nomeCompleto = "Guilherme Silveira";
-      string primeiroNome = nomeCompleto.Substring(0, 9);
-      MessageBox.Show(primeiroNome);
-
-      int posicaoDoS = nomeCompleto.IndexOf("s");
-      string segundoNome = nomeCompleto.Substring(posicaoDoS);
-      MessageBox.Show(segundoNome);
 
     }
   }
