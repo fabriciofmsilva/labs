@@ -5,8 +5,28 @@
     <title>Loja Virtual</title>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+      .navbar-header button {
+        color: #fff;
+      }
+    </style>
   </head>
   <body>
+    <header>
+      <nav class="navbar navbar-inverse">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Caelum</a>
+          <button class="navbar-toggle" type="button" data-target=".navbar-collapse" data-toggle="collapse">Menu</button>
+        </div>
+
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#">Novidades</a></li>
+            <li><a href="#">Mais vendidos</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
     <main>
       <div>
         <h3 class="text-center">Novidades</h3>
@@ -67,5 +87,7 @@
       </div>
 
     </main>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
