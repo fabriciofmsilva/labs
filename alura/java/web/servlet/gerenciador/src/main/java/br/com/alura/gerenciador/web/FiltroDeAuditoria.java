@@ -12,8 +12,6 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.tomcat.util.http.Cookies;
-
 @WebFilter(urlPatterns = "/*")
 public class FiltroDeAuditoria implements Filter {
 
@@ -27,22 +25,18 @@ public class FiltroDeAuditoria implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		String uri = req.getRequestURI();
 		String usuario = getUsuario(req);
-		
+
 		System.out.println("Usuário " + usuario + " acessando a URI " + uri);
 		chain.doFilter(request, response);
 	}
 
 	private String getUsuario(HttpServletRequest req) {
-		String usuario = "<deslogado>";
-
-		Cookie[] cookies = req.getCookies();
-		if(cookies == null) return usuario;
-		for(Cookie cookie : cookies) {
-			if(cookie.getName().equals("usuario.logado")) {
-				usuario = cookie.getValue();
-			}
+		Cookie cookie = new Cookies(req.getCookies()).buscaUsuarioLogado();
+		if(cookie == null) {
+			return "<deslogado>";
 		}
-		return usuario;
+		
+		return cookie.getValue();
 	}
 
 	@Override
