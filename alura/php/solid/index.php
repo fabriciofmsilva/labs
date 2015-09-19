@@ -9,11 +9,17 @@
   // $calculadora = new CalculadoraDeSalario();
   // echo $calculadora->calcula($dev);
 
-  $fatura = new Fatura();
-  $fatura->setValorMensal(1000);
-  $gerador = new GeradorNotaFiscal();
-  $gerador->addAcao(new EnviadorDeEmail());
-  $gerador->addAcao(new NotaFiscalDao());
-  $gerador->gera($fatura);
+  // $fatura = new Fatura();
+  // $fatura->setValorMensal(1000);
+  // $gerador = new GeradorNotaFiscal();
+  // $gerador->addAcao(new EnviadorDeEmail());
+  // $gerador->addAcao(new NotaFiscalDao());
+  // $gerador->gera($fatura);
+
+  $compra = new Compra(3000, "SAO PAULO");
+
+  $calculadora = new CalculadorDePrecos(new TabelaDePrecoPadrao(), new Frete());
+
+  echo $calculadora->calcula($compra);
 
 ?>
