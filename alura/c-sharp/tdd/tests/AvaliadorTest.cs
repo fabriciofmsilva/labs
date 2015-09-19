@@ -141,5 +141,14 @@ namespace Caelum.Leilao
 
       Assert.AreEqual(0, maiores.Count);
     }
+
+    [Test]
+    [ExpectedException(typeof(Exception))]
+    public void NaoDeveAvaliarLeiloesSemNenhumLanceDado()
+    {
+      Leilao.leilao = new CriadorDeLeilao().Para("Playstation").Constroi();
+
+      leiloeiro.Avalia(leilao);
+    }
   }
 }
