@@ -1,3 +1,4 @@
+import java.util.Calendar;
 
 public class Pagamento {
 
@@ -27,6 +28,11 @@ public class Pagamento {
 
 	public void setValor(double valor) {
 		this.valor = valor;
+	}
+
+	public Calendar getData() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
