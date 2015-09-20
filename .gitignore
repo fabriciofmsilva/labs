@@ -35,6 +35,7 @@ _delete
 *.sublime-workspace
 nbproject
 Thumbs.db
+.metadata
 
 # Komodo
 .komodotools
