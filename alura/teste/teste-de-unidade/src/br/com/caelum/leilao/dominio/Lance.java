@@ -18,6 +18,4 @@ public class Lance {
 		return valor;
 	}
 	
-	
-	
 }
