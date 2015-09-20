@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lines</title>
+  <script src="https://www.google.com/jsapi"></script>
+  <script>
+    google.load('visualization', '1', {'packages': ['corechart']});
+    google.setOnLoadCallback(desenhaGrafico);
+
+    function desenhaGrafico() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Mês');
+      data.addColumn('number', 'Gastos em R$');
+
+      data.addRows(5);
+
+      data.setValue(0, 0, 'Janeiro');
+      data.setValue(0, 1, 20450.0);
+
+      data.setValue(1, 0, 'Fevereiro');
+      data.setValue(1, 1, 21870.0);
+
+      data.setValue(2, 0, 'Março');
+      data.setValue(2, 1, 22250.0);
+
+      data.setValue(3, 0, 'Abril');
+      data.setValue(3, 1, 21796.0);
+
+      data.setValue(4, 0, 'Maio');
+      data.setValue(4, 1, 23234.0);
+
+      var options = {
+        colors: ['green'],
+        width: 400,
+        height: 240,
+        curveType: 'function',
+      };
+
+      var chart = new google.visualization.LineChart(
+          document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+  </script>
+</head>
+<body>
+  <h1>Gastos por mês</h1>
+  <div id="chart_div"></div>
+</body>
+</html>
