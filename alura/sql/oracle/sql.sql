@@ -1,3 +1,4 @@
+# aula 1
 create table compras (id number primary key, valor number, observacoes varchar2(30), data date, recebido char check (recebido in (0,1)));
 create sequence id_seq;
 insert into compras (id, valor, data, observacoes, recebido) values (id_seq.nextval, 100, '12-MAY-2007', 'Compras de maio', '1');
@@ -14,3 +15,17 @@ select * from compras where valor < 120 or recebido = '1';
 select * from compras where observacoes = 'Compras';
 select * from compras where observacoes like 'Compras%';
 select * from compras where observacoes like '%de%';
+# aula 2
+select * from compras;
+select * from compras where valor > 200 and valor <= 700;
+select * from compras where valor between 200 and 700;
+select * from compras where data between '01-JAN-2010' and '01-APR-2010';
+update compras set valor = 900 where id = 20;
+select * from compras where id = 20;
+update compras set valor = 100, observacoes = 'uma compra comum' where data not between '01-JAN-2010' and '01-APR-2010';
+select * from compras;
+update compras set observacoes = 'datas festivas' where data in ('12-OCT-2010', '25-DEC-2010'. '12-JUN-2010');
+select * from compras;
+delete from compras where id = 44;
+select * from compras;
+delete from compras where valor < 50;
