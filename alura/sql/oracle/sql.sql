@@ -29,3 +29,28 @@ select * from compras;
 delete from compras where id = 44;
 select * from compras;
 delete from compras where valor < 50;
+# aula 3
+desc compras;
+insert into compras (id, valor, data, observacoes, recebido) values (id_seq.nextval, 500, '03-AUG-2015', null, '1');
+select * from compras;
+select * from compras where observacoes is null;
+select * from compras where observacoes is not null;
+delete from compras where observacoes is null;
+select * from compras where observacoes is null;
+create tabel pessoas (nome varchar2(100) not null);
+alter table compras modify (observacoes varchar2(30) not null);
+insert into compras (id, valor, data, observacoes, recebido) values (id_seq.nextval, 500, '03-AUG-2015', null, '1');
+desc compras
+insert into compras (id, valor, data, observacoes, recebido) values (id_seq.nextval, 500, '03-AUG-2015', 'presente pro filho', '1');
+alter table compras modify (recebido char default '0' check (recebido in (0,1)));
+insert into compras (id, valor, data, observacoes) values (id_seq.nextval, 500, '03-AUG-2015', 'presente pro filho');
+select * from compras;
+alter table compras add (forma_pagt varchar2(10) check (forma_pagt in ('boleto', 'dinheiro', 'cartao')));
+desc compras;
+insert into compras (id, valor, data, observacoes, form_pagt) values (id_seq.nextval, 500, '15-AUG-2015', 'presente pra mae', 'boleto');
+select * from compras;
+update compras set forma_pagt = 'dinheiro' where forma_pagt is null;
+select * from compras;
+insert into compras (id, valor, data, observacoes, form_pagt) values (id_seq.nextval, 500, '15-AUG-2015', 'presente pra mae', 'jujuba');
+alter table compras rename column forma_pagt to forma_pagto;
+desc compras;
