@@ -54,3 +54,17 @@ select * from compras;
 insert into compras (id, valor, data, observacoes, form_pagt) values (id_seq.nextval, 500, '15-AUG-2015', 'presente pra mae', 'jujuba');
 alter table compras rename column forma_pagt to forma_pagto;
 desc compras;
+# Aula 4
+select * from compras;
+select sum(valor) from compras;
+select sum(valor) from compras where data > '01-JAN-2010';
+select avg(valor) from compras;
+select count(id) from compras where data between '01-JAN-2010' and '31-DEC-2010';
+select sum(valor), avg(valor) from compras;
+select sum(valor) as soma, avg(valor) as media from compras;
+select sum(valor) from compras where recebido = '1';
+select sum(valor) from compras where recebido = '0';
+select sum(valor) from compras group by recebido;
+select recebido, sum(valor) from compras group by recebido;
+select extract(year from data), sum(valor) from compras group by extract(year from data);
+select extract(year from data) as ano, sum(valor) as soma from compras group by extract(year from data) order by ano;
