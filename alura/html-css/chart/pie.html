@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lines</title>
+  <script src="https://www.google.com/jsapi"></script>
+  <script>
+    google.load('visualization', '1', {'packages': ['corechart']});
+    google.setOnLoadCallback(desenhaGrafico);
+
+    function desenhaGrafico() {
+      var dados = new google.visualization.DataTable();
+      dados.addColumn('string', 'Tipo');
+      dados.addColumn('number', 'Valor');
+      dados.addRows(4);
+
+      dados.setValue(0, 0, 'Alimentação');
+      dados.setValue(0, 1, 450);
+      dados.setValue(1, 0, 'Educação');
+      dados.setValue(1, 1, 2260);
+      dados.setValue(2, 0, 'Transporte');
+      dados.setValue(2, 1, 365);
+      dados.setValue(3, 0, 'Shows');
+      dados.setValue(3, 1, 180);
+
+      var div = document.getElementById('grafico');
+      var grafico = new google.visualization.PieChart(div);
+      grafico.draw(dados, {width: 700, heigth: 340, title: 'Meus Gastos'});
+      google.visualization.events.addListener(grafico, 'select', avisoDoClique);
+    }
+
+    function avisoDoClique(event) {
+      document.getElementById('msg').innerHTML += 'Gráfico foi clicado e algum pedaço escolhido...<br>';
+    }
+  </script>
+</head>
+<body>
+  <h1>Saldo das contas</h1>
+  <div id="grafico"></div>
+  <div id="msg"></div>
+</body>
+</html>
