@@ -42,5 +42,46 @@ namespace mock.testes
       Assert.isTrue(leilao1.Encerrado);
       Assert.isTrue(leilao2.Encerrado);
     }
+
+    [Test]
+    public void DeveEncerrarOsLeiloesESalvarNoDao()
+    {
+      DateTime diaDaSemanaPassada = new DateTime(1999, 5, 5);
+
+      Leilao leilao1 = new Leilao("TV de plasma");
+      leilao1.NaData(diaDaSemanaPassada);
+      Leilao leilao2 = new Leilao("Playstation");
+      leilao2.NaData(diaDaSemanaPassada);
+
+      List<Leilao> ListaDeLeiloes = new List<Leilao>();
+      ListaDeLeiloes.Add(leilao1);
+      ListaDeLeiloes.Add(leilao2);
+
+      var dao = new Mock<LeilaoDaoFalso>();
+      dao.Setup(d => d.Correntes()).Returns(ListaDeLeiloes);
+
+      EncerradorDeLeilao encerrador = new EncerradorDeLeilao(dao.Object);
+      encerrador.Encerra();
+
+      dao.Verify(d => d.Atualiza(leilao1), Times.Once);
+      dao.Verify(d => d.Atualiza(leilao2), Times.Once);
+    }
+
+    [Test]
+    public void NaoDeveAtualizaOsLeiloesEncerrados()
+    {
+      DateTime data = new DateTime(2014, 05, 05);
+      Leilao leilao1 = new Leilao("Tv 20 polegadas");
+      leilao1.naData(data);
+      List<Leilao> listaRetorno = new List<Leilao>();
+      listaRetorno.Add(leilao1);
+      var dao = new Mock<LeilaoDaoFalso>();
+      dao.Setup(m => m.correntes()).Returns(listaRetorno);
+      EncerradorDeLeilao encerrador = new EncerradorDeLeilao(dao.Object);
+      encerrador.encerra();
+      // verify aqui !
+      dao.Verify(m => m.atualiza(leilao1),Times.Never());
+      dao.Verify(m => m.atualiza(leilao2),Times.Never());
+    }
   }
 }
