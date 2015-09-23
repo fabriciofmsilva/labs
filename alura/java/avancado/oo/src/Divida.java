@@ -23,10 +23,6 @@ public class Divida {
 	public void setCredor(String credor) {
 		this.credor = credor;
 	}
-
-	public Pagamentos getPagamentos() {
-		return pagamentos;
-	}
 	
 	public Cnpj getCnpjCredor() {
 		return cnpjCredor;
@@ -34,6 +30,14 @@ public class Divida {
 	
 	public void setCnpjCredor(String cnpjCredor) {
 		this.cnpjCredor = new Cnpj(cnpjCredor);
+	}
+
+	public void registra(Pagamento pagamento) {
+		pagamentos.registra(pagamento);
+	}
+
+	public double getValorPago() {
+		return pagamentos.getValorPago();
 	}
 
 }

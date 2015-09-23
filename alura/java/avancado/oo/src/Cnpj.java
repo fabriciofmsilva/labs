@@ -3,8 +3,8 @@ public class Cnpj {
 	
 	private String cnpj;
 	
-	public Cnpj(String valor) {
-		this.cnpj = valor;
+	public Cnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
 	
 	public boolean ehValido() {
@@ -39,6 +39,11 @@ public class Cnpj {
 	public void setValor(String cnpjCredor) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public String toString() {
+		return this.cnpj;
 	}
 	
 }
