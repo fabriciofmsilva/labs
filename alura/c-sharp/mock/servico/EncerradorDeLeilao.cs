@@ -1,5 +1,6 @@
 ﻿using mock.dominio;
 using mock.infra;
+using mock.servico;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,16 @@ namespace mock.servico
     public class EncerradorDeLeilao
     {
       private LeilaoDaoFalso dao;
+      private Carteiro carteiro;
+
         public int total { get; private set; }
 
 
-        public EncerradorDeLeilao(LeilaoDaoFalso dao)
+        public EncerradorDeLeilao(LeilaoDaoFalso dao, Carteiro carteiro)
         {
             total = 0;
             this.dao = dao;
+            this.carteiro = carteiro;
         }
 
         public virtual void encerra()
@@ -30,10 +34,16 @@ namespace mock.servico
 
                 if (comecouSemanaPassada(l))
                 {
-
-                    l.encerra();
-                    total++;
-                    dao.atualiza(l);
+                    try
+                    {
+                      l.encerra();
+                      total++;
+                      dao.atualiza(l);
+                      carteiro.Envia(l);
+                    } catch(Exception e)
+                    {
+                      // salva um log
+                    }
 
                 }
             }
