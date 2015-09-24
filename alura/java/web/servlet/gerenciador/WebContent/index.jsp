@@ -7,9 +7,9 @@ Bem vindo ao nosso gerenciador de empresas!<br/>
 	Logado como ${usuarioLogado.email}<br/>
 </c:if>
 
-<form action="novaEmpresa" method="POST">
-	Nome: <input type="text" name="nome">
-	<input type="submit" value="Enviar">
+<form action="fazTudo?tarefa=NovaEmpresa" method="post">
+    Nome: <input type="text" name="nome" /><br/>
+    <input type="submit" value="Enviar" />
 </form>
 
 <form action="login" method="POST">
@@ -18,7 +18,8 @@ Bem vindo ao nosso gerenciador de empresas!<br/>
 	<input type="submit" value="Enviar" />
 </form>
 
-<form action="logout" method="POST">
+<form action="fazTudo" method="POST">
+	<input type="hidden" name="tarefa" value="Logout" />
 	<input type="submit" value="Deslogar" />
 </form>
 
