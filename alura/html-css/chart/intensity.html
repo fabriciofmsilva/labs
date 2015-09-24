@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lines</title>
+  <script src="https://www.google.com/jsapi"></script>
+  <script>
+    google.load('visualization', '1', {'packages': ['intensitymap']});
+    google.setOnLoadCallback(desenhaGrafico);
+
+    function desenhaGrafico() {
+      var dados = new google.visualization.DataTable();
+      dados.addColumn('string', 'País');
+      dados.addColumn('number', 'Populacao');
+      dados.addColumn('number', 'Área');
+
+      dados.addRows(7);
+      dados.setValue(0, 0, 'BR');//Brasil
+      dados.setValue(0, 1, 8515);
+      dados.setValue(0, 2, 190732);
+      dados.setValue(1, 0, 'CO');//Colômbia
+      dados.setValue(1, 1, 1138);
+      dados.setValue(1, 2, 45986);
+      dados.setValue(2, 0, 'PE');//Peru
+      dados.setValue(2, 1, 1285);
+      dados.setValue(2, 2, 29461);
+      dados.setValue(3, 0, 'UY');//Uruguai
+      dados.setValue(3, 1, 176);
+      dados.setValue(3, 2, 3356);
+      dados.setValue(4, 0, 'AR');//Argentina
+      dados.setValue(4, 1, 2766);
+      dados.setValue(4, 2, 40091);
+      dados.setValue(5, 0, 'VE');//Venezuela
+      dados.setValue(5, 1, 912);
+      dados.setValue(5, 2, 29223);
+      dados.setValue(6, 0, 'CL');//Chile
+      dados.setValue(6, 1, 756);
+      dados.setValue(6, 2, 17231);
+
+      var div = document.getElementById('chart_div');
+      var chart = new google.visualization.IntensityMap(div);
+
+      chart.draw(dados, {region: 'south_america'});
+    }
+  </script>
+</head>
+<body>
+  <h1>Saldo das contas</h1>
+  <div id="chart_div"></div>
+</body>
+</html>
