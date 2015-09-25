@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 855px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+main:after {
+  display: table;
+  content: "";
+  clear: both;
+}
+
+.comment-input {
+  float: left;
+  width: 33.333333%;
+}
+
+.comment {
+  float: right;
+  width: 66.666666%;
+}
+
+.comment p {
+  margin-bottom: 1em;
+  padding: .5em;
+  background: gainsboro;
+  border-radius: 6px;
+}
+
+.comment p:nth-child(even) {
+  background: lavender;
+}
