@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Remote Data Source</title>
+  <script src="https://www.google.com/jsapi"></script>
+  <script>
+    google.load('visualization', '1', {'packages': ['corechart']});
+    google.setOnLoadCallback(desenhaGrafico);
+
+    function desenhaGrafico() {
+      var wrapper = new google.visualization.ChartWrapper({
+        dataSourceUrl: 'https://raw.github.com/caelum/caelum-online/blob/master/google-chart-tools/07-dados.json',
+        chartType: 'AreaChart',
+        containerId: 'meu_grafico',
+        option: {
+          width: 900,
+          height: 300,
+        },
+      });
+
+      wrapper.draw();
+    }
+  </script>
+</head>
+<body>
+  <div id="meu_grafico"></div>
+</body>
+</html>
