@@ -35,4 +35,9 @@ public class Pagamento {
 		return null;
 	}
 
+	public void setDocumentoPagador(Cnpj cnpj) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
