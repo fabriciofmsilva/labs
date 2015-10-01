@@ -52,3 +52,6 @@ _reference
 .sass-cache
 Servers
 .recommenders
+
+bin/**
+WebContent/WEB-INF/classes/
