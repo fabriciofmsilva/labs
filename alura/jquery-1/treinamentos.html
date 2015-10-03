@@ -52,6 +52,7 @@
     //   }
     // });
     $.get('http://mirrorfashion.caelum.com.br/treinamentos', function(retorno) {
+      console.log(retorno);
       $.each(retorno.treinamentos, function() {
         var treinamento = this;
         $('<li>').css('color', 'green').text(treinamento.nome).appendTo('#lista');
