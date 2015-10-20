@@ -13,12 +13,12 @@ import br.com.caelum.vraptor.view.Results;
 @Resource
 public class ProdutoController {
 
-	private final ProdutoDao produtos;
+	private final RepositorioDeProdutos produtos;
 	private final Result result;
 
-	public ProdutoController(Result result) {
+	public ProdutoController(RepositorioDeProdutos produtos, Result result) {
 		this.result = result;
-		this.produtos = new ProdutoDao();
+		this.produtos = produtos;
 	}
 	
 	public void formulario() {
