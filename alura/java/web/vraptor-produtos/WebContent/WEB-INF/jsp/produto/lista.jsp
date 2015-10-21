@@ -6,15 +6,25 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Lista de produtos</title>
+<script type="text/javascript " src="<c:url value="/js/jquery-1.6.1.min.js" />"></script>
+<script type="text/javascript">
+	function remove(id) {
+		$.get('remove?produto.id=' + id, function() {
+			alert('produto removido com sucesso!');
+			$('#produto-'+ id).remove();
+		});
+	}
+</script>
 </head>
 <body>
 ${mensagem}
 <table>
-<c:forEach var="produto" items="${produtoList }">
-	<tr>
+<c:forEach var="produto" items="${produtoList}">
+	<tr id="produto-${produto.id}">
 		<td>${produto.nome }</td>
 		<td>${produto.descricao }</td>
 		<td>${produto.preco }</td>
+		<td><a onclick="remove(${produto.id}); return false;">Remove</a></td>
 	</tr>
 </c:forEach>
 </table>
