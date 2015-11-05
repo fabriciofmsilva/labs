@@ -19,7 +19,7 @@ public class TesteImportador {
 
 		ImportadorDeGastos importador = new ImportadorDeGastos();
 
-		List<Gasto> list = importador.importa(new ByteArrayInputStream(conteudo.getBytes("UTF-8")));
+		Collection<Gasto> list = importador.importa(new ByteArrayInputStream(conteudo.getBytes("UTF-8")));
 
 		for (Gasto gasto : list) {
 			System.out.println(gasto.getTipo());
