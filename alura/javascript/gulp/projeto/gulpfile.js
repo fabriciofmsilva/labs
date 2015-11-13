@@ -10,6 +10,8 @@ var browserSync = require('browser-sync');
 var jshint = require('gulp-jshint');
 var jshintStylish = require('jshint-stylish');
 var csslint = require('gulp-csslint');
+var autoprefixer = require('gulp-autoprefixer');
+var less = require('gulp-less');
 
 gulp.task('default', ['copy'], function() {
   gulp.start('build-img', 'usemin');
@@ -35,7 +37,7 @@ gulp.task('usemin', function() {
   gulp.src('dist/**/*.html')
     .pipe(usemin({
       'js': [uglify],
-      'css': [cssmin]
+      'css': [autoprefixer, cssmin]
     }))
     .pipe(gulp.dest('dist'));
 });
@@ -54,12 +56,24 @@ gulp.task('server', function() {
       .pipe(jshint())
       .pipe(jshint.reporter(jshintStylish));
   });
+
+  gulp.watch('src/less/*.less').on('change' , function(event) {
+    console.log('Compilando arquivo: ' + event.path);
+    gulp.src(event.path)
+      .pipe(less().on('error', function(error) {
+        console.log('Problema na compilação');
+        console.log(error.message);
+      }))
+      .pipe(gulp.dest('src/css'));
+  });
+
   gulp.watch('src/css/*.css').on('change' , function(event) {
     console.log('Linting ' + event.path);
     gulp.src(event.path)
       .pipe(csslint())
       .pipe(csslint.reporter());
   });
+
   gulp.watch('src/**/*')
     .on('change', browserSync.reload);
 });
