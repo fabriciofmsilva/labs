@@ -1,7 +1,6 @@
 package br.com.caelum.empresa.dao;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import br.com.caelum.empresa.modelo.Gasto;
 
