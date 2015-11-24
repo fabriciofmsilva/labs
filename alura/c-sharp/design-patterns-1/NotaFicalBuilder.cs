@@ -17,9 +17,23 @@ namespace CursoDesignPatterns
     private double Impostos;
     private IList<ItemDaNota> todosItens = new List<ItemDaNota>();
 
+    private IList<AcaoAposGerarNota> todasAcoesASeremExecutadas = new List<AcaoAposGerarNota>;
+
     public NotaFical Constroi()
     {
-      return new NotaFiscal(RazaoSocial, Cnpj, Data, valorTotal, Impostos, todosItens, Observacoes);
+      NotaFiscal nf = new NotaFiscal(RazaoSocial, Cnpj, Data, valorTotal, Impostos, todosItens, Observacoes);
+
+      foreach(AcaoAposGerarNota acao in todasAcoesASeremExecutadas)
+      {
+        acao.Executa(nf);
+      }
+
+      return nf;
+    }
+
+    public void AdicionaAcao(AcaoAposGerarNota novaAcao)
+    {
+      this.todasAcoesASeremExecutadas.Add(novaAcao);
     }
 
     public NotaFiscalBuilder ParaEmpresa(String razaoSocial)

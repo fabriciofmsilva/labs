@@ -18,6 +18,10 @@ namespace CursoDesignPatterns
         .NaDataAtual()
         .ComObservacoes("uma observacao qualquer");
 
+      criador.AdicionaAcao(new EnviadorDeEmail());
+      criador.AdicionaAcao(new NotaFiscalDAO());
+      criador.AdicionaAcao(new EnviadorDeSms());
+
       NotaFiscal nf = criador.Constroi();
 
       Console.WriteLine(nf.ValorBruto);
