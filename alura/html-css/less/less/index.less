@@ -1,5 +1,10 @@
 @import 'base';
 @cor: red;
+@largura-tela: 940px;
+
+body {
+  width: @largura-tela;
+}
 
 h1 {
   color: @cor;
@@ -13,11 +18,12 @@ p {
 
 article {
   h1 {
-    background-color: blue;
+    width: floor(@largura-tela/3);
+    background-color: darken(blue, 30%);
   }
 
   p {
-    background-color: yellow;
+    background-color: lighten(yellow, 35%);
 
     em {
      font-size: 40px;
