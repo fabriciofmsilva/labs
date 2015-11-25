@@ -7,5 +7,5 @@ Template.novo.events({
 
     Tarefas.insert({nome: nome, data: new Date()});
     input.val('');
-  }
+  },
 });
