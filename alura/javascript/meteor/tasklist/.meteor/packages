@@ -19,3 +19,6 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 insecure                # Allow all DB writes from clients (for prototyping)
 mrt:bootstrap-3
 momentjs:moment
+accounts-base
+accounts-password
+ian:accounts-ui-bootstrap-3
