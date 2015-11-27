@@ -58,31 +58,32 @@ header .container {
   position: relative;
 }
 
-.menu-opcoes {
+.menu-principal {
   position: absolute;
   right: 0;
   top: -.5em;
   font-size: 1.2em;
   font-weight: lighter;
+
+  ul {
+    padding-left: 0;
+  }
+
+  li {
+    display: inline-block;
+    width: 5em;
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
-.menu-opcoes ul {
-  padding-left: 0;
-}
-
-.menu-opcoes li {
-  display: inline-block;
-  width: 5em;
-}
-
-.menu-opcoes a {
-  color: white;
-  text-decoration: none;
-}
-
-.menu-opcoes a:hover {
-  text-decoration: underline;
-}
 
 /** Destaque **/
 .destaque {
@@ -213,22 +214,22 @@ header .container {
 
 .itens-plano {
   padding-left: 1.2em;
-}
 
-.itens-plano li {
-  font-size: 1em;
-  list-style: none;
-  border-bottom: 1px solid #acacac;
-  padding: .5em;
-  width: 14.8em;
-}
+  li {
+    font-size: 1em;
+    list-style: none;
+    border-bottom: 1px solid #acacac;
+    padding: .5em;
+    width: 14.8em;
 
-.itens-plano li:last-child {
-  border: 0;
-}
+    &:last-child {
+      border: 0;
+    }
+  }
 
-.itens-plano span {
-  float: right;
+  span {
+    float: right;
+  }
 }
 
 .plano button {
