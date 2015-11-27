@@ -79,8 +79,9 @@ header .container {
   border: 0;
   padding: .6em;
   font-size: 1.2em;
-  -webkit-border-radius: 0.3em;
-  border-radius: 0.3em;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  -webkit-box-shadow: 0 2px 6.65px 0.35px rgba(0, 0, 0, 0.3);
   box-shadow: 0 2px 6.65px 0.35px rgba(0, 0, 0, 0.3);
   font-weight: bold; }
 
@@ -110,11 +111,11 @@ header .container {
   display: inline-block;
   width: 50px;
   height: 60px;
-  text-indent: -9999px;
-  overflow: hidden;
-  background-repeat: no-repeat;
   background-position: center;
-  margin: 1em 1.5em 0 0; }
+  margin: 1em 1.5em 0 0;
+  text-indent: -9999px;
+  background-repeat: no-repeat;
+  overflow: hidden; }
 
 .plataformas li:nth-child(1) {
   background-image: url(../imagens/logo-apple.png); }
@@ -184,6 +185,7 @@ header .container {
   font-size: 1.2em;
   -webkit-border-radius: 0.3em;
   border-radius: 0.3em;
+  -webkit-box-shadow: 0 2px 6.65px 0.35px rgba(0, 0, 0, 0.3);
   box-shadow: 0 2px 6.65px 0.35px rgba(0, 0, 0, 0.3);
   margin-left: 2em; }
 
@@ -266,6 +268,7 @@ textarea {
   font-size: 1.2em;
   -webkit-border-radius: 0.3em;
   border-radius: 0.3em;
+  -webkit-box-shadow: 0 2px 6.65px 0.35px rgba(0, 0, 0, 0.3);
   box-shadow: 0 2px 6.65px 0.35px rgba(0, 0, 0, 0.3); }
 
 /** Footer **/
@@ -333,10 +336,10 @@ footer a {
   display: block;
   width: 55px;
   height: 55px;
+  margin-left: 1em;
   text-indent: -9999px;
-  overflow: hidden;
   background-repeat: no-repeat;
-  margin-left: 1em; }
+  overflow: hidden; }
 
 .social a {
   background-position: top;
