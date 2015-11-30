@@ -4,6 +4,10 @@
           border-radius: $raio;
 }
 
+@function multiplica-pela-fonte($multiplicador) {
+  @return round($multiplicador * $tamanho-da-fonte-padrao);
+}
+
 %image-replacement {
   text-indent: -9999px;
   background-repeat: no-repeat;
