@@ -1,3 +1,4 @@
+# Aula 1
 create database controle_compras;
 
 use controle_compras;
@@ -52,3 +53,36 @@ or observacoes = 'PARCELA DO CARRO';
 
 select * from compras
 where observacoes like 'PARCELA%  ';
+
+# Aula 2
+select * from compras;
+
+select valor, observacoes
+from compra
+where valor <= 1000;
+
+select valor, observacoes
+from compra
+where valor <= 1000
+and valor >= 2000;
+
+select valor, observacoes
+from compra
+where valor between 1000 and 2000;
+
+select valor, observacoes
+from compra
+where valor between 1000 and 2000
+and valor between '2015-01-01' and '2015-03-31';
+
+select id, valor, observacoes
+from compra
+where valor between 1000 and 2000
+and valor between '2015-01-01' and '2015-03-31';
+
+update compras
+set valor = 1500
+where id = 49;
+
+delete from compras
+where id = 49;
