@@ -12,10 +12,17 @@ namespace DesignPatterns2
   {
     static void Main(string[] args)
     {
-      IDbConnection conexao = new ConnectionFactory().getConnection();
-
-      IBdComman comando = conexao.CreateCommand();
-      comando.CommandText = "select * from tabela";
+      NotasMusicas notas = new NotasMusicas();
+      IList<INota> musica = new List<INota>(){
+        notas.Pega("do"),
+        notas.Pega("re"),
+        notas.Pega("mi"),
+        notas.Pega("fa"),
+        notas.Pega("fa"),
+        notas.Pega("fa"),
+      };
+      Piano piano = new Piano();
+      piano.toca(musica);
     }
   }
 }
