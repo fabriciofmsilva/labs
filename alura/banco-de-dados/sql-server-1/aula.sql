@@ -113,3 +113,14 @@ alter table compras add default '0' for recebida;
 insert into compras (valor, data, observacoes) values (200, '2015-10-04', 'testando default');
 
 select * from compras where observacoes = 'testando default';
+
+
+# Aula 4
+select * from compras;
+select sum(valor) from compras where recebida = 1;
+select count(*) from compras where recebida = 1;
+select recebida, sum(valor) as soma from compras group by recebida;
+select recebida, sum(valor) as soma from compras where valor < 1000 group by recebida;
+select mounth(data) as mes, year(data) as ano, recebida, sum(valor) as soma from compras where valor < 1000 group by recebida, mounth(data), year(data);
+select mounth(data) as mes, year(data) as ano, recebida, sum(valor) as soma from compras where valor < 1000 group by recebida, mounth(data), year(data) order by year(data);
+select mounth(data) as mes, year(data) as ano, recebida, avg(valor) as media from compras where valor < 1000 group by recebida, mounth(data), year(data) order by year(data);
