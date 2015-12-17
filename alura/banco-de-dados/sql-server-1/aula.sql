@@ -86,3 +86,30 @@ where id = 49;
 
 delete from compras
 where id = 49;
+
+
+# Aula 3
+select * from compras;
+sp_help compras;
+
+insert into compras values(150, '2015-04-15', 'Churrasqueira', 1);
+select * from compras;
+
+insert into compras values(150, '2015-04-15', 1);
+
+insert into compras (valor, data, recebida) values(150, '2015-04-15', 1);
+select * from compras;
+
+delete from compras where observacoes is null;
+
+select * from compras where observacoes is null;
+
+alter table compras alter column observacoes nvarchar(400) not null;
+
+insert into compras (valor, data, recebido) values(10, '2015-06-10', 1);
+
+alter table compras add default '0' for recebida;
+
+insert into compras (valor, data, observacoes) values (200, '2015-10-04', 'testando default');
+
+select * from compras where observacoes = 'testando default';
