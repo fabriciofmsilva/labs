@@ -12,17 +12,18 @@ namespace DesignPatterns2
   {
     static void Main(string[] args)
     {
-      NotasMusicas notas = new NotasMusicas();
-      IList<INota> musica = new List<INota>(){
-        notas.Pega("do"),
-        notas.Pega("re"),
-        notas.Pega("mi"),
-        notas.Pega("fa"),
-        notas.Pega("fa"),
-        notas.Pega("fa"),
-      };
-      Piano piano = new Piano();
-      piano.toca(musica);
+      Historico historico = new Historico();
+      Contrato c = new Contrato(DataTime.Now, "Victor", TipoContrato.Novo);
+      historico.Adiciona(c.SalvaEstado());
+
+      c.Avanca();
+      historico.Adiciona(c.SalvaEstado());
+
+      c.Avanca();
+      historico.Adiciona(c.SalvaEstado());
+
+      Console.WriteLine(historico.Pega(0).Contrato.Tipo);
+
     }
   }
 }
