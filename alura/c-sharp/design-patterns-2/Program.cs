@@ -12,18 +12,16 @@ namespace DesignPatterns2
   {
     static void Main(string[] args)
     {
-      Historico historico = new Historico();
-      Contrato c = new Contrato(DataTime.Now, "Victor", TipoContrato.Novo);
-      historico.Adiciona(c.SalvaEstado());
+      // (1 + 10) + (20 - 10)
+      // IExpressao esquerda = new Soma(new Numero(1), new Numero(10));
+      // IExpressao direita = new Subtracao(new Numero(20), new Numero(10));
+      // IExpressao soma = new Soma(esquerda, direita);
 
-      c.Avanca();
-      historico.Adiciona(c.SalvaEstado());
+      // Console.WriteLine(soma.Avalia());
 
-      c.Avanca();
-      historico.Adiciona(c.SalvaEstado());
-
-      Console.WriteLine(historico.Pega(0).Contrato.Tipo);
-
+      Expression soma = Expression.Add(Expression.Constant(10), Expression.Constant(100));
+      Func<int> funcao = Expression.Lambda<Func<int>>(soma).Compile();
+      Console.WriteLine(funcao());
     }
   }
 }
