@@ -124,3 +124,33 @@ select recebida, sum(valor) as soma from compras where valor < 1000 group by rec
 select mounth(data) as mes, year(data) as ano, recebida, sum(valor) as soma from compras where valor < 1000 group by recebida, mounth(data), year(data);
 select mounth(data) as mes, year(data) as ano, recebida, sum(valor) as soma from compras where valor < 1000 group by recebida, mounth(data), year(data) order by year(data);
 select mounth(data) as mes, year(data) as ano, recebida, avg(valor) as media from compras where valor < 1000 group by recebida, mounth(data), year(data) order by year(data);
+
+
+# Aula 5
+select * from compras;
+create table compradores(
+  id int primary key identity not null,
+  nome nvarchar(200),
+  endereco nvarchar(200),
+  telefone nvarchar(30)
+);
+select * from compradores;
+insert into compradores values ('gabriel ferreira', 'rua vergueiro, 3185, '12345678');
+insert into compradores values ('camila ferreira', 'rua paulista, 31, '98745621');
+select * from compradores;
+alter table compras add comprador_id int;
+select * from compras;
+update compras set comprador_id = 1 where id < 20;
+update compras set comprador_id = 2 where id > 20;
+select * from compras;
+update compras set comprador_id = 1 where id = 20;
+select * from compras, compradores;
+select * from compras;
+select * from compras join compradores on compras.comprador_id = compradores.id;
+select * from compras join compradores on compras.comprador_id = compradores.id where recebida = 1;
+insert into compras values(100, '2015-07-10', 'vaso de flores', 1, 100);
+select * from compras;
+delete from compras where comprador_id = 100;
+alter table compras add constraint FK_Compras_CompradorID fereing key (comprador_id) references compradores(id);
+insert into compras values(100, '2015-07-10', 'vaso de flores', 1, 100);
+insert into compras values(100, '2015-07-10', 'vaso de flores', 1, 1);
