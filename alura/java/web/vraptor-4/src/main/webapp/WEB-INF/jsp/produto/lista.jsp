@@ -17,6 +17,7 @@
 				<th>Nome</th>
 				<th>Valor</th>
 				<th>Quantidade</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -25,10 +26,17 @@
 				<td>${produto.nome}</td>
 				<td>${produto.valor}</td>
 				<td>${produto.quantidade}</td>
+				<td>
+				   <a href="<c:url value='/produto/remove?produto.id=${produto.id}'/>">Remover</a>
+				</td>
 			</tr>
 			</c:forEach>
 		</tbody>
 	</table>
+
+<a href="<c:url value='/produto/formulario'/>">
+    Adicionar mais produtos!
+</a>
 
 </body>
 </html>
