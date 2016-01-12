@@ -12,6 +12,7 @@ namespace DesignPatterns2
   {
     private IExpressao numero;
 
+    public int Valor {get; private set; };
     public Numero(int numero)
     {
       this.numero = numero;
@@ -19,7 +20,12 @@ namespace DesignPatterns2
 
     public int Avalia()
     {
-      return this.numero;
+      return this.Valor;
+    }
+
+    public void Aceita(IVisitor impressora)
+    {
+      impressora.ImprimeNumero(this);
     }
   }
 }

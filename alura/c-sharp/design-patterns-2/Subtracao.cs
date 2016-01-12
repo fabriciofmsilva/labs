@@ -10,8 +10,8 @@ namespace DesignPatterns2
 {
   class Subtracao : IExpressao
   {
-    private IExpressao esquerda;
-    private IExpressao direita;
+    public IExpressao Esquerda {get; private set; }
+    public IExpressao Direita {get; private set; };
 
     public Subtracao(IExpressao esquerda, IExpressao direita)
     {
@@ -24,6 +24,11 @@ namespace DesignPatterns2
       int valorEsqueda = esquerda.Avalia();
       int valorDireita = direita.Avalia();
       return valorEsquerda - valorDireita;
+    }
+
+    public void Aceita(IVisitor impressora)
+    {
+      impressora.ImprimeSubtracao(this);
     }
   }
 }

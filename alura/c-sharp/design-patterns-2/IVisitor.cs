@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace DesignPatterns2
 {
-  interface IExpressao
+  interface IVisitor
   {
-    int Avalia();
+    void ImprimeSoma(Soma soma);
 
-    void Aceita(IVisitor impressora);
+    void ImprimeSubtracao(Subtracao subtracao);
+
+    void ImprimeNumero(Numero numero);
   }
 }
