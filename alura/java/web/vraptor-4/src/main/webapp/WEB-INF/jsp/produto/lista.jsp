@@ -33,9 +33,18 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	
+<c:if test="${not empty mensagem}">
+    <div class="alert alert-success">${mensagem}</div>
+</c:if>
+
 
 <a href="<c:url value='/produto/formulario'/>">
     Adicionar mais produtos!
+</a>
+
+<a href="<c:url value='/produto/listaXML'/>">
+    Acesse essa lista em XML!
 </a>
 
 </body>
