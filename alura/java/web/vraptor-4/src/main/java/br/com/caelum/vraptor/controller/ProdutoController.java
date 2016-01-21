@@ -18,14 +18,16 @@ import br.com.caelum.vraptor.view.Results;
 public class ProdutoController {
 	
 	private final Result result;
+	private final ProdutoDao dao;
 	
 	@Inject
-	public ProdutoController(Result result) {
+	public ProdutoController(Result result, ProdutoDao dao) {
 		this.result = result;
+		this.dao = dao;
 	}
 	
 	public ProdutoController() {
-		this(null);
+		this(null, null);
 	}
 
 	@Get("/")
@@ -34,17 +36,12 @@ public class ProdutoController {
 
 	@Get
 	public void lista() {
-		EntityManager em = JPAUtil.criaEntityManager();
-		ProdutoDao produtoDao = new ProdutoDao(em);
-		List<Produto> lista = produtoDao.lista();
-		result.include("produtoList", lista);
+		result.include("produtoList", dao.lista());
 	}
 
 	@Get
 	public void listaXML() {
-		EntityManager em = JPAUtil.criaEntityManager();
-		ProdutoDao produtoDao = new ProdutoDao(em);
-		List<Produto> lista = produtoDao.lista();
+		List<Produto> lista = dao.lista();
 		result.use(Results.xml()).from(lista).serialize();
 	}
 
@@ -55,22 +52,14 @@ public class ProdutoController {
 	
 	@Post
 	public void adiciona(Produto produto) {
-		EntityManager em = JPAUtil.criaEntityManager();
-		ProdutoDao produtoDao = new ProdutoDao(em);
-		em.getTransaction().begin();
-		produtoDao.adiciona(produto);
-		em.getTransaction().commit();
+		dao.adiciona(produto);
 		result.include("mensagem", "Produto adicionado com sucesso!");
 		result.redirectTo(this).lista();
 	}
 
 	@Post
 	public void remove(Produto produto){
-	    EntityManager em = JPAUtil.criaEntityManager();
-	    ProdutoDao dao = new ProdutoDao(em);
-	    em.getTransaction().begin();
 	    dao.remove(produto);
-	    em.getTransaction().commit();
 	}
 	
 }
