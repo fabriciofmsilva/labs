@@ -12,15 +12,13 @@ namespace DesignPatterns2
   {
     static void Main(string[] args)
     {
-      Cliente cliente = new Cliente();
+      String cpf = "1234";
 
-      cliente.Nome = "victor";
-      cliente.Endereco = "Rua Vergueiro";
-      cliente.DataDeNascimento = DateTime.Now;
+      EmpresaFacade facade = new EmpresaFacadeSingleton().Instancia;
+      Cliente cliente = facade.BuscaCliente(cpf);
 
-      String xml = new GeradorDeXml().GeraXml(cliente);
-
-      Console.WriteLine(xml);
+      var fatura = facade.CriaFatura(cliente, 5000);
+      facade.GeraCobranca(Tipo.Boleto, fatura);
     }
   }
 }
