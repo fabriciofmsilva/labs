@@ -12,16 +12,15 @@ namespace DesignPatterns2
   {
     static void Main(string[] args)
     {
-      FilaDeTrabalho fila = new FilaDeTrabalho();
-      Pedido pedido1 = new Pedido("Mauricio", 100.0);
-      Pedido pedido2 = new Pedido("Marcelo", 200.0);
+      Cliente cliente = new Cliente();
 
-      fila.Adiciona(new PagaPedido(pedido1));
-      fila.Adiciona(new PagaPedido(pedido2));
+      cliente.Nome = "victor";
+      cliente.Endereco = "Rua Vergueiro";
+      cliente.DataDeNascimento = DateTime.Now;
 
-      fila.Adiciona(new FinalizaPedido(pedido1));
+      String xml = new GeradorDeXml().GeraXml(cliente);
 
-      fila.Processa();
+      Console.WriteLine(xml);
     }
   }
 }
