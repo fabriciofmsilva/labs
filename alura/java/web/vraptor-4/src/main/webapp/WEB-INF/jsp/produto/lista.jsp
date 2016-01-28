@@ -9,7 +9,7 @@
 <title>Listagem de produtos</title>
 </head>
 <body>
-	<h1>Listagem de produtos</h1>
+	<h1>Listagem de produtos do ${usuarioLogado.usuario.nome}</h1>
 	
 	<table class="table table-striped table-hover table-bordered">
 		<thead>

@@ -10,11 +10,20 @@
 <link rel="stylesheet" type="text/css" href="../base.css">
 </head>
 <body>
+<div class="container">
+	<h1>Adicionar Produto</h1>
+	
 	<form action="<c:url value='/produto/adiciona' />" method="POST">
 		Nome: <input class="form-control" name="produto.nome" type="text">
 		Valor: <input class="form-control" name="produto.valor" type="text">
 		Quantidade: <input class="form-control" name="produto.quantidade" type="text">
 		Nome: <input class="btn btn-primary" type="submit" value="Adicionar">
 	</form>
+</div>
+
+<c:forEach items="${errors}" var="erro">
+	${erro.category} - ${erro.message} <br>
+</c:forEach>
+
 </body>
 </html>
