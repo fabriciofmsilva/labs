@@ -26,3 +26,39 @@ select * from nota;
 select c.nome, avg(n.nota) from nota n join resposta r on r.id = n.resposta_id join exercicio e on e.id = r.exercicio_id join secao s on s.id = e.secao_id join curso c on c.id = s.curso_id group by c.nome;
 select c.nome, count(e.id) as contagem from exercicio e join secao s on s.id = e.secao_id join curso c on c.id = s.curso_id group by c.nome;
 select c.nome, count(a.id) as quantidade from curso c join matricula m on m.curso_id = c.id join aluno a on a.id = m.aluno_id group by c.nome;
+
+# aula 3
+select a.nome, c.nome, avg(n.nota) from nome n join resposta r on r.id = n.resposta_id join exercicio e on e.id = r.exercicio_id join secao s on s.id = e.secao_id join curso c on c.id = s.curso_id join aluno a on a.id = a.aluno_id group by a.nome, c.nome;
+
+select a.nome, c.nome, avg(n.nota) from nome n join resposta r on r.id = n.resposta_id join exercicio e on e.id = r.exercicio_id join secao s on s.id = e.secao_id join curso c on c.id = s.curso_id join aluno a on a.id = a.aluno_id group by a.nome, c.nome having avg(n.nota) < 5;
+
+select a.nome, c.nome, avg(n.nota) from nome n join resposta r on r.id = n.resposta_id join exercicio e on e.id = r.exercicio_id join secao s on s.id = e.secao_id join curso c on c.id = s.curso_id join aluno a on a.id = a.aluno_id group by a.nome, c.nome having avg(n.nota) => 5;
+
+select c.nome, count(a.id) from curso c join matricula m on m.curso_id = c.id join aluno a on a.aluno_id = a.id group by c.nome having count(a.id) < 10;
+
+# aula 4
+sp_help matricula;
+
+select distinct tipo from matricula;
+
+select c.nome, count(m.id) quantidade, m.tipo from matricula m join curso c on m.curso_id = c.id where m.tipo in ('PAGA_PJ', 'PAGA_PF') group by c.nome, m.tipo;
+
+select * from aluno;
+
+select a.nome, c.nome from curso c join matricula m on m.curso_id = c.id join aluno a on m.aluno_id = a.id where m.aluno_id in (1, 3, 4) order by a.nome;
+
+select a.nome, c.nome from curso c join matricula m on m.curso_id = c.id join aluno a on m.aluno_id = a.id where c.id in (1,4) order by a.nome;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
