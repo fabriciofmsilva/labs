@@ -17,7 +17,7 @@
 		Nome: <input class="form-control" name="produto.nome" type="text">
 		Valor: <input class="form-control" name="produto.valor" type="text">
 		Quantidade: <input class="form-control" name="produto.quantidade" type="text">
-		Nome: <input class="btn btn-primary" type="submit" value="Adicionar">
+		<input class="btn btn-primary" type="submit" value="Adicionar">
 	</form>
 </div>
 
