@@ -18,6 +18,7 @@
 				<th>Valor</th>
 				<th>Quantidade</th>
 				<th></th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -26,6 +27,10 @@
 				<td>${produto.nome}</td>
 				<td>${produto.valor}</td>
 				<td>${produto.quantidade}</td>
+				<td>
+					<c:url value="/produto/enviaPedidoDeNovosItens?produto.nome=${produto.nome}" var="url"></c:url>
+					<a href="${url}">Pedir mais itens</a>
+				</td>
 				<td>
 				   <a href="<c:url value='/produto/remove?produto.id=${produto.id}'/>">Remover</a>
 				</td>
