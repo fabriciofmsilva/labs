@@ -102,6 +102,18 @@ select * from resposta where aluno_id = 1;
 select a.nome, count(distinct r.id) quantidade_respostas, count(distinct m.id) quantidade_matriculas from aluno a left join matricula m on m.aluno_id = a.id left join resposta r on r.aluno_id = a.id group by a.nome;
 
 
+# aula 7
+select nome from aluno order by nome;
+
+select count(*) from aluno a;
+
+select top 5 nome from aluno order by nome;
+
+select nome from aluno order by nome offset 5 rows;
+
+select nome from aluno order by nome offset 5 rows fetch next 5 rows only;
+
+
 
 
 
