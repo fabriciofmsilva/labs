@@ -1,7 +1,10 @@
 package caelum.com.br.cadastro;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -43,4 +46,22 @@ public class ListaAlunosActivity extends Activity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_lista_alunos, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.novo:
+                Intent irParaFormulario = new Intent(this, FormularioActivity.class);
+                startActivity(irParaFormulario);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
