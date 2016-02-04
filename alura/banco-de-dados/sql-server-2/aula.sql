@@ -50,6 +50,14 @@ select a.nome, c.nome from curso c join matricula m on m.curso_id = c.id join al
 select a.nome, c.nome from curso c join matricula m on m.curso_id = c.id join aluno a on m.aluno_id = a.id where c.id in (1,4) order by a.nome;
 
 
+# aula 5
+select a.nome, c.nome, avg(n.nota) media_curso, (select avg(n2.nota) from nota n2) media_geral, avg(n.nota) - (select avg(n1.nota) from nota n1) diferenca from nota n join resposta r on n.resposta_id = r.id join exercicio e on r.exercicio_id = e.id join secao s on e.secao_id = s.id join curso c on s.curso_is = c.id join aluno a on r.aluno_id = a.id group by c.nome, a.nome;
+
+select a.nome, (select count(r.id) from resposta r where r.aluno_id = a.id) quantidade _respostas from aluno a;
+
+select a.nome, (select count(m.id) from matricula m where m.aluno_id = a.id) from aluno a;
+
+select a.nome, (select count(m.id) from matricula m where m.aluno_id = a.id) quantidade_matriculas, (select count(r.id) from resposta r where r.aluno_id = a.id) quantidade_respostas from aluno a;
 
 
 
