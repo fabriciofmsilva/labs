@@ -59,6 +59,62 @@ select a.nome, (select count(m.id) from matricula m where m.aluno_id = a.id) fro
 
 select a.nome, (select count(m.id) from matricula m where m.aluno_id = a.id) quantidade_matriculas, (select count(r.id) from resposta r where r.aluno_id = a.id) quantidade_respostas from aluno a;
 
+# aula 6
+select a.nome, count(r.id) from aluno a join resposta r on r.aluno_id = a.id group by a.nome;
+select count(*) from aluno;
+select * from aluno;
+select * from resposta where aluno_id in (6, 8);
+
+select a.id, a.nome, r.aluno_id, r.respostada_dada from aluno a
+join resposta r on r.aluno_id = a.id;
+
+select a.nome, r.resposta_dada from aluno a left join resposta r on r.aluno_id = a.id;
+
+select a.nome, count(r.id) quantidade_respostas from aluno a left join resposta r on r.aluno_id = a.id group by a.nome;
+
+select a.nome, r.resposta_dada from aluno a right join resposta r on r.aluno_id = r.id;
+
+select * from aluno where id = 50000;
+insert into resposta (exercicio_id, aluno_id, resposta_dada) values(1, 50000 "sql server");
+
+select a.nome, r.resposta_dada from aluno a right join resposta r on r.aluno_id = r.id;
+
+delete from resposta where aluno_id = 50000;
+
+
+select a.nome, count(m.id) quantidade_matriculas from aluno a left join matricula m on m.aluno_id = m.id group by a.nome;
+
+select a.nome, (select count(m.id) from matricula m where m.aluno_id = a.id) from aluno a;
+
+select a.nome, (select count(r.id) from resposta r where r.aluno_id = a.id) from aluno a;
+
+
+select a.nome, (select count(m.id) from matricula m where m.aluno_id = a.id) quantidade_matriculas, (select count(r.id) from resposta r where r.aluno_id = a.id) quantidade_respostas from aluno a;
+
+select a.nome, r.resposta_dada, m.id from aluno a left join matricula m on m.aluno_id = a.id left join resposta r on r.aluno_id = a.id;
+
+select * from aluno;
+
+select * from matricula where aluno_id = 1;
+
+select * from resposta where aluno_id = 1;
+
+select a.nome, count(distinct r.id) quantidade_respostas, count(distinct m.id) quantidade_matriculas from aluno a left join matricula m on m.aluno_id = a.id left join resposta r on r.aluno_id = a.id group by a.nome;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
