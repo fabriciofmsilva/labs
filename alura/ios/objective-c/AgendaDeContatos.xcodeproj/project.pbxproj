@@ -17,6 +17,7 @@
 		CA39A2AF1C4859F800760F28 /* AgendaDeContatosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CA39A2AE1C4859F800760F28 /* AgendaDeContatosTests.m */; };
 		CA39A2BA1C4859F800760F28 /* AgendaDeContatosUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = CA39A2B91C4859F800760F28 /* AgendaDeContatosUITests.m */; };
 		CA39A2CC1C4876C000760F28 /* Contato.m in Sources */ = {isa = PBXBuildFile; fileRef = CA39A2CB1C4876C000760F28 /* Contato.m */; };
+		CA6B8D561C51B80400DEA9BA /* ListaContatosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA6B8D551C51B80400DEA9BA /* ListaContatosViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,8 @@
 		CA39A2BB1C4859F800760F28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA39A2CA1C4876C000760F28 /* Contato.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contato.h; sourceTree = "<group>"; };
 		CA39A2CB1C4876C000760F28 /* Contato.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contato.m; sourceTree = "<group>"; };
+		CA6B8D541C51B80400DEA9BA /* ListaContatosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListaContatosViewController.h; sourceTree = "<group>"; };
+		CA6B8D551C51B80400DEA9BA /* ListaContatosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListaContatosViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +116,8 @@
 				CA39A2CA1C4876C000760F28 /* Contato.h */,
 				CA39A2CB1C4876C000760F28 /* Contato.m */,
 				CA39A29A1C4859F800760F28 /* Main.storyboard */,
+				CA6B8D541C51B80400DEA9BA /* ListaContatosViewController.h */,
+				CA6B8D551C51B80400DEA9BA /* ListaContatosViewController.m */,
 				CA39A2A01C4859F800760F28 /* Assets.xcassets */,
 				CA39A2A21C4859F800760F28 /* LaunchScreen.storyboard */,
 				CA39A2A51C4859F800760F28 /* Info.plist */,
@@ -279,6 +284,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA39A2CC1C4876C000760F28 /* Contato.m in Sources */,
+				CA6B8D561C51B80400DEA9BA /* ListaContatosViewController.m in Sources */,
 				CA39A2991C4859F800760F28 /* ViewController.m in Sources */,
 				CA39A29F1C4859F800760F28 /* AgendaDeContatos.xcdatamodeld in Sources */,
 				CA39A2961C4859F800760F28 /* AppDelegate.m in Sources */,
@@ -508,6 +514,7 @@
 				CA39A2C01C4859F800760F28 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CA39A2C11C4859F800760F28 /* Build configuration list for PBXNativeTarget "AgendaDeContatosTests" */ = {
 			isa = XCConfigurationList;
@@ -516,6 +523,7 @@
 				CA39A2C31C4859F800760F28 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CA39A2C41C4859F800760F28 /* Build configuration list for PBXNativeTarget "AgendaDeContatosUITests" */ = {
 			isa = XCConfigurationList;
@@ -524,6 +532,7 @@
 				CA39A2C61C4859F800760F28 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
