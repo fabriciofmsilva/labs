@@ -4,13 +4,15 @@ namespace Solid
   {
     public void Main(string[] args)
     {
-      CalculadoraDeSalario cs = new CalculadoraDeSalario();
-      Funcionario funcionario = new Funcionario(new Desenvolvedor(new DezOuVintePorcento), 2000);
-      double resultado;
-
-      resultado = cs.Calcula(funcionario);
-
-      Console.WriteLine("O salario de um desenvolvedor que ganha 2000 bruto é: " + resultado);
+      EnviadorDeEmail enviadorEmail = new EnviadorDeEmail();
+      NotaFiscalDao nfDao = new NotaFiscalDao();
+      IList<IAcaoAposGerarNota> acoes = new IList<IAcaoAposGerarNota>();
+      acoes.Add(new enviadorEmail());
+      acoes.add(new NotaFiscalDao());
+      acoes.add(new SAP());
+      GeradorDeNotaFiscal gnf = new GeradorDeNotaFiscal(acoes);
+      Fatura fatura = new Fatura(200, "Renan Saggio");
+      gnf.Gera(fatura);
       Console.ReadKey();
     }
   }
