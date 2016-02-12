@@ -16,5 +16,7 @@
 @property IBOutlet UITextField *site;
 @property IBOutlet UITextField *email;
 
+@property NSMutableArray *contatos;
+
 @end
 
