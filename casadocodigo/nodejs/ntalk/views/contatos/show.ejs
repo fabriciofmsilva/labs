@@ -1,0 +1,17 @@
+<% include ../header %>
+<header class="row-fluid text-center">
+  <h2>Ntalk - Dados do contato</h2>
+</header>
+
+<section class="row-fluid text-center">
+  <form class="well form-inline" action="/contato/<%- id %>?_method=delete" method="POST">
+    <p><label>Nome:</label><%- contato.nome %></p>
+    <p><label>E-mail:</label><%- contato.email %></p>
+    <p>
+      <a class="btn btn-info" href="/contato/<%- id %>/editar">Editar</a>
+      <button class="btn btn-danger" type="submit">Excluir</button>
+    </p>
+  </form>
+</section>
+<% include ../exit %>
+<% include ../footer %>

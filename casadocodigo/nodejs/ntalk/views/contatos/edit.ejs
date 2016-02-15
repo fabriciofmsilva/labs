@@ -1,0 +1,16 @@
+<% include ../header %>
+<header class="row-fluid text-center">
+  <h2>Ntalk - Agenda de contatos</h2>
+</header>
+
+<section class="row-fluid text-center">
+  <form class="well form-inline" action="/contato/<%- id %>?_method=put" method="POST">
+    <label>Nome:</label>
+    <input name="contato[nome]" type="text" value="<%- contato.nome %>">
+    <label>E-mail:</label>
+    <input name="contato[email]" type="text" value="<%- contato.email %>">
+    <button class="btn btn-primary" type="submit">Atualizar</button>
+  </form>
+</section>
+<% include ../exit %>
+<% include ../footer %>
