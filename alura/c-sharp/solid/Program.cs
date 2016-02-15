@@ -4,15 +4,12 @@ namespace Solid
   {
     public void Main(string[] args)
     {
-      EnviadorDeEmail enviadorEmail = new EnviadorDeEmail();
-      NotaFiscalDao nfDao = new NotaFiscalDao();
-      IList<IAcaoAposGerarNota> acoes = new IList<IAcaoAposGerarNota>();
-      acoes.Add(new enviadorEmail());
-      acoes.add(new NotaFiscalDao());
-      acoes.add(new SAP());
-      GeradorDeNotaFiscal gnf = new GeradorDeNotaFiscal(acoes);
-      Fatura fatura = new Fatura(200, "Renan Saggio");
-      gnf.Gera(fatura);
+      Compra compra = new Compra(500, 'sao paulo');
+      CalculadoraDePrecos calc = new CalculadoraDePrecos(new TabelaDePrecoPadrao(), new Frete());
+
+      double resultado = calc.Calcula(compra);
+
+      Console.WriteLine('O preco da compra e: ' + resultado);
       Console.ReadKey();
     }
   }
