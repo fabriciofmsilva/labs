@@ -4,13 +4,39 @@ namespace Solid
   {
     public void Main(string[] args)
     {
-      Compra compra = new Compra(500, 'sao paulo');
-      CalculadoraDePrecos calc = new CalculadoraDePrecos(new TabelaDePrecoPadrao(), new Frete());
+      IList<ContaComum> contas = ContasDoBanco();
 
-      double resultado = calc.Calcula(compra);
+      foreach(ContaComum conta in contas)
+      {
+        conta.somaInvestimentos();
 
-      Console.WriteLine('O preco da compra e: ' + resultado);
-      Console.ReadKey();
+        Console.WriteLine("Novo saldo: " + conta.Saldo);
+      }
+
+      Console.ReadLine();
+    }
+
+    private static IList<ContaComum> ContasDoBanco()
+    {
+      List<ContaComum> contas = List<ContaComum>();
+      contas.Add(umaContaComum(100));
+      contas.Add(umaContaComum(150));
+      contas.Add(umaContaComum(100));
+      return contas;
+    }
+
+    private static ContaEstudante umaContaEstudante(double saldo)
+    {
+      ContaEstudante conta = new ContaEstudante();
+      conta.Deposita(saldo);
+      return conta;
+    }
+
+    private static ContaComum umaContaComum(double saldo)
+    {
+      ContaComum conta = new ContaComum();
+      conta.Deposita(saldo);
+      return conta;
     }
   }
 }
