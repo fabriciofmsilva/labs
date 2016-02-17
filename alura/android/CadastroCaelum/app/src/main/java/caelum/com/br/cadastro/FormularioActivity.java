@@ -2,9 +2,12 @@ package caelum.com.br.cadastro;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import java.io.Serializable;
 
 import caelum.com.br.cadastro.dao.AlunoDAO;
 import caelum.com.br.cadastro.modelo.Aluno;
@@ -14,17 +17,20 @@ import caelum.com.br.cadastro.modelo.Aluno;
  */
 public class FormularioActivity extends Activity {
 
-    private FormularioHelper helper;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.formulario);
 
-        Button botao = (Button) findViewById(R.id.botao);
+        final FormularioHelper helper = new FormularioHelper(this);
 
-        helper = new FormularioHelper(this);
+        final Aluno alunoParaSerAlterado = (Aluno) getIntent().getSerializableExtra("alunoSelecionado");
 
+        if (alunoParaSerAlterado != null) {
+            helper.colocaAlunoNoFormulario(alunoParaSerAlterado);
+        }
+
+        final Button botao = (Button) findViewById(R.id.botao);
         botao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,7 +40,14 @@ public class FormularioActivity extends Activity {
                 Aluno aluno = helper.pegaAlunoDoFormulario();
 
                 AlunoDAO dao = new AlunoDAO(FormularioActivity.this);
-                dao.insere(aluno);
+
+                if (alunoParaSerAlterado != null) {
+                    aluno.setId(alunoParaSerAlterado.getId());
+                    botao.setText("Alterar");
+                    dao.atualizar(aluno);
+                } else {
+                    dao.insere(aluno);
+                }
                 dao.close();
 
                 finish();

@@ -1,5 +1,6 @@
 package caelum.com.br.cadastro;
 
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.RatingBar;
 
@@ -10,16 +11,13 @@ import caelum.com.br.cadastro.modelo.Aluno;
  */
 public class FormularioHelper {
 
-    private final EditText campoNome;
-    private final EditText campoSite;
-    private final EditText campoEndereco;
-    private final EditText campoTelefone;
-    private final RatingBar campoNota;
-    private final Aluno aluno;
+    EditText campoNome;
+    EditText campoSite;
+    EditText campoEndereco;
+    EditText campoTelefone;
+    RatingBar campoNota;
 
     public FormularioHelper(FormularioActivity activity) {
-        aluno = new Aluno();
-        
         campoNome = (EditText) activity.findViewById(R.id.nome);
         campoSite = (EditText) activity.findViewById(R.id.site);
         campoEndereco = (EditText) activity.findViewById(R.id.endereco);
@@ -28,6 +26,8 @@ public class FormularioHelper {
     }
 
     public Aluno pegaAlunoDoFormulario() {
+        Aluno aluno = new Aluno();
+
         String nome = campoNome.getText().toString();
         String site = campoSite.getText().toString();
         String endereco = campoEndereco.getText().toString();
@@ -41,6 +41,14 @@ public class FormularioHelper {
         aluno.setNota(Double.valueOf(nota));
 
         return aluno;
+    }
+
+    public void colocaAlunoNoFormulario(Aluno alunoParaSerAlterado) {
+        campoNome.setText(alunoParaSerAlterado.getNome());
+        campoSite.setText(alunoParaSerAlterado.getSite());
+        campoEndereco.setText(alunoParaSerAlterado.getEndereco());
+        campoTelefone.setText(alunoParaSerAlterado.getTelefone());
+        campoNota.setRating(alunoParaSerAlterado.getNota().floatValue());
     }
 
 }
