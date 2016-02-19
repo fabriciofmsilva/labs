@@ -17,6 +17,7 @@
         UIBarButtonItem *botao = [[UIBarButtonItem alloc] initWithTitle:@"Adicionar" style:UIBarButtonItemStylePlain target:self action:@selector(adiciona)];
         self.navigationItem.rightBarButtonItem = botao;
         self.navigationItem.title = @"Novo Contato";
+        self.dao = [ContatoDao contatoDaoInstance];
     }
     
     return self;
@@ -30,9 +31,9 @@
     contato.telefone = self.telefone.text;
     contato.email = self.email.text;
     
-    [self.contatos addObject:contato];
+    [self.dao adicionaContato:contato];
     
-    NSLog(@"%@", self.contatos);
+    NSLog(@"%@", self.dao.contatos);
 
     [self.navigationController popViewControllerAnimated:YES];
 }

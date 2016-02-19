@@ -18,6 +18,7 @@
 		CA39A2BA1C4859F800760F28 /* AgendaDeContatosUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = CA39A2B91C4859F800760F28 /* AgendaDeContatosUITests.m */; };
 		CA39A2CC1C4876C000760F28 /* Contato.m in Sources */ = {isa = PBXBuildFile; fileRef = CA39A2CB1C4876C000760F28 /* Contato.m */; };
 		CA6B8D561C51B80400DEA9BA /* ListaContatosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA6B8D551C51B80400DEA9BA /* ListaContatosViewController.m */; };
+		CA9024651C769F8F004E26A8 /* ContatoDao.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9024641C769F8F004E26A8 /* ContatoDao.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,8 @@
 		CA39A2CB1C4876C000760F28 /* Contato.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contato.m; sourceTree = "<group>"; };
 		CA6B8D541C51B80400DEA9BA /* ListaContatosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListaContatosViewController.h; sourceTree = "<group>"; };
 		CA6B8D551C51B80400DEA9BA /* ListaContatosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListaContatosViewController.m; sourceTree = "<group>"; };
+		CA9024631C769F8F004E26A8 /* ContatoDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContatoDao.h; sourceTree = "<group>"; };
+		CA9024641C769F8F004E26A8 /* ContatoDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContatoDao.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +126,8 @@
 				CA39A2A51C4859F800760F28 /* Info.plist */,
 				CA39A29D1C4859F800760F28 /* AgendaDeContatos.xcdatamodeld */,
 				CA39A2911C4859F800760F28 /* Supporting Files */,
+				CA9024631C769F8F004E26A8 /* ContatoDao.h */,
+				CA9024641C769F8F004E26A8 /* ContatoDao.m */,
 			);
 			path = AgendaDeContatos;
 			sourceTree = "<group>";
@@ -283,6 +288,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA9024651C769F8F004E26A8 /* ContatoDao.m in Sources */,
 				CA39A2CC1C4876C000760F28 /* Contato.m in Sources */,
 				CA6B8D561C51B80400DEA9BA /* ListaContatosViewController.m in Sources */,
 				CA39A2991C4859F800760F28 /* ViewController.m in Sources */,

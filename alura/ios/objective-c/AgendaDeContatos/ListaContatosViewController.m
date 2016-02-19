@@ -22,7 +22,7 @@
     
         self.navigationItem.rightBarButtonItem = botaoForm;
         self.navigationItem.title = @"Contatos";
-        self.contatos = [NSMutableArray new];
+        self.dao = [ContatoDao contatoDaoInstance];
     }
     
     return self;
@@ -32,13 +32,12 @@
 -(void) exibeFormulario {
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ViewController *form = [storyBoard instantiateViewControllerWithIdentifier:@"Form-Contato"];
-    form.contatos = self.contatos;
     
     [self.navigationController pushViewController:form animated:YES];
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.contatos.count;
+    return [self.dao total];
 }
 
 - (UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
@@ -51,7 +50,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identificador];
     }
 
-    Contato *contato = self.contatos[indexPath.row];
+    Contato *contato = [self.dao contatoDoIndice:indexPath.row];
     cell.textLabel.text = contato.nome;
     
     return cell;
