@@ -2,6 +2,7 @@ package caelum.com.br.cadastro;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -92,10 +93,36 @@ public class ListaAlunosActivity extends Activity {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        menu.add("Ligar");
+        MenuItem ligar = menu.add("Ligar");
+        ligar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent irParaATelaDeDiscagem = new Intent();
+                irParaATelaDeDiscagem.setAction(Intent.ACTION_CALL);
+
+                Uri telefoneDoAluro = Uri.parse("tel:" + aluno.getTelefone());
+                irParaATelaDeDiscagem.setData(telefoneDoAluro);
+
+                startActivity(irParaATelaDeDiscagem);
+                return false;
+            }
+        });
+
         menu.add("Enviar SMS");
         menu.add("Achar no Mapa");
-        menu.add("Navegar no site");
+        MenuItem site = menu.add("Navegar no site");
+        site.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent abrirOSiteDoAluno = new Intent(Intent.ACTION_VIEW);
+
+                Uri siteDoAluno = Uri.parse("http://" + aluno.getSite());
+                abrirOSiteDoAluno.setData(siteDoAluno);
+
+                startActivity(abrirOSiteDoAluno);
+                return false;
+            }
+        });
 
         MenuItem deletar = menu.add("Deletar");
         deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
