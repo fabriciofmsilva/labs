@@ -22,6 +22,24 @@
     return this.item;
   };
 
+  Circle.prototype.next = function(shp) {
+    if (shp) {
+      this.nextShape = shp;
+    }
+
+    return this.nextShape;
+  };
+
+  Circle.prototype.chainDo = function(action, args, count) {
+    this[action].apply(this, args);
+
+    if (count && this.nextShape) {
+      setTimeout(binder(this, function() {
+        this.nextShape.chainDo(action, args, --count);
+      }), 20);
+    }
+  };
+
   Circle.prototype.getID = function() {
     return this.id;
   };
@@ -59,6 +77,57 @@
       objt.item.remove();
     };
   }
+
+  function eventDispatcherDecorator(o) {
+    var list = {};
+    o.addEvent = function(type, listener) {
+      if (!list[type]) {
+        list[type] = [];
+      }
+
+      if (list[type].indexOf(listener) === -1) {
+        list[type].push(listener);
+      }
+    };
+
+    o.removeEvent = function(type, listener) {
+      var a = list[type];
+      if (a) {
+        var index = a.indexOf(listener);
+        if (index > -1) {
+          a.splice(index, 1);
+        }
+      }
+    };
+
+    o.dispatchEvent = function(e) {
+      var aList = list[e.type];
+      if (aList) {
+        if (!e.target) {
+          e.target = this;
+        }
+
+        for (var index in aList) {
+          aList[index](e);
+        }
+      }
+    };
+  }
+
+  var o = {};
+  var fun = function() {
+    console.log('it\'s over 2');
+  };
+  eventDispatcherDecorator(o);
+  o.addEvent('over', function() {
+    console.log('it\'s over');
+  });
+  o.addEvent('over', fun);
+  o.addEvent('over', fun);
+  o.addEvent('over', fun);
+  o.removeEvent('over', fun);
+
+  o.dispatchEvent({type: 'over'});
 
   function RedCircleBuilder() {
     this.item = new Circle();
@@ -165,11 +234,26 @@
 
       function create(left, top, type) {
         var circle = _sf.create(type);
+        var index = _aCircle.length - 1;
         circle.move(left, top);
         circle.setID(_aCircle.length);
         _aCircle.push(circle);
 
+        if (index != -1) {
+          _aCircle[index].next(circle);
+        }
+
         return shapeFacade(circle);
+      }
+
+      function chainTint(count) {
+        var index = Math.max(0, _aCircle.length - count);
+        var clr = '#' +
+                  Math.floor(Math.random() * 255).toString(16) +
+                  Math.floor(Math.random() * 255).toString(16) +
+                  Math.floor(Math.random() * 255).toString(16);
+
+        _aCircle[index].chainDo('color', [clr], count);
       }
 
       function tint(clr) {
@@ -195,6 +279,7 @@
         register: registerShape,
         setStage: setStage,
         tint: tint,
+        chainTint: chainTint,
         move: move
       };
     }
@@ -210,32 +295,108 @@
     };
   })();
 
+  function RedState(obj) {
+    var on = 'red',
+        off = 'rgba(255,0,0,.25)',
+        _nextState;
+
+    this.nextState = function(ns) {
+      _nextState = ns;
+    };
+
+    this.start = function() {
+      obj.color(on);
+      setTimeout(binder(_nextState, _nextState.start), 1000);
+      setTimeout(function() {
+        obj.color(off);
+      }, 3000);
+    };
+  }
+
+  function YellowState(obj) {
+    var on = 'yellow',
+        off = 'rgba(255,255,0,.25)',
+        _nextState;
+
+    this.nextState = function(ns) {
+      _nextState = ns;
+    };
+
+    this.start = function() {
+      obj.color(on);
+      setTimeout(function() {
+        obj.color(off);
+        _nextState.start();
+      }, 2000);
+    };
+  }
+
+  function GreenState(obj) {
+    var on = 'green',
+        off = 'rgba(0,255,0,.25)',
+        _nextState;
+
+    this.nextState = function(ns) {
+      _nextState = ns;
+    };
+
+    this.start = function() {
+      obj.color(on);
+      setTimeout(function() {
+        obj.color(off);
+        _nextState.start();
+      }, 4000);
+    };
+  }
+
   $(win.document).ready(function() {
     var cg = CircleGenerationSingleton.getInstance();
-    cg.register('red', RedCircleBuilder);
-    cg.register('blue', BlueCircleBuilder);
+    cg.register('circle', RedCircleBuilder);
+    // cg.register('blue', BlueCircleBuilder);
     cg.setStage(new StageAdapter('.advert'));
 
-    $('.advert').click(function(e) {
-      var circle = cg.create(e.pageX - 25, e.pageY - 25, 'red');
+    var red = cg.create(200, 150, 'circle');
+    cg.add(red);
 
-      cg.add(circle);
+    var yellow = cg.create(200, 225, 'circle');
+    yellow.color('rgba(255,255,0,.25');
+    cg.add(yellow);
 
-      flyWeightFader($(e.target));
-    });
+    var green = cg.create(200, 300, 'circle');
+    green.color('rgba(0,255,0,.25');
+    cg.add(green);
 
-    $(document).keypress(function(e) {
-      if (e.keyCode === 97) {
-        var circle = cg.create(Math.floor(Math.random() * 600), Math.floor(Math.random() * 600), 'blue');
+    var rs = new RedState(red);
+    var ys = new YellowState(yellow);
+    var gs = new GreenState(green);
 
-        cg.add(circle);
-      } else if (e.keyCode === 116) {
-        cg.tint('black');
-      } else if (e.keyCode === 119) {
-        cg.move('+=5px', '+=0px');
-      } else if (e.keyCode === 113) {
-        cg.move('-=5px', '+=0px');
-      }
-    });
+    rs.nextState(ys);
+    ys.nextState(gs);
+    gs.nextState(rs);
+
+    rs.start();
+
+    // $('.advert').click(function(e) {
+    //   var circle = cg.create(e.pageX - 25, e.pageY - 25, 'red');
+
+    //   cg.add(circle);
+    //   cg.chainTint(5);
+
+    //   flyWeightFader($(e.target));
+    // });
+
+    // $(document).keypress(function(e) {
+    //   if (e.keyCode === 97) {
+    //     var circle = cg.create(Math.floor(Math.random() * 600), Math.floor(Math.random() * 600), 'blue');
+
+    //     cg.add(circle);
+    //   } else if (e.keyCode === 116) {
+    //     cg.tint('black');
+    //   } else if (e.keyCode === 119) {
+    //     cg.move('+=5px', '+=0px');
+    //   } else if (e.keyCode === 113) {
+    //     cg.move('-=5px', '+=0px');
+    //   }
+    // });
   });
 })(window, jQuery);
