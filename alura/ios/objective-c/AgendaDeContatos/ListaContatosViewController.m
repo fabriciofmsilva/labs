@@ -21,6 +21,7 @@
         UIBarButtonItem *botaoForm = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(exibeFormulario)];
     
         self.navigationItem.rightBarButtonItem = botaoForm;
+        self.navigationItem.leftBarButtonItem = self.editButtonItem;
         self.navigationItem.title = @"Contatos";
         self.dao = [ContatoDao contatoDaoInstance];
     }
@@ -29,9 +30,28 @@
     
 }
 
+- (void) tableView:(nonnull UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Contato *contato = [self.dao contatoDoIndice:indexPath.row];
+        
+        [self.dao removeContato: contato];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
+- (void) tableView:(nonnull UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    self.contatoSelecionado = [self.dao contatoDoIndice:indexPath.row];
+    
+    [self exibeFormulario];
+}
+
 -(void) exibeFormulario {
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ViewController *form = [storyBoard instantiateViewControllerWithIdentifier:@"Form-Contato"];
+    if (self.contatoSelecionado) {
+        form.contato = self.contatoSelecionado;
+    }
+    self.contatoSelecionado = nil;
     
     [self.navigationController pushViewController:form animated:YES];
 }

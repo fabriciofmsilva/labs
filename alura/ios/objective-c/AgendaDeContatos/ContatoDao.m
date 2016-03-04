@@ -32,6 +32,10 @@ static ContatoDao *defaultDao = nil;
     [self.contatos addObject:contato];
 }
 
+- (void) removeContato:(Contato *)contato {
+    [self.contatos removeObject:contato];
+}
+
 - (NSInteger) total {
     return self.contatos.count;
 }

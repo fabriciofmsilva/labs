@@ -14,28 +14,55 @@
 -(id) initWithCoder: (NSCoder *) aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        UIBarButtonItem *botao = [[UIBarButtonItem alloc] initWithTitle:@"Adicionar" style:UIBarButtonItemStylePlain target:self action:@selector(adiciona)];
-        self.navigationItem.rightBarButtonItem = botao;
-        self.navigationItem.title = @"Novo Contato";
         self.dao = [ContatoDao contatoDaoInstance];
     }
     
     return self;
 }
 
+- (void) viewDidLoad {
+    [super viewDidLoad];
+
+    UIBarButtonItem *botao = nil;
+    if (self.contato) {
+        botao = [[UIBarButtonItem alloc] initWithTitle:@"Alterar" style:UIBarButtonItemStylePlain target:self action:@selector(altera)];
+        self.navigationItem.title = @"Editar Contato";
+    } else {
+        botao = [[UIBarButtonItem alloc] initWithTitle:@"Adicionar" style:UIBarButtonItemStylePlain target:self action:@selector(adiciona)];
+        self.navigationItem.title = @"Novo Contato";
+    }
+    self.navigationItem.rightBarButtonItem = botao;
+    
+    if (self.contato) {
+        self.nome.text = self.contato.nome;
+        self.telefone.text = self.contato.telefone;
+        self.endereco.text = self.contato.endereco;
+        self.email.text = self.contato.email;
+        self.site.text = self.contato.site;
+    }
+}
+
 -(void) adiciona {
-    Contato *contato = [Contato new];
-    contato.nome = self.nome.text;
-    contato.endereco = self.endereco.text;
-    contato.site = self.site.text;
-    contato.telefone = self.telefone.text;
-    contato.email = self.email.text;
+    self.contato = [Contato new];
+    [self pegaDadosDoFormulario];
     
-    [self.dao adicionaContato:contato];
-    
-    NSLog(@"%@", self.dao.contatos);
+    [self.dao adicionaContato:self.contato];
 
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) altera {
+    [self pegaDadosDoFormulario];
+
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) pegaDadosDoFormulario {
+    self.contato.nome = self.nome.text;
+    self.contato.endereco = self.endereco.text;
+    self.contato.site = self.site.text;
+    self.contato.telefone = self.telefone.text;
+    self.contato.email = self.email.text;
 }
 
 @end
