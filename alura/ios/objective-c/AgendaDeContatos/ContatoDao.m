@@ -44,4 +44,8 @@ static ContatoDao *defaultDao = nil;
     return self.contatos[indice];
 }
 
+- (NSInteger) indiceDoContato:(Contato *) contato {
+    return [self.contatos indexOfObject:contato];
+}
+
 @end

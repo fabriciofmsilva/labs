@@ -7,7 +7,6 @@
 //
 
 #import "ListaContatosViewController.h"
-#import "ViewController.h"
 #import "Contato.h"
 
 @implementation ListaContatosViewController
@@ -23,6 +22,8 @@
         self.navigationItem.rightBarButtonItem = botaoForm;
         self.navigationItem.leftBarButtonItem = self.editButtonItem;
         self.navigationItem.title = @"Contatos";
+        self.linhaSelecionada = -1;
+        
         self.dao = [ContatoDao contatoDaoInstance];
     }
     
@@ -48,6 +49,8 @@
 -(void) exibeFormulario {
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ViewController *form = [storyBoard instantiateViewControllerWithIdentifier:@"Form-Contato"];
+    form.delegate = self;
+
     if (self.contatoSelecionado) {
         form.contato = self.contatoSelecionado;
     }
@@ -78,6 +81,30 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.tableView reloadData];
+}
+
+- (void) contatoAdicionado: (Contato *) contato {
+    self.linhaSelecionada = [self.dao indiceDoContato:contato];
+    NSString *mensagem = [NSString stringWithFormat:@"Contato %@ adicionado com sucesso", contato.nome];
+
+    UIAlertController *alerta = [UIAlertController alertControllerWithTitle:@"Contato adicionado" message:mensagem preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+    [alerta addAction:ok];
+    
+    [self presentViewController:alerta animated:YES completion:nil];
+    
+    NSLog(@"Adicionado: %@", contato);
+}
+
+- (void) contatoAtualizado: (Contato *) contato {
+    self.linhaSelecionada = [self.dao indiceDoContato:contato];
+    NSLog(@"Adicionado: %@", contato);
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.linhaSelecionada inSection:0];
+    [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    self.linhaSelecionada = -1;
 }
 
 @end
