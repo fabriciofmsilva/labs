@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.logging.ConsoleHandler;
 
+import caelum.com.br.cadastro.adapter.AlunoAdapter;
 import caelum.com.br.cadastro.dao.AlunoDAO;
 import caelum.com.br.cadastro.modelo.Aluno;
 
@@ -68,7 +69,8 @@ public class ListaAlunosActivity extends Activity {
     private void carregaLista() {
         AlunoDAO dao = new AlunoDAO(this);
         List<Aluno> alunos = dao.getLista();
-        ArrayAdapter<Aluno> adapter = new ArrayAdapter<Aluno>(this, android.R.layout.simple_list_item_1, alunos);
+
+        AlunoAdapter adapter = new AlunoAdapter(alunos, this);
         listaAlunos.setAdapter(adapter);
     }
 
