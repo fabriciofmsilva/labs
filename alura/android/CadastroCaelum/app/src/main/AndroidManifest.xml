@@ -8,6 +8,7 @@
         android:maxSdkVersion="19" />
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <application
         android:allowBackup="true"
@@ -16,12 +17,21 @@
         
         <activity android:name=".ListaAlunosActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"></action>
-                <category android:name="android.intent.category.LAUNCHER"></category>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".FormularioActivity"></activity>
+        <activity android:name=".FormularioActivity" />
+        
+        <receiver
+            android:name=".SMSReceiver"
+            android:permission="android.permission.BROADCAST_SMS"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
 
     </application>
 
