@@ -14,7 +14,7 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 
-public class TesteProdutor {
+public class TesteProdutorFila {
 
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws Exception {
