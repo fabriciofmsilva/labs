@@ -1,0 +1,2378 @@
+---
+title: ## Banco de Dados - Alura
+notebook: @Inbox
+tags: sql
+---
+
+Banco de Dados - Alura
+==========
+
+Oracle - Introdução e SQL
+----------
+
+Oracle no dia a dia enquanto aprende SQL
+
+Desenvolvedores (ou pessoas de qualquer outra área) que querem aprender SQL com Oracle.
+
+### Consultando os dados
+
+1. Criando tabelas
+2. Determinando os tipos das colunas
+3. Identificadores únicos: a chave primária
+4. Inserindo dados usando o comando INSERT
+5. Selecionando registros com o comando SELECT
+6. Renomeando colunas selecionadas usando aliases
+7. Filtro de registros com a cláusula WHERE
+
+```
+sqlplus
+create table compras (id number primary key, valor number, observacoes varchar2(30), data date, recebido char check (recebido in (0,1)));
+create sequence id_seq;
+insert into compras (id, valor, data, observacoes, recebido) values (id_seq.nextval, 100, '12-MAY-2007', 'Compras de maio', '1');
+select * from compras;
+select valor, data from compras;
+select valor * 3, data from compras;
+select valor * 3 as triplo, data from compras;
+insert into compras (id, valor, data, observacoes, recebido) values (id_seq.nextval, 150, '15-JUN-2007', 'Compras de junho', '0');
+select * from compras;
+select valor, data from compras where valor > 100;
+select valor, data from compras where valor < 120;
+select * from compras where valor < 120 and recebido = '1';
+select * from compras where valor < 120 or recebido = '1';
+select * from compras where observacoes = 'Compras';
+select * from compras where observacoes like 'Compras%';
+select * from compras where observacoes like '%de%';
+```
+
+
+
+### Atualizando e excluindo dados
+
+1. Atualizando registros com o comando UPDATE
+2. Removendo registros com o comando DELETE
+3. Operadores BETWEEN e IN para facilitar os filtros de registros
+
+```
+sqlplus
+select * from compras;
+select * from compras where valor > 200 and valor <= 700;
+select * from compras where valor between 200 and 700;
+select * from compras where data between '01-JAN-2010' and '01-APR-2010';
+update compras set valor = 900 where id = 20;
+select * from compras where id = 20;
+update compras set valor = 100, observacoes = 'uma compra comum' where data not between '01-JAN-2010' and '01-APR-2010';
+select * from compras;
+update compras set observacoes = 'datas festivas' where data in ('12-OCT-2010', '25-DEC-2010'. '12-JUN-2010');
+select * from compras;
+delete from compras where id = 44;
+select * from compras;
+delete from compras where valor < 50;
+```
+
+
+
+### Alterando e restringindo o formato das nossas tabelas
+
+1. Evitando a inserção de valores nulos na nossa tabela, garantindo a sua integridade
+2. Criando e renomeando colunas na tabela com o comando ALTER TABLE
+3. Atribuindo um valor padrão à coluna com o default
+4. Simulando o tipo ENUM no Oracle Database, para criar colunas que só aceitam apenas valores pré-definidos
+
+```
+desc compras;
+insert into compras (id, valor, data, observacoes, recebido) values (id_seq.nextval, 500, '03-AUG-2015', null, '1');
+select * from compras;
+select * from compras where observacoes is null;
+select * from compras where observacoes is not null;
+delete from compras where observacoes is null;
+select * from compras where observacoes is null;
+create tabel pessoas (nome varchar2(100) not null);
+alter table compras modify (observacoes varchar2(30) not null);
+insert into compras (id, valor, data, observacoes, recebido) values (id_seq.nextval, 500, '03-AUG-2015', null, '1');
+desc compras
+insert into compras (id, valor, data, observacoes, recebido) values (id_seq.nextval, 500, '03-AUG-2015', 'presente pro filho', '1');
+alter table compras modify (recebido char default '0' check (recebido in (0,1)));
+insert into compras (id, valor, data, observacoes) values (id_seq.nextval, 500, '03-AUG-2015', 'presente pro filho');
+select * from compras;
+alter table compras add (forma_pagt varchar2(10) check (forma_pagt in ('boleto', 'dinheiro', 'cartao')));
+desc compras;
+insert into compras (id, valor, data, observacoes, form_pagt) values (id_seq.nextval, 500, '15-AUG-2015', 'presente pra mae', 'boleto');
+select * from compras;
+update compras set forma_pagt = 'dinheiro' where forma_pagt is null;
+select * from compras;
+insert into compras (id, valor, data, observacoes, form_pagt) values (id_seq.nextval, 500, '15-AUG-2015', 'presente pra mae', 'jujuba');
+alter table compras rename column forma_pagt to forma_pagto;
+desc compras;
+```
+
+
+
+### Agrupando dados e fazendo consultas mais inteligentes
+
+1. Usando funções de agregação, como SUM, AVG e COUNT
+2. Ordenando os resultados com ORDER BY
+3. Usando GROUP BY para agrupar registros
+
+```
+select * from compras;
+select sum(valor) from compras;
+select sum(valor) from compras where data > '01-JAN-2010';
+select avg(valor) from compras;
+select count(id) from compras where data between '01-JAN-2010' and '31-DEC-2010';
+select sum(valor), avg(valor) from compras;
+select sum(valor) as soma, avg(valor) as media from compras;
+select sum(valor) from compras where recebido = '1';
+select sum(valor) from compras where recebido = '0';
+select sum(valor) from compras group by recebido;
+select recebido, sum(valor) from compras group by recebido;
+select extract(year from data), sum(valor) from compras group by extract(year from data);
+select extract(year from data) as ano, sum(valor) as soma from compras group by extract(year from data) order by ano;
+```
+
+
+
+### Juntando dados de várias tabelas
+
+1. Juntando registros de tabelas através do JOIN
+2. Usando a chave estrangeira para referenciar ID's de outras tabelas
+
+```
+select * from compras;
+create table compradores (id number primary key, nome varchar2(30) not null, endereco varchar2(30) not null, telefone varchar2(20) not null);
+create sequence id_compradores_seq;
+insert into compradores (id, nome, endereco, telefone) values (id_compradores_seq.nextval, 'Flavio', 'Rua do Ouvidor, 123', '(21) 1111-1111');
+insert into compradores (id, nome, endereco, telefone) values (id_compradores_seq.nextval, 'Nico', 'Av. Presidente Vargas, 123', '(21) 2222-2222');
+select * from compradores;
+set linesize 100;
+select * from compradores;
+select * from compras;
+alter table compras add (comprador_id number);
+desc compras;
+select * from compras;
+set linesize 150;
+select * from compras;
+update compras set comprador_id = 1 where id <= 20;
+update compras set comprador_id = 2 where id > 20;
+select * from compras;
+select * from compras, compradores;
+select observacoes, valor nome from compras, compradores;
+select observacoes, valor nome from compras join compradores on compras.comprador_id = compradores.id;
+alter table compras add foreign key (comprador_id) references compradores(id);
+insert into compras (id, valor, data, observacoes, forma_pagto, comprador_id) values (id_seq.nextval, 500, '10-JAN-2010', 'compras de janeiro', 'cartao', 100);
+insert into compras (id, valor, data, observacoes, forma_pagto, comprador_id) values (id_seq.nextval, 500, '10-JAN-2010', 'compras de janeiro', 'cartao', 1);
+select * from compras;
+select observacoes, valor nome from compras join compradores on compras.comprador_id = compradores.id;
+```
+
+
+
+
+
+Oracle II: Consultas Complexas
+----------
+
+Pessoas que já conhecem SQL e querem escrever relatórios mais complexos.
+
+- Pagine seus dados
+- Agrupe suas consultas com GROUP BY
+- Filtre consultas com HAVING
+- Saiba quando usar o LEFT e RIGHT JOIN
+- Crie Sub-queries complexas
+
+
+
+### Alunos sem matrícula e o EXISTS
+
+- A palavra reservada EXISTS
+- Buscando alunos que não tem matrícula
+
+
+
+### Agrupando os dados com GROUP BY
+
+- A palavra reservada GROUP BY
+- Contando com COUNT
+- Média com AVG
+
+
+
+### Filtrando agregações e o HAVING
+
+- Filtrando consultas com agregações
+- A palavra reservada HAVING
+
+
+
+### Múltiplos valores na condição e o IN
+
+- A palavra reservada DISTINCT
+- A palavra reservada IN
+- Introdução a sub-queries
+
+
+
+### Sub-queries
+
+- Sub-queries que devolvem 1 elemento
+- Sub-queries que devolvem N elementos
+- Como usar?
+
+
+
+### Entendendo o LEFT JOIN
+
+- Diferença entre LEFT e RIGHT JOIN
+- RIGHT JOIN
+- Filtrando no JOIN
+- INNER JOIN
+
+
+
+### Muitos alunos e limitando os resultados
+
+- Paginando os dados utilizando o ROWNUM
+
+
+
+
+
+SQLServer I: desvendando o banco de dados
+----------
+
+Desenvolvedores (ou pessoas de qualquer outra área) que querem aprender SQL com SQL Server.
+
+- SQL Server no dia a dia enquanto aprende SQL
+- Faça consultas mais inteligentes
+- Crie, altere e apague registros das duas tabelas
+- Use as principais funções do SQL
+
+
+
+### Consultando os dados
+
+- Criando seu banco de dados com Sql Server Management Studio
+- Criando uma tabela
+- Inserindo dados com INSERT
+- Selecionando registros com SELECT
+
+SQLServer Management Studio
+
+```
+create database controle_compras;
+
+use controle_compras;
+
+create table compras
+(
+  id int primary key identity not null,
+  valor decimal(18, 2) null,
+  data date null,
+  observacoes nvarchar(200) null,
+  recebida bit null
+);
+
+sp_help compras;
+
+insert into compras (valor, data, observacoes, recebida)
+values (200, '2008-02-19', 'MATERIAL ESCOLAR', 1);
+
+insert into compras (valor, data, observacoes, recebida)
+values (3500, '2008-05-21', 'TELEVISAO', 1);
+
+select observacoes, valor from compras;
+
+select * from compras;
+
+// roda o script
+
+select * from compras;
+
+select * from compras
+where valor < 500;
+
+select * from compras
+where valor > 1500;
+
+select * from compras
+where valor > 1500
+and recebido = 0;
+
+select * from compras
+where valor > 1500
+or valor < 500;
+
+select * from compras
+where valor = 3500;
+
+select * from compras;
+
+select * from compras
+where observacoes = 'PARCELA DA CASA'
+or observacoes = 'PARCELA DO CARRO';
+
+select * from compras
+where observacoes like 'PARCELA%  ';
+```
+
+
+
+### Atualizando e exlcuindo dados
+
+- Filtrando dados selecionados com BETWEEN
+- Alterando dados com UPDATE
+- Atualizando várias colunas em um mesmo UPDATE
+- Excluindo dados com DELETE
+- Fazendo DELETE com WHERE
+
+```
+select * from compras;
+
+select valor, observacoes
+from compra
+where valor <= 1000;
+
+select valor, observacoes
+from compra
+where valor <= 1000
+and valor >= 2000;
+
+select valor, observacoes
+from compra
+where valor between 1000 and 2000;
+
+select valor, observacoes
+from compra
+where valor between 1000 and 2000
+and valor between '2015-01-01' and '2015-03-31';
+
+select id, valor, observacoes
+from compra
+where valor between 1000 and 2000
+and valor between '2015-01-01' and '2015-03-31';
+
+update compras
+set valor = 1500
+where id = 49;
+
+delete from compras
+where id = 49;
+```
+
+
+
+### Alterando e restringindo o formato de nossas tabelas
+
+- Definindo valor padrão de colunas com DEFAULT
+- Não perimitindo nulos com NOT NULL
+- Constraints no ALTER TABLE
+- Reescrevendo o CREATE TABLE
+
+```
+select * from compras;
+sp_help compras;
+
+insert into compras values(150, '2015-04-15', 'Churrasqueira', 1);
+select * from compras;
+
+insert into compras values(150, '2015-04-15', 1);
+
+insert into compras (valor, data, recebida) values(150, '2015-04-15', 1);
+select * from compras;
+
+delete from compras where observacoes is null;
+
+select * from compras where observacoes is null;
+
+alter table compras alter column observacoes nvarchar(400) not null;
+
+insert into compras (valor, data, recebido) values(10, '2015-06-10', 1);
+
+alter table compras add default '0' for recebida;
+
+insert into compras (valor, data, observacoes) values (200, '2015-10-04', 'testando default');
+
+select * from compras where observacoes = 'testando default';
+```
+
+
+
+### Agrupando dados e fazendo consultas mais inteligentes
+
+- Calculando a média com AVG
+- Contando número de compras com COUNT
+- Agrupando resultados com GROUP BY
+
+```
+select * from compras;
+select sum(valor) from compras where recebida = 1;
+select count(*) from compras where recebida = 1;
+select recebida, sum(valor) as soma from compras group by recebida;
+select recebida, sum(valor) as soma from compras where valor < 1000 group by recebida;
+select mounth(data) as mes, year(data) as ano, recebida, sum(valor) as soma from compras where valor < 1000 group by recebida, mounth(data), year(data);
+select mounth(data) as mes, year(data) as ano, recebida, sum(valor) as soma from compras where valor < 1000 group by recebida, mounth(data), year(data) order by year(data);
+select mounth(data) as mes, year(data) as ano, recebida, avg(valor) as media from compras where valor < 1000 group by recebida, mounth(data), year(data) order by year(data);
+```
+
+
+
+### Juntando dados de várias tabelas
+
+```
+select * from compras;
+create table compradores(
+  id int primary key identity not null,
+  nome nvarchar(200),
+  endereco nvarchar(200),
+  telefone nvarchar(30)
+);
+select * from compradores;
+insert into compradores values ('gabriel ferreira', 'rua vergueiro, 3185, '12345678');
+insert into compradores values ('camila ferreira', 'rua paulista, 31, '98745621');
+select * from compradores;
+alter table compras add comprador_id int;
+select * from compras;
+update compras set comprador_id = 1 where id < 20;
+update compras set comprador_id = 2 where id > 20;
+select * from compras;
+update compras set comprador_id = 1 where id = 20;
+select * from compras, compradores;
+select * from compras;
+select * from compras join compradores on compras.comprador_id = compradores.id;
+select * from compras join compradores on compras.comprador_id = compradores.id where recebida = 1;
+insert into compras values(100, '2015-07-10', 'vaso de flores', 1, 100);
+select * from compras;
+delete from compras where comprador_id = 100;
+alter table compras add constraint FK_Compras_CompradorID fereing key (comprador_id) references compradores(id);
+insert into compras values(100, '2015-07-10', 'vaso de flores', 1, 100);
+insert into compras values(100, '2015-07-10', 'vaso de flores', 1, 1);
+```
+
+
+
+
+
+Curso SQLServer II: Consultas poderosas
+----------
+
+Desenvolvedores que já conhecem SQL e querem escrever relatórios mais complexos.
+
+- Pagine seus dados com LIMIT
+- Realize contas com INTERVAL
+- Filtre consultas com HAVING
+- A diferença entre o LEFT e RIGHT JOIN
+- Como usar Sub queries
+- Agrupando com GROUP BY
+
+
+
+### Alunos sem matrícula e o Exists
+
+- A palavra reservada EXIST
+- Buscando alunos que não tem matrícula
+- Fazendo conta com datas usando INTERVAL
+
+
+```
+create database sql_avancado;
+# rodar o script da aula
+use sql_avancado;
+sp_help aluno;
+sp_help curso;
+sp_help exercicio;
+sp_help matricula;
+sp_help nota;
+sp_help resposta;
+sp_help secao;
+select a.nome, c.nome from aluno a join matricula m on m.aluno_id = a.id join curso c on m.curso_id = c.id order by a.nome;
+select count(*) from aluno;
+select a.nome from aluno a where not exists(select m.id from matricula m where m.aluno_id = a.id);
+select e.id, e.pergunta from exercicio e where not exists(select r.id from resposta r where r.exercicio_id = e.id);
+select c.nome from curso c where not exists(select m.id from matricula m where m.curso_id = c.id);
+select a.nome, c.nome from aluno a join matricula m on m.aluno_id = a.id join curso c on m.curso_id = c.id where not exists(select r.aluno_id from resposta r where r.aluno_id = a.id);
+select a.nome from aluno a join resposta r on r.aluno_id = a.id where not exists(select m.aluno_id from matricula m where m.aluno_id = a.id);
+```
+
+
+
+### Agrupando dados com GROUP BY
+
+- A palavra reservada GROUP BY
+- Soma com SUM
+- Contando com COUNT
+- Média com AVG
+
+```
+select * from curso;
+select * from secao;
+select * from exercicio;
+select * from resposta;
+select * from nota;
+select c.nome, avg(n.nota) from nota n join resposta r on r.id = n.resposta_id join exercicio e on e.id = r.exercicio_id join secao s on s.id = e.secao_id join curso c on c.id = s.curso_id group by c.nome;
+select c.nome, count(e.id) as contagem from exercicio e join secao s on s.id = e.secao_id join curso c on c.id = s.curso_id group by c.nome;
+select c.nome, count(a.id) as quantidade from curso c join matricula m on m.curso_id = c.id join aluno a on a.id = m.aluno_id group by c.nome;
+```
+
+
+
+### Filtrando agregações e o HAVING
+
+- Filtrando consultas com agregações
+- A palavra reservada HAVING
+
+
+```
+select a.nome, c.nome, avg(n.nota) from nome n join resposta r on r.id = n.resposta_id join exercicio e on e.id = r.exercicio_id join secao s on s.id = e.secao_id join curso c on c.id = s.curso_id join aluno a on a.id = a.aluno_id group by a.nome, c.nome;
+
+select a.nome, c.nome, avg(n.nota) from nome n join resposta r on r.id = n.resposta_id join exercicio e on e.id = r.exercicio_id join secao s on s.id = e.secao_id join curso c on c.id = s.curso_id join aluno a on a.id = a.aluno_id group by a.nome, c.nome having avg(n.nota) < 5;
+
+select a.nome, c.nome, avg(n.nota) from nome n join resposta r on r.id = n.resposta_id join exercicio e on e.id = r.exercicio_id join secao s on s.id = e.secao_id join curso c on c.id = s.curso_id join aluno a on a.id = a.aluno_id group by a.nome, c.nome having avg(n.nota) => 5;
+
+select c.nome, count(a.id) from curso c join matricula m on m.curso_id = c.id join aluno a on a.aluno_id = a.id group by c.nome having count(a.id) < 10;
+```
+
+
+
+### Múltiplos valores na condição e o IN
+
+- A palavra reservada DISTINCT
+- A palavra reservada IN
+
+```
+sp_help matricula;
+
+select distinct tipo from matricula;
+
+select c.nome, count(m.id) quantidade, m.tipo from matricula m join curso c on m.curso_id = c.id where m.tipo in ('PAGA_PJ', 'PAGA_PF') group by c.nome, m.tipo;
+
+select * from aluno;
+
+select a.nome, c.nome from curso c join matricula m on m.curso_id = c.id join aluno a on m.aluno_id = a.id where m.aluno_id in (1, 3, 4) order by a.nome;
+
+select a.nome, c.nome from curso c join matricula m on m.curso_id = c.id join aluno a on m.aluno_id = a.id where c.id in (1,4) order by a.nome;
+```
+
+
+
+### Introdução a sub-queries
+
+- Sub-queries que devolvem 1 elemento
+- Sub-queries que devolvem N elementos
+- Como usar?
+
+```
+select a.nome, c.nome, avg(n.nota) media_curso, (select avg(n2.nota) from nota n2) media_geral, avg(n.nota) - (select avg(n1.nota) from nota n1) diferenca from nota n join resposta r on n.resposta_id = r.id join exercicio e on r.exercicio_id = e.id join secao s on e.secao_id = s.id join curso c on s.curso_is = c.id join aluno a on r.aluno_id = a.id group by c.nome, a.nome;
+
+select a.nome, (select count(r.id) from resposta r where r.aluno_id = a.id) quantidade _respostas from aluno a;
+
+select a.nome, (select count(m.id) from matricula m where m.aluno_id = a.id) from aluno a;
+
+select a.nome, (select count(m.id) from matricula m where m.aluno_id = a.id) quantidade_matriculas, (select count(r.id) from resposta r where r.aluno_id = a.id) quantidade_respostas from aluno a;
+```
+
+
+
+### Entendendo o LEFT JOIN
+
+- Diferença entre LEFT e INNER JOIN
+- RIGHT JOIN
+- Filtrando no JOIN
+
+```
+select a.nome, count(r.id) from aluno a join resposta r on r.aluno_id = a.id group by a.nome;
+select count(*) from aluno;
+select * from aluno;
+select * from resposta where aluno_id in (6, 8);
+
+select a.id, a.nome, r.aluno_id, r.respostada_dada from aluno a
+join resposta r on r.aluno_id = a.id;
+
+select a.nome, r.resposta_dada from aluno a left join resposta r on r.aluno_id = a.id;
+
+select a.nome, count(r.id) quantidade_respostas from aluno a left join resposta r on r.aluno_id = a.id group by a.nome;
+
+select a.nome, r.resposta_dada from aluno a right join resposta r on r.aluno_id = r.id;
+
+select * from aluno where id = 50000;
+insert into resposta (exercicio_id, aluno_id, resposta_dada) values(1, 50000 "sql server");
+
+select a.nome, r.resposta_dada from aluno a right join resposta r on r.aluno_id = r.id;
+
+delete from resposta where aluno_id = 50000;
+
+
+select a.nome, count(m.id) quantidade_matriculas from aluno a left join matricula m on m.aluno_id = m.id group by a.nome;
+
+select a.nome, (select count(m.id) from matricula m where m.aluno_id = a.id) from aluno a;
+
+select a.nome, (select count(r.id) from resposta r where r.aluno_id = a.id) from aluno a;
+
+
+select a.nome, (select count(m.id) from matricula m where m.aluno_id = a.id) quantidade_matriculas, (select count(r.id) from resposta r where r.aluno_id = a.id) quantidade_respostas from aluno a;
+
+select a.nome, r.resposta_dada, m.id from aluno a left join matricula m on m.aluno_id = a.id left join resposta r on r.aluno_id = a.id;
+
+select * from aluno;
+
+select * from matricula where aluno_id = 1;
+
+select * from resposta where aluno_id = 1;
+
+select a.nome, count(distinct r.id) quantidade_respostas, count(distinct m.id) quantidade_matriculas from aluno a left join matricula m on m.aluno_id = a.id left join resposta r on r.aluno_id = a.id group by a.nome;
+```
+
+
+
+### Muitos alunos e o TOP
+
+- Filtrando resultados com LIMIT
+- Combinando TOP e WHERE
+- Incluindo ORDER BY
+
+```
+select nome from aluno order by nome;
+
+select count(*) from aluno a;
+
+select top 5 nome from aluno order by nome;
+
+select nome from aluno order by nome offset 5 rows;
+
+select nome from aluno order by nome offset 5 rows fetch next 5 rows only;
+```
+
+
+
+
+
+Redis I: Armazenando chaves e valores
+-----------
+
+Iniciantes no mundo NoSQL e bancos chave valor.
+
+- Inicie no mundo NoSQL
+- Resolva problemas com Redis
+- Faça buscas otimizadas
+- Apenda como coletar estatísticas de acesso
+- Conheça os operadores com bit
+
+
+
+### Os problemas que o redis Resolve
+
+- Get, set, del, echo
+- Otimizando buscas
+- Otimizando mais buscas
+- Mais buscas e padrões
+- Trabalhando com hashes
+
+No nosso dia-a-dia, quando estamos desenvolvendo uma aplicação Web, uma aplicação Mobile, ou até mesmo um jogo, sempre nos deparamos com situações em que se requer uma pesquisa. Por exemplo, em um jogo gostaríamos de saber quais amigos estão online, ou qual o ranking mundial. Num aplicativo mobile queremos saber quais amigos estão online. Num site da Web, podemos ter uma pesquisa que varre a base de dados inteira dele, como é no Alura.
+
+O nosso site apresenta, logo na homepage, números que resumem toda a nossa aplicação:
+
+<en-media type="image/jpeg" hash="be270bf3c9c616ac2b309ab6a0e0d29b"/>
+
+Imagine que toda vez que um usuário acessa o site do Laura procurando uma aula, ele tenha que esperar a aplicação varrer toda a base de dados, para só depois ele conseguir visualizar a página e decidir qual aula deve assistir. Seria um processo muito lento.
+
+É muito melhor que a aplicação retorne apenas um número que seja significativo, por exemplo, a quantidade de alunos, ou o número de aulas. A pesquisa deve estar focada naquilo que o usuário está procurando. É desnecessária uma pesquisa mais complexa.
+
+É interessante conseguirmos armazenar uma chave - "Total de Cursos" - e um valor - "105". É interessante termos um sistema com uma base de dados que não necessariamente seja sequel ou SQL, mas que seja somente "chave-valor". Tal valor pode ser um número, uma palavra, ou uma lista de nomes.
+
+Queremos, então, armazenar em algum lugar um conjunto de chaves e valores, de modo que a busca seja extremamente rápida, otimizada. Para isso, vamos utilizar o Redis.
+
+Vamos abrir o prompt de comando, entrar no diretório onde o Redis está instalado e mandar rodar o Redis-server. Funciona da mesma forma que um SQL, o servidor fica rodando e podemos ignorá-lo.
+
+```
+... cd src
+./redis-server
+```
+
+Agora temos que nos conectar ao servidor como um cliente:
+
+```
+... cd src
+./redis-cli
+```
+
+Agora estamos conectados. Mas vamos fazer um teste simples apenas por desencargo de consciência (se não estivéssemos, apareceria uma mensagem de erro): vamos pedir para que uma frase seja repetida, ecoada:
+
+```
+<ip> ECHO "estou no redis"
+```
+
+Se retornar tal frase, então está tudo certo.
+
+Vamos enfim resolver o problema de busca do nosso site. Não queremos que ela varra todos os cursos e os contabilize. Queremos apenas que retorne o valor "105", que é o total de cursos do Alura.
+
+Precisamos colocar - ou setar - o valor do total de cursos:
+
+```
+<ip> SET "total_de_cursos" 105
+OK
+```
+
+Definimos a chave "total_de_cursos" com o valor "105". A partir de agora, qualquer cliente do Redis pode se conectar e buscar o total de cursos. Para testar, abrimos uma nova aba, conectamos como cliente no servidor e chamamos essa chave:
+
+```
+<ip> GET "total_de_cursos"
+"105"
+```
+
+O valor foi armazenado no servidor através da chave. O problema foi resolvido. Não precisamos varrer tabelas ou buscar dados. A pergunta é direta e a resposta também. Podemos fazer isso para todas as chaves. Veja mais um exemplo:
+
+```
+<ip> SET "total_de_respostas" 1446014
+OK
+
+<ip> GET "total_de_respostas"
+"1446014"
+```
+
+Repare que apesar de termos pedido para que o Redis armazenasse o valor como um número, ele o devolveu como uma string (por isso as aspas). O mais importante é a facilidade para armazenar esses dados.
+
+Mas e se os valores mudarem, se acrescentarmos mais aulas, ou aparecerem mais respostas? Adianta mudar o valor da chave?
+
+```
+<ip> SET "total_de_respostas" 1446015
+OK
+
+<ip> GET "total_de_respostas"
+"1446015
+```
+
+Sim, funciona da mesma forma! Em qualquer instante podemos trocar o valor atrelado a uma chave.
+
+Lembre-se que o valor não precisa ser necessariamente um número, ele pode ser um nome:
+
+```
+<iP> SET "ultimo_usuario_que_se_logou" "guilherme silveira"
+OK
+
+<ip> GET "ultimo_usuario_que_se_logou"
+"guilherme silveira"
+```
+
+Assim como conseguimos armazenar e buscar o valor de uma chave, também podemos exclui-lo:
+
+```
+<ip> DEL "ultimo_usuario_que_se_logou"
+(integer) 1
+
+<ip> GET "ultimo_usuario_que_se_logou"
+(nil)
+```
+
+Se buscarmos o valor da chave, o servidor retornará "nil", ou seja, nulo, vazio.
+
+Vimos, então, a primeira e mais comum utilização do Redis. Armazenar valores faz com que as buscas sejam muito mais rápidas.
+
+
+```
+redis-server
+redis-cli
+ECHO "estou no redis"
+SET "total_de_cursos" 105
+redis-cli
+GET "total_de_cursos"
+SET "total_de_respostas" 1446104
+GET "total_de_respostas"
+SET "total_de_respostas" 1446105
+GET "total_de_respostas"
+SET "ultimo_usuario_que_se_logou" "guilherme silveira"
+GET "ultimo_usuario_que_se_logou"
+DEL "ultimo_usuario_que_se_logou"
+GET "ultimo_usuario_que_se_logou"
+```
+
+
+
+### Otimizando buscas
+
+Vamos imaginar um site onde queremos armazenar todos os resultados da Mega-Sena. Muito provavelmente o resultado mais buscado é o último que saiu, o mais recente. É de se esperar que queiramos esse resultado logo na primeira página. Veremos como armazenar os resultados no Redis para não precisarmos ficar pesquisando toda vez no banco de dados original e encontrarmos o último dado do último sorteio da Mega-Sena.
+
+Como vimos na aula passada uma forma é armazenar a chave do último sorteio e seu valor, que são os resultados numéricos.
+
+```
+<ip> SET "ultimo_sorteio" "2, 15, 18, 30, 35, 42"
+OK
+```
+
+A qualquer hora que entrarmos na primeira página do site da Mega-Sena não precisaremos acessar o banco de dados com todos os sorteios e filtrá-los até achar o último resultado.
+
+```
+<ip> GET "ultimo_sorteio"
+"2, 15, 18, 30, 35, 42"
+```
+
+Podemos afirmar que o penúltimo e o antepenúltimo sorteios também serão bastante pesquisados, então
+
+```
+<ip> SET "penultimo_sorteio" "14, 17, 18, 25, 32, 42"
+OK
+<ip> SET "antepenultimo_sorteio" "2, 17, 18, 26, 35, 43"
+OK
+```
+
+Não parece um modo muito inteligente de guardar esses valores porque o padrão dos nomes das chaves não é bom. E se quiséssemos, por exemplo, encontrar todos os sorteios de 2013, ou os sorteios de Dezembro de 2014? Com esses nomes fica muito complicado armazenar tais informações. Seria melhor encontrar outro padrão para as chaves. A primeira coisa a se fazer é olhar para tais chaves no banco de dados e, com isso, assumir um padrão. Fazemos isso perguntando ao Redis quais são elas:
+
+```
+<ip> KEYS *
+1) "penultimo_sorteio"
+2) "ultimo_sorteio"
+3) "antepenultimo_sorteio"
+4) "total_de_respostas"
+5) "total_de_cursos"
+```
+
+Perceba que as chaves que usamos como exemplo na aula anterior ainda estão armazenadas, elas não foram apagadas. Para apagá-las, como vimos, usamos "DEL". Depois disso teremos:
+
+```
+<ip> KEYS *
+1) "penultimo_sorteio"
+2) "ultimo_sorteio"
+3) "antepenultimo_sorteio"
+```
+
+Com o "KEYS" somos capazes de pesquisar quais chaves existem dentro do Redis.
+
+Vamos pensar agora num novo padrão de nomes de chaves. O Redis já possui um que serve para criar uma estrutura nas chaves e ele é definido com ":" (dois pontos). Vamos organizar os sorteios por data e por tipo de jogo:
+
+```
+<ip> SET resultado:17-05-2015:megasena "2, 15, 18, 25, 28, 32"
+OK
+<ip> SET resultado:10-05-2015:megasena "4, 16, 19, 23, 28, 43"
+OK
+```
+
+Dessa forma conseguimos melhorar a organização dos valores no banco de dados nos utilizando de nomes mais específicos para as chaves.
+
+
+Terminal
+
+```
+SET "ultimo_sorteio" "2, 15, 18, 30, 35, 42"
+GET "ultimo_sorteio"
+SET "penultimo_sorteio" "14, 17, 18, 25, 32, 42"
+SET "antepenultimo_sorteio" "2, 17, 18, 26, 35, 43"
+KEYS *
+DEL total_de_respostas
+DEL total_de_cursos
+KEYS *
+
+SET resultado:17-05-2015:megasena "2, 15, 18, 25, 28, 32"
+SET resultado:10-05-2015:megasena "4, 16, 19, 23, 28, 43"
+```
+
+
+
+### Otimizando mais buscas
+
+Na aula passada armazenamos dois valores de resultados da Mega-Sena:
+
+```
+<ip> SET resultado:17-05-2015:megasena "2, 15, 18, 25, 28, 32"
+OK
+<ip> SET resultado:10-05-2015:megasena "4, 16, 19, 23, 28, 43"
+OK
+```
+
+Agora queremos armazenar mais diversas duplas chave-valor. Será que teremos que dar esses comandos um por um, ou podemos armazenar múltiplos valores? Sim, podemos e, para tal, usamos o comando "MSET":
+
+```
+<ip> MSET resultado:03-05-2015:megasena "1, 3, 17, 19, 24, 26" resultado:22-04-2015:megasena "15, 18, 20, 32, 37, 41" resultado:15-04-2015:megasena "10, 15, 18, 22, 35, 43"
+OK
+```
+
+Vamos verificar se esses valores realmente foram armazenados:
+
+```
+<ip> KEYS *
+1) "penultimo_sorteio"
+2) "resultado:03-05-2015:megasena"
+3) "resultado:17-05-2015:megasena"
+4) "ultimo_sorteio"
+5) "resultado:10-05-2015:megasena"
+6) "antepenultimo_sorteio"
+7) "resultado:15-04-2015:megasena"
+8) "resultado:22-04-2015:megasena"
+```
+
+O "KEYS *" (com asterisco) nos retorna todas as chaves armazenadas. Se quisermos filtrá-las pelo nome, basta fazer, por exemplo:
+
+```
+<ip> KEYS "resultado*"
+1) "resultado:03-05-2015:megasena"
+2) "resultado:17-05-2015:megasena"
+3) "resultado:10-05-2015:megasena"
+4) "resultado:15-04-2015:megasena"
+5) "resultado:22-04-2015:megasena"
+```
+
+O Redis traz todas as chaves que começam com "resultado". Podemos refinar ainda mais a busca: queremos os resultados do mês de Maio de 2015 da Mega-Sena:
+
+```
+<ip> KEYS "resultado:*-05-2015:megasena"
+1) "resultado:03-05-2015:megasena"
+2) "resultado:17-05-2015:megasena"
+3) "resultado:10-05-2015:megasena"
+```
+
+Perceba que o asterisco pode ser substituído por qualquer caractere ou conjunto de caracteres. E se quisermos encontrar os resultados do dia 10/05 até o dia 19/05?
+
+```
+<ip> KEYS "resultado:1*-05-2015:megasena"
+1) "resultado:17-05-2015:megasena"
+2) "resultado:10-05-2015:megasena"
+```
+
+Se quisermos que a lacuna seja preenchida com apenas um caractere, utilizamos o "?" (ponto de interrogação):
+
+```
+<ip> KEYS "resultado:1?-05-2015:megasena"
+1) "resultado:17-05-2015:megasena"
+2) "resultado:10-05-2015:megasena"
+```
+
+Perceba que o "?" não funciona se ele não puder ser substituído por apenas um caractere:
+
+```
+<ip> KEYS "resultado:?-05-2015:megasena"
+(empty list or set) [lista ou conjunto vazio]
+```
+
+Em um momento ou outro poderíamos ter definido uma string sem as aspas. O melhor é sempre utilizá-las, para evitar problemas nas situações em que os valores possuam caracteres especiais ou espaços entre eles.
+
+Como esse novo modo de dar nome às chaves, facilitamos a busca. E não importa se existe duplicidade, se as pesquisas trouxerem os mesmos resultados, pois o que vale aqui é a otimização dessa busca por meio de um padrão.
+
+
+```
+MSET resultado:03-05-2015:megasena "1, 3, 17, 19, 24, 26" resultado:22-04-2015:megasena "15, 18, 20, 32, 37, 41" resultado:15-04-2015:megasena "10, 15, 18, 22, 35, 43"
+KEYS *
+KEYS "resultado*"
+KEYS "resultado:*-05-2015:megasena"
+KEYS "resultado:1*-05-2015:megasena"
+KEYS "resultado:*5:megasena"
+KEYS "resultado:1?-05-2015:megasena"
+KEYS "resultado:0?-05-2015:megasena"
+KEYS "resultado:*-2015:*sena"
+GET "resultado:03-05-2015:megasena"
+```
+
+
+
+### Mais buscas e padrões
+
+Já vimos alguns tipos de pesquisa no Redis utilizando o asterisco ou o ponto de interrogação. Nesta aula veremos mais alguns tipos como, por exemplo, buscar sorteios da Mega-Sena que ocorreram nos dias terminados em "3" ou em "7". Poderíamos pesquisá-los separadamente:
+
+```
+<ip> KEYS "resultado:?3-??-????:megasena"
+1) "resultado:03-05-2015:megasena"
+
+<ip>KEYS "resultado:?7-??-????:megasena"
+1) "resultado:17-05-2015:megasena"
+```
+
+Mas queremos pesquisar os dois ao mesmo tempo, então usamos "[ ]" (colchetes):
+
+```
+<ip> KEYS "resultado:?[37]-??-????:megasena"
+1) "resultado:03-05-2015:megasena"
+2) "resultado:17-05-2015:megasena"
+```
+
+Analisando o padrão que criamos para dar nomes às chaves, podemos perceber que ele está da forma tipo:identificador:campo:
+
+- tipo do objeto: no caso, é do tipo "resultado";
+- identificador: no caso, é a data, aquilo que o faz diferente dos outros objetos;
+- campo do identificador: onde o objeto, com seu tipo e já identificado, é armazenado. No caso, "megasena".
+
+
+```
+KEYS *
+KEYS "resultado:?3-??-????:megasena"
+KEYS "resultado:?7-??-????:megasena"
+KEYS "resultado:?[37]-??-????:megasena"
+```
+
+
+
+### Trabalhando com hashes
+
+Nas últimas aulas vimos como fazer pesquisa, definir estrutura de chaves, para facilitar na pesquisa, armazenar dados resumidos. Tudo isso em um servidor remoto de dicionário do tipo chave-valor.
+
+Usamos o valor como uma string solta, ou seja, o definimos não com números ou lista. Porém, nem sempre ele será desse tipo. Podemos querer armazenar os números do resultado da Mega-Sena de um dia determinado e a quantidade de ganhadores desse sorteio.
+
+Em vez de armazenarmos para uma chave apenas uma string, armazenamos os números do resultado, o total de ganhadores e outros números relevantes, ou seja, um dicionário de informações, um hash. Para isso usamos o comando "HSET":
+
+```
+<ip> HSET resultado:24-05-2015:megasena "numeros" "13, 17, 19, 25, 28, 32"
+(integer) 1
+```
+
+Agora vamos armazenar para a mesma chave o número de ganhadores:
+
+```
+<ip> HSET resultado:24-05-2015:megasena "ganhadores" 23
+(integer) 1
+```
+
+Para pegar os valores armazenados através do hash usamos "HGET":
+
+```
+<ip> HGET resultado:24-05-2015:megasena "numeros"
+"13, 17, 19, 25, 28, 32"
+
+<ip> HGET resultado:24-05-2015:megasena "ganhadores"
+"23"
+```
+
+E, da mesma forma, também podemos remover um valor usando o "HDEL":
+
+```
+<ip> HDEL resultado:24-05-2015:megasena "numeros"
+(integer) 1
+
+<ip> HGET resultado:24-05-2015:megasena "numeros"
+(nil)
+```
+
+Lembre-se, para pegar os valores armazenados com HSET devemos usar sempre o HGET.
+
+Então o hash serve para armazenar mais de um valor numa chave, em um dicionário de dados.
+
+
+
+### Sessão de um usuário web
+
+- Setando informações de um usuário logado
+- Expirando e verificando o tempo para expirar
+
+Vejamos um cenário muito comum na Web: um usuário no navegador que gostaria de acessar o servidor web de site. Por sua vez, o servidor web pode buscar as informações num servidor Redis como, por exemplo, quem foi o último usuário a se logar, qual a última notícia, qual tem sido a notícia mais comentada, etc.
+
+<en-media type="image/jpeg" hash="033cd599f9070cd26b9b4a02b8725245"/>
+
+Em determinadas situações, o usuário tem características atreladas somente a ele, como seu carrinho de compras, e queremos guardar essas informações para sempre ou por um tempo limitado, dependendo da decisão de negócio do site. Tais informações que serão guardadas por tempo limitado devem permanecer em um lugar específico.
+
+Quando existem dois ou mais servidores web, no caso de um site com muitas informações, existe a chance do usuário transitar entre eles. Se os dados atrelados a esse usuário estiverem alocados em um servidor web, a partir do momento em que ele acessa o outro, eles ficarão invisíveis. Deveria haver uma replicação de informações para que isso não ocorresse.
+
+Nós queremos que haja um compartilhamento das informações com os servidores, logo, elas devem ficar alocadas no servidor de dados, no banco de dados. Nesse caso usaremos o Redis para armazenar os dados da sessão atrelados ao usuário. Dessa forma não importa em qual servidor web o usuário está conectado.
+
+<en-media type="image/jpeg" hash="a877caad3469286e7d7676a3acbdcec3"/>
+
+<en-media type="image/jpeg" hash="6fdbfe1e183e68c2a6e5fe7c62b6defe"/>
+
+Jogando as informações em um servidor Redis, não existe a necessidade de haver replicação de dados nos servidores web.
+
+Mas agora temos um outro problema a ser resolvido: no caso de informações temporárias, como fazemos para que elas sumam da base de dados automaticamente depois de um determinado tempo?
+
+Temos uma situação onde um cliente se conecta com o seu navegador em um ou mais servidores web e se loga num site de compras. Queremos armazenar informações da sessão desse usuário num servidor Redis. Informações estas que queremos apagar depois de, por exemplo, 30 minutos.
+
+Depois de estarmos conectados no Redis, vamos colocar informações do usuário que está logado. Vimos que podemos usar o hash:
+
+```
+<ip> HSET "sessao:usuario:1675" "nome" "guilherme"
+(integer) 1
+
+<ip> HSET "sessao:usuario:1675" "total_de_produtos" "3"
+(integer) 1
+```
+
+Aprendemos em aulas passadas o hash, que é um dicionário de dados, e o Multiple Set, que armazena mais de uma informação. Agora queremos armazenar mais de uma informação dentro de um dicionário, então usamos o Multiple Hash Set, ou "MHSET":
+
+```
+<ip> HMSET "sessao:usuario:1675" "nome" "guilherme" "total_de_produtos" "3" "sobrenome" "silveira"
+OK
+```
+
+Se buscarmos um dos valores da chave:
+
+```
+<ip> HGET "sessao:usuario:1675" "nome"
+"guilherme"
+
+<ip> HGET "sessao:usuario:1675" "sobrenome"
+"silveira"
+```
+
+Agora vamos ver como fazer para que eles sejam apagados automaticamente. Para isso usamos o comando "EXPIRE"
+
+```
+<ip> EXPIRE "sessao:usuario:1675" 1800
+(integer) 1
+```
+
+Isso significa que daqui 1800 segundos, ou 30 minutos, os dados do usuário serão apagados, expirados. Para sabermos quanto tempo falta para que essas informações sejam apagadas usamos o comando Time Left ou "TTL":
+
+```
+<ip> TTL "sessao:usuario:1675"
+(integer) 1680
+```
+
+O que significa que se passaram 2 minutos desde o começo da contagem regressiva, faltam ainda 28 minutos para os dados expiarem.
+
+Passados os 30 minutos, se tentarmos pegar um dos valores da chave, o Redis retornará nulo:
+
+```
+<ip> HGET "sessao:usuario:1675" "nome"
+(nil)
+```
+
+É muito comum em um site da web que toda vez que há uma requisição por parte do usuário, esse contador (EXPIRE) é ativado. Ou seja, para cada clique ou página visitada, nós postergamos o logout do usuário.
+
+
+
+```
+HSET "sessao:usuario:1675" "nome" "guilherme"
+HSET "sessao:usuario:1675" "total_de_produtos" "3"
+HMSET "sessao:usuario:1675" "nome" "guilherme" "total_de_produtos" "3" "sobrenome" "silveira"
+HGET "sessao:usuario:1675" "nome"
+EXPIRE "sessao:usuario:1675" 1800
+TTL "sessao:usuario:1675"
+```
+
+
+
+### Estatísticas de acesso a uma página
+
+- Estatística de uma compra
+
+Empresas possuem um sistema para armazenar as informações sobre quais páginas de seus sites estão sendo acessadas e quantas vezes. Conseguimos não só isso, mas também saber quantas pessoas assistiram a um determinado vídeo ontem ou hoje. Queremos armazenar quantas pessoas acessaram cada funcionalidade do nosso site com o passar do tempo.
+
+Perceba que queremos armazenar dia/página e total de acessos, ou seja, chave-valor. Vamos ver como fazer isso usando o Redis:
+
+```
+<ip> SET pagina:/contato:25-05-2015 1
+OK
+<ip> SET pagina:/contato:25-05-2015 2
+OK
+```
+
+Isso significa que duas pessoas acessaram a página de contato. Porém não podemos ficar contando dessa forma, uma vez que poderíamos não saber a quantidade anterior de acessos. Devemos achar uma forma de colocar o valor atual +1. Poderíamos pensar que uma forma é visualizar o atual e acrescentar um:
+
+```
+GET pagina:/contato:25-05-2015
+4
+SET pagina:/contato:25-05-2015 5
+```
+
+O problema é que alguém já poderia ter feito alguma alteração nesse meio tempo. Queremos uma forma de adicionar 1 aos valores automaticamente. Seria basicamente juntar as duas tarefas de GET e SET em uma só.
+
+Todo comando do Redis é garantido que é executado de maneira atômica, ou seja, não existe a possibilidade de que ele seja sobrescrito por outro, ou que outro aconteça no meio tempo entre dois.
+
+Logo, para conseguirmos essa incrementação de 1, usamos o comando INCR:
+
+```
+<ip> INCR pagina:/contato:25-05-2015
+(integer) 10
+<ip> INCR pagina:/contato:25-05-2015
+(integer) 11
+```
+
+Da mesma forma, conseguimos decrementar:
+
+```
+<ip> DECR pagina:/contato:25-05-2015
+(integer) 10
+<ip> DECR pagina:/contato:25-05-2015
+(integer) 9
+```
+
+Garantimos que se outra pessoa também utilizar o INCR, também funcionará sem perda de informação.
+
+Mas e se quisermos incrementar o valor de compras em um site e não o número de acessos? Se fizermos:
+
+```
+<ip> INCR compras:25-05-2015
+```
+
+Porém assim nós estaremos incrementando o número de compras. Devemos encontrar um meio de incremetar valores diferentes de 1. Para isso usamos o comando INCRBY:
+
+```
+<ip> INCRBY compras:25-05-2015:valor 15
+(integer) 15
+<ip> INCRBY compras:25-05-2015:valor 17
+(integer) 32
+<ip> INCRBY compras:25-05-2015:valor 2
+(integer) 34
+```
+
+Idem para a decrementação, se houve, por exemplo, uma compra cancelada:
+
+```
+<ip> DECRBY compras:25-05-2015:valor 2
+(integer) 32
+```
+
+Para incrementar valores quebrados usamos o comando INCRBYFLOAT. Para decrementar, também usamos o INCRBYFLOAT passando um valor negativo:
+
+```
+<ip> INCRBYFLOAT compras:25-05-2015:valor 10.50
+"42.5"
+<ip> INCRBYFLOAT compras:25-05-2015:valor -0.50
+"42.0"
+```
+
+
+```
+SET pagina:/contato:25-05-2015 1
+SET pagina:/contato:25-05-2015 2
+SET pagina:/contato:25-05-2015 3
+SET pagina:/contato:25-05-2015 4
+GET pagina:/contato:25-05-2015
+SET pagina:/contato:25-05-2015 5
+INCR pagina:/contato:25-05-2015
+DECR pagina:/contato:25-05-2015
+INCR pagina:/quem-somos-nos:25-05-2015
+```
+
+
+
+### Quem acessou meu sistema
+
+- Bitmaps
+- Contando bits
+- Quantos usuários acessaram
+- Quem acessou vários dias
+
+Imaginemos um cenário onde duas pessoas acessam o site do Alura:
+
+<en-media type="image/png" hash="ab14633be71c3bac8c05e0feb0945d37"/>
+
+
+```
+<ip> SETBIT acesso:25-05-2015 15 1
+```
+
+Da maneira que desenvolvemos nosso sistema até agora, somos capazes de dizer quantas vezes cada página foi acessada e em quais dias, e fazer diversas queries ligadas a isso. Porém queremos ser mais específicos e dizer em quais dias o André, por exemplo, acessou o sistema. Ou quem acessou o sistema em determinados dias. Ou seja, queremos informações ligadas ao usuário, informações qualitativas.
+
+Já trabalhamos com strings, valores e hashes. Agora veremos como trabalhar com valores booleanos, ou seja, trues e falses para responder este tipo de pergunta. Para marcarmos esses valores, a menor unidade de memória que será utilizada é de 1 bit. E o Redis já possui uma estrutura otimizada que permite setar diversos bits.
+
+Usaremos os comandos SETBIT e GETBIT para marcarmos diversos bits, um para cada usuário, usando os valores 0 (false) ou 1 (true). Temos um espaço de memória muito grande onde poderemos marcar quais usuários acessaram (true) ou não (false) o sistema.
+
+Então vamos marcar um único bit, dizendo se é verdadeiro ou falso para um valor específico, nesse caso o id do usuário. Fazemos, por exemplo, para o acesso do dia 25/05/2015, que os usuários de ids 15, 32, etc acessaram o sistema:
+
+```
+(integer) 0
+<ip> SETBIT acesso:25-05-2015 32 1
+(integer) 0
+<ip> SETBIT acesso:25-05-2015 46 1
+(integer) 0
+<ip> SETBIT acesso:25-05-2015 11 1
+(integer) 0
+```
+
+Para sabermos se um usuário acessou o sistema, fazemos:
+
+```
+<ip> GETBIT acesso:25-05-2015 15
+(integer) 1
+<ip> GETBIT acesso:25-05-2015 30
+(integer) 0
+```
+
+Logo, o usuário de id 15 acessou o sistema em 25/05/2015 e o 30 não. Porque os ids são números normais e não muito grandes, o sistema consegue armazenar os bits necessários em uma sequência, o bitmap.
+
+O próximo passo é aprendermos a fazer operações com todas essas informações que vimos como armazenar e extrair.
+
+
+```
+SETBIT acesso:25-05-2015 15 1
+SETBIT acesso:25-05-2015 32 1
+SETBIT acesso:25-05-2015 46 1
+SETBIT acesso:25-05-2015 11 1
+GETBIT acesso:25-05-2015 15
+GETBIT acesso:25-05-2015 30
+
+SETBIT acesso:25-06-2015 1 1
+SETBIT acesso:25-06-2015 2 1
+SETBIT acesso:25-06-2015 3 0
+SETBIT acesso:26-06-2015 1 1
+SETBIT acesso:26-06-2015 3 1
+SETBIT acesso:27-06-2015 1 1
+SETBIT acesso:27-06-2015 2 1
+SETBIT acesso:27-06-2015 3 1
+BITCOUNT acesso:25-06-2015
+BITCOUNT acesso:26-06-2015
+BITCOUNT acesso:27-06-2015
+```
+
+
+
+### Operadores com bits
+
+- Bitop e and
+- Quem acessou no fim de semana
+- Bitop e or
+- Bits
+- Resumindo
+
+
+```
+BITOP AND acesso:25-e-26-06-2015 acesso:25-06-2015 acesso:26-06-2015
+GETBIT acesso:25-e-26-06-2015 1
+GETBIT acesso:25-e-26-06-2015 2
+GETBIT acesso:25-e-26-06-2015 3
+BITCOUNT acesso:25-e-26-06-2015
+
+BITOP OR acesso:25-ou-26-06-2015 acesso:25-06-2015 acesso:26-06-2015
+GETBIT acesso:25-ou-26-06-2015 1
+GETBIT acesso:25-ou-26-06-2015 2
+GETBIT acesso:25-ou-26-06-2015 3
+BITCOUNT acesso:25-ou-26-06-2015
+```
+
+
+
+
+
+Redis II: Estruturas e recursos na sua base NoSQL
+-----------
+
+Quem já fez o curso de nosql chave valor com Redis 1.
+
+- Implemente listas no Redis
+- Trabalhe com uma fila de espera
+- Entenda recursos como busy wait e pop blocante
+- Crie ranks de usuários e elementos
+- Use ordenação com o zrange wishscores
+
+
+
+### Ultimas notícias
+
+- Ultimas notícias na memória
+- Comandos do redis para listas
+- Implementando listas no redis com Ipush, Rpush, llen, lindex, lrange, ltrim
+
+Já sabemos usar o Redis para resolver vários problemas, utilizando strings, tipos numéricos, tipos booleanos, etc em conjuntos muito grandes. Nesta segunda parte do curso de Redis veremos mais alguns problemas para resolvermos.
+
+Um dos problemas, muito comum, é querermos saber quais foram as últimas notícias publicadas no site de um jornal para também podermos deixá-lo sempre atualizado. No site do Alura nós mostramos os três últimos depoimentos de cada curso. Poderíamos querer saber quais foram os últimos usuários logados.
+
+Veremos aqui como armazenamos listas de valores de um tamanho determinado. Vamos modelar, então, um sistema de notícias com as últimas três de um site.
+
+A primeira notícia é
+
+<en-media type="image/png" hash="226cc6b9d0607c85be2d2ad7e022f8fc"/>
+
+No momento em que escrevemos a segunda notícia, mais recente, queremos deixá-la em cima, ou seja, antes. Então, toda nova notícia deve aparecer primeiro:
+
+<en-media type="image/png" hash="ebd7e1ded4ec8faa83470fd3322d5345"/>
+
+E, para a terceira notícia:
+
+<en-media type="image/png" hash="a2c75d07ca5c3c205184d5ff1675d018"/>
+
+Pode ser que apareá uma quarta notícia:
+
+<en-media type="image/png" hash="37b6c087a2042c9fad38f83a6ab548b1"/>
+
+Se aparecer uma quarta notícia, devemos esconder aquela primeira, a mais em baixo, afinal só estamos interessados em mostrar as últimas três:
+
+<en-media type="image/png" hash="fadc62319f579d062e153bbc9f1a8544"/>
+
+Todo o instante em que chegar uma notícia nova, ela será colocada antes das outras na fila e a mais antiga some.
+
+Vamos numerar as notícias para já começarmos a pensar na implementação no Redis. Quando tínhamos apenas uma notícia, ela estava na posição 0. Assim que a sunga notícia chegou, ela entra na posição 0 e a primeira vai para a posição 1. Para a terceira a mesma coisa: ela fica em 0, a segunda em 1 e a primeira em 3. Com a quarta repetimos:
+
+- quarta - 0,
+- terceira - 1,
+- segunda - 2,
+- primeira - 3.
+
+Porém, não queremos que a posição 3 apareça. Então, mandamos o banco de dados manter a lista na memória só até a posição 2. Fazemos isso primeiramente inserindo os elementos na lista.
+
+Cada elemento novo é empurrado (push) para a esquerda (left) da lista. Precisamos também de um nome para a chave na qual os elementos (notícias) serão armazenados: "ultimas_noticias". E o nome de cada elemento: a manchete da notícia. O comando para a primeira notícia fica assim:
+
+```
+LPUSH ultimas_noticias "Jogador de futebol e flagrado jogando basquete na rua"
+(integer) 1
+```
+
+Para a segunda, devemos encaixá-la também à esquerda:
+
+```
+LPUSH ultimas_noticias "Novo curso de Redis e lancado pelo Alura"
+(integer) 2
+```
+
+Toda vez que chega uma notícia nova, usamos esse comando. Mas ainda precisaremos de um comando que apare (trim) as últimas notícias à esquerda (left) da lista e deixe-a com os elementos nas posições de 0 a 2:
+
+```
+LTRIM ultimas_noticias 0 2
+OK
+```
+
+Vamos incluir todas as notícias já vistas para visualizar os elementos usamos o comando LINDEX:
+
+```
+LINDEX ultimas_noticias 0
+"Guilherme Silveira faz aniversario e espera presentes... sentado"
+```
+
+De fato, esta foi a última notícia a ser inserida na lista, a mais à esquerda. Para sabermos o tamanho (length) da lista fazemos:
+
+```
+LLEN ultimas_noticias
+(integer) 4
+```
+
+Para visualizar um trecho (range) específico da lista, fazemos
+
+```
+LRANGE ultimas_noticias 1 2
+1) "Jogador de basquete e encontrado jogando futebol na quadra"
+2) "Novo curso de Redis lancado pelo Alura"
+```
+
+Aqui visualizamos os elementos nas posições de 1 a 2. Perceba que se passarmos valores maiores de trechos, como aplicamos o LTRIM na lista, serão retornados aqueles três primeiros elementos, como queríamos.
+
+
+```
+LPUSH ultimas_noticias "Jogador de futebol é flagrado jogando basquete na rua."
+LPUSH ultimas_noticias "Novo curso de Redis é lançado pelo Alura."
+LPUSH ultimas_noticias "Jogador de basquete é encontrado jogando futebol na quadra."
+LPUSH ultimas_noticias "Guilherme Silveira faz aniversário e espera presentes... sentado."
+LINDEX ultimas_noticias 0
+LINDEX ultimas_noticias 1
+LLEN ultimas_noticias
+LRANGE ultimas_noticias 1 2
+LRANGE ultimas_noticias 0 3
+LRANGE ultimas_noticias 0 2
+LTRIM ultimas_noticias 0 2
+LLEN ultimas_noticias
+LRANGE ultimas_noticias 0 2
+```
+
+
+
+### Uma fila de espera de envio de emails e mensagens de celular
+
+- A fila em uma diagrama
+- Ipop e o problema de uma atomicidade de uma fila
+
+Veremos nesta aula uma outra aplicação do Redis bem comum em sites e aplicativos mobile. Quando nos cadastramos em um site, é normal que peçam nosso e-mail ou telefone para confirmar nossa identidade, por questões de segurança e para ter certeza de que ele está se comunicando realmente conosco e não com outro usuário. Nesse momento recebemos um e-mail ou SMS para confirmação.
+
+Existe, então, um mecanismo, em que, por meio da Web ou de um aplicativo de celular, nos cadastramos num site.Um tempo depois recebemos um e-mail, uma ligação ou um SMS para confirmarmos o cadastro. Essa segunda parte ocorre no background, como uma tarefa paralela.
+
+Para que uma sequências de tarefas sejam executadas em paralelo, é necessário que elas sejam enfileiradas em algum lugar. Um outro programa olha para essa fila e vai executando as tarefas na ordem que elas estão.
+
+Um outro bom exemplo de filas de tarefas é o atendimento via chat, que provavelmente possui uma fila de espera de atendimento dos clientes. Sempre lembrando que a primeira tarefa/primeiro cliente será executada/atendido primeiro.
+
+Vimos na aula passada a inserção de elementos pela esquerda de uma lista. Desta vez estamos fazendo pela direita (right) e dando prioridade de saída para aqueles que foram inseridos primeiramente, em vez de a apararmos. Com isso criamos uma fila de espera.
+
+Para fazer a implementação, vamos usar o exemplo de um site que confirma o e-mail dos usuários. Para isso colocamos o e-mail em uma fila e a atendendemos sempre da esquerda para a direita. O e-mail mais antigo será o primeiro a sair. Para criar uma fila com elementos usamos o comando RPUSH ("R" de right) :
+
+```
+RPUSH "fila:confirma-email" "guilherme.silveira@alura.com.br"
+(integer) 1
+```
+
+Para visualizarmos a quantidade de elementos em uma lista:
+
+```
+LLEN "fila:confirma-email"
+(interger) 1
+```
+
+De fato, há um elemento na lista. Vamos acrescentar mais dois e-mails:
+
+```
+RPUSH "fila:confirma-email" "daniela.mikyung@alura.com.br"
+(integer) 2
+RPUSH "fila:confirma-email" "carlos.felicio@alura.com.br"
+(integer) 3
+```
+
+Vamos confirmar que os três estão lá:
+
+```
+LRANGE "fila:confirma-email" 0 2
+1) "guilherme.silveira@alura.com.br"
+2) "daniela.mikyung@alura.com.br"
+3) "carlos.felicio@alura.com.br"
+```
+
+Agora que já temos uma fila formada, um outro programa atende, na ordem, os elementos:
+
+```
+LINDEX fila:confirma-email 0
+"guilherme.silveira@alura.com.br"
+```
+
+Tiramos esse elemento da fila:
+
+```
+LTRIM fila:confirma-email 1 3
+OK
+```
+
+Aqui precisamos tomar muito cuidado! Se fizermos o LTRIM dessa forma, corremos o risco de um cliente (no caso o de número 3) ser cadastrado no meio tempo e, logo após o comando, ser excluído. Para solucionar esse problema, precisamos retirá-lo da fila ao mesmo tempo que o pegarmos, para não dar tempo de outro usuário se cadastrar. O comando que faz esse trabalho é o POP, se for da esquerda, LPOP:
+
+```
+LPOP fila:confirma-email
+```
+
+Dessa maneira pegamos o elemento e o retiramos da lista sem corrermos o risco de que outro se perca.
+
+```
+RPUSH "fila:confirma-email" "guilherme.silveira@alura.com.br"
+LLEN "fila:confirma-email"
+RPUSH "fila:confirma-email" "daniela.mikyung@alura.com.br"
+LLEN "fila:confirma-email"
+RPUSH "fila:confirma-email" "carlos.felicio@alura.com.br"
+LRANGE "fila:confirma-email" 0 2
+LPOP "fila:confirma-email"
+LLEN "fila:confirma-email"
+LRANGE "fila:confirma-email" 0 1
+RPUSH "fila:confirma-email" "ana.stella@alura.com.br"
+LRANGE "fila:confirma-email" 0 2
+LPOP "fila:confirma-email"
+LRANGE "fila:confirma-email" 0 2
+```
+
+
+
+### Busy wait e pop blocante com o blpop
+
+- Filas e a importancia do redis
+
+Vimos como implementar uma fila no Redis. Veremos nessa aula como implementar o programa que consome a fila. Um dos motivos é que ele poderá continuar dando POP nos elementos mesmo com a fila vazia, o que resulta em:
+
+```
+LPOP fila:confirma-email
+(nil)
+```
+
+Precisamos de um comando que faça o programa parar de chamar o POP quando a fila estiver vazia. Ele não pode ficar ocupado enquanto estiver esperando, ou seja, em estado Busy wait.
+
+Primeiramente vamos adicionar alguns e-mails:
+
+```
+RPUSH fila:confirma-email "ana.stella@alura.com.br"
+(integer) 1
+RPUSH fila:confirma-email "maria.lucia@alura.com.br"
+(integer) 2
+RPUSH fila:confirma-email "paulo.silveira@alura.com.br"
+(integer) 3
+```
+
+Queremos fazer o LPOP da fila, mas ele deve parar se ela estiver vazia, ou seja, ficar bloqueado. Logo, fazemos:
+
+```
+BLPOP fila:confirma-email 30
+1) "fila:confirma-email"
+2) "ana.stella@alura.com.br"
+BLPOP fila:confirma-email 30
+1) "fila:confirma-email"
+2) "maria.lucia@alura.com.br"
+BLPOP fila:confirma-email 30
+1) "fila:confirma-email"
+2) "paulo.silveira@alura.com.br"
+BLPOP fila:confirma-email 30
+```
+
+O programa terá um tempo máximo de espera de 30 segundos. Se durante esses 30 segundos, um novo e-mail for adicionado:
+
+```
+RPUSH fila:confirma-email "guilherme.silveira@alura.com.br"
+```
+
+O programa faz o POP:
+
+```
+1) "fila:confirma-email"
+2) "guilherme.silveira@alura.com.br"
+(12.28s)
+```
+
+Demorou 12.28 segundos para um novo elemento ser incluido. Se nenhum for incluido nesse tempo:
+
+```
+BLPOP fila:confirma-email 30
+(nil)
+(30.01s)
+```
+
+Se não quisermos indicar um tempo determinado, fazemos
+
+```
+BLPOP fila:confirma-email 0
+```
+
+Dessa forma o programa ficará esperando indeterminadamente até um elemento aparecer. Mas o mais importante: o programa não estará ocupado.
+
+Uma lista pode ser utilizada de diversas formas. A que acabamos de ver foi a Fila. O Redis é tão famoso por possibilitar essas implementações que existem diversas ferramentas de sistema de filas baseadas nele, como resque e restmq. Lembremos que o Redis armazena a lista na memória e não no disco.
+
+```
+LLEN fila:confirma-email
+LPOP fila:confirma-email
+LPOP fila:confirma-email
+LPOP fila:confirma-email
+LPOP fila:confirma-email
+RPUSH fila:confirma-email "ana.stella@alura.com.br"
+RPUSH fila:confirma-email "paulo.silveira@alura.com.br"
+RPUSH fila:confirma-email "maria.lucia@alura.com.br"
+BLPOP fila:confirma-email 30
+BLPOP fila:confirma-email 30
+BLPOP fila:confirma-email 30
+RPUSH fila:confirma-email "ana.stella@alura.com.br"
+BLPOP fila:confirma-email 30
+BLPOP fila:confirma-email 10
+BLPOP fila:confirma-email 30
+RPUSH fila:confirma-email "paulo.silveira@alura.com.br"
+BLPOP fila:confirma-email 0
+```
+
+
+
+### Rede social e relacionamento
+
+- Rede social e relacionamento
+- Operações básicas de conjunto sadd, scard, smembers, sismember, srem
+- Interseccao entre conjuntos com o sinter
+- Diferença entre conjuntos e possiveis amigos com sdiff
+
+Um exemplo de conjunto de informações que poderíamos querer utilizar no dia-a-dia é o de amigos em uma rede social.
+
+<en-media type="image/png" hash="cc27eff0531c023ca440804fab8786c2"/>
+
+Aqui mostramos o Guilherme, que possui quatro amigos: Daniela, Carlos, Ana e Lúcia. Poderíamos fazer isso para todos desse grupo. Cada linha representa uma conexão. Isso se aplica para contatos telefônicos ou qualquer tipo de relacionamento entre elementos. Então um Conjunto de elementos são esses elementos juntos por uma característica em comum.
+
+Não podemos falar de lista aqui, pois esta traz a ideia de ordem. Se não existe a enumeração dos elementos, podemos fazer diversas operações entre esses conjuntos como, por exemplo, dizer quem são os amigos em comum entre o Guilherme e o Carlos.
+
+<en-media type="image/png" hash="4f86d146c025b3dede7e4437f6f08f98"/>
+
+Os amigos do Guilherme são:
+
+- Daniela
+- Carlos
+- Ana
+- Lúcia
+
+Os amigo do Carlos são:
+
+- Paulo
+- Lúcia
+- Guilherme
+
+Os amigos em comum entre Guilherme e Carlos são:
+
+- Lúcia
+
+Vimos a intersecção de dois conjuntos. Veremos que serão possíveis outras operações como união, diferença, etc e faremos tudo isso no Redis.
+
+Para representar um conjunto (set) no Redis, criamos uma chave (relacionamentos do Guilherme) e adicionaremos strings (amigos) a ela:
+
+```
+SADD "relacionamentos:guilherme" "daniela" "carlos" "ana" "lucia"
+(integer) 4
+```
+
+Se tentarmos adicionar elementos que já pertencem ao conjunto, teremos:
+
+```
+SADD "relacionamentos:guilherme" "ana" "lucia"
+(integer) 0
+```
+
+Não foram adicionados, pois uma das características dos conjuntos é que não existem elementos repetidos, diferentemente da lista.
+
+Para visualizarmos a quantidade de elementos (cardinalidade) em um conjunto fazemos:
+
+```
+SCARD "relacionamentos:guilherme"
+(integer) 4
+```
+
+E para discriminar os "membros" do conjunto:
+
+```
+SMEMBERS "relacionamentos:guilherme"
+1) "lucia"
+2) "ana"
+3) "carlos"
+4) "daniela"
+```
+
+Para descobrirmos se um elemento pertence ao conjunto:
+
+```
+SISMEMBER "relacionamentos:guilherme" "carlos"
+(integer) 1
+SISMEMBER "relacionamentos:guilherme" "carlos"
+(integer) 0
+```
+
+O que significa que o elemento "carlos" está dentro do conjunto e o "joao" não.
+
+Para remover um membro:
+
+```
+SREM "relacionamentos:guilherme" "lucia"
+(integer) 1
+```
+
+Voltando agora à intersecção de conjuntos, vimos que, no caso dos amigos do Guilherme e do Carlos, a Lúcia é a amiga em comum entre eles. Veremos como implementar tal operação no Redis. Primeiro, criemos o conjunto de relacionamentos do Carlos:
+
+```
+SADD "relacionamentos:carlos" "paulo" "lucia" "guilherme"
+(integer) 3
+```
+
+Agora basta fazer
+
+```
+SINTER "relacionamentos:guilherme" "relacionamentos:carlos"
+1) "lucia"
+```
+
+para saber o elemento em comum.
+
+Uma outra pergunta que pode ser feita em relação aos conjuntos de amigos é: quem o Guilherme conhece que a marcela não conhece? Isso nada mais é do que a diferença entre dois conjuntos.
+
+```
+amigos do guilherme - amigos da marcela
+
+daniela, carlos, ana, lucia -
+daniela, ana =
+carlos, lucia
+```
+
+Implementando no Redis, vamos criar o conjunto de amigos da Marcela:
+
+```
+SADD "relacionamentos:marcela" "daniela" "ana"
+(integer) 1
+```
+
+E fazer a diferença:
+
+```
+SDIFF "relacionamentos:guilherme" "relacionamentos:marcela"
+1) "carlos"
+2) "lucia"
+```
+
+Se invertêssemos os conjuntos:
+
+```
+SDIFF "relacionamentos:marcela" "relacionamentos:guilherme"
+(empty list or set)
+```
+
+De fato, não existe membro do conjunto da Marcela que não está no conjunto do Guilherme.
+
+Represente o que representar os conjuntos, a intersecção e a diferença falam muito sobre eles.
+
+```
+SADD "relacionamentos:guilherme" "daniela"
+SADD "relacionamentos:guilherme" "carlos"
+SADD "relacionamentos:guilherme" "ana" "lucia"
+SADD "relacionamentos:guilherme" "ana" "lucia"
+SADD "relacionamentos:guilherme" "ana" "lucia" "carlos"
+SLEN "relacionamentos:guilherme"
+SCARD "relacionamentos:guilherme"
+SMEMBERS "relacionamentos:guilherme"
+SISMEMBER "relacionamentos:guilherme" "carlos"
+SISMEMBER "relacionamentos:guilherme" "joao"
+SREM "relacionamentos:guilherme" "lucia"
+SREM "relacionamentos:guilherme" "lucia"
+SADD "relacionamentos:guilherme" "lucia"
+SREM "relacionamentos:guilherme" "lucia"
+SMEMBERS "relacionamentos:guilherme"
+SADD "relacionamentos:guilherme" "lucia"
+SMEMBERS "relacionamentos:guilherme"
+SMEMBERS "relacionamentos:guilherme"
+SADD "relacionamentos:carlos" "paulo" "lucia" "guilherme"
+SMEMBERS "relacionamentos:carlos"
+SINTER "relacionamentos:guilherme" "relacionamentos:carlos"
+SADD "relacionamentos:marcela" "ana" "daniela"
+SMEMBERS "relacionamentos:marcela"
+SDIFF "relacionamentos:guilherme" "relacionamentos:marcela"
+SDIFF "relacionamentos:marcela" "relacionamentos:guilherme"
+```
+
+
+
+### Ranks
+
+- Continuando com hashes
+- Criando um conjunto ordenado com zadd e zcard
+- Ranks de usuários e elementos com zrange e zrevange
+
+Vimos nas aulas passadas diversos tipos de problemas os quais o redis é capaz de resolver: estruturas, características, armazenar strings, números, tipos booleanos, fizemos operações com elementos e armazenamos listas e trabalhamos com elas como se fossem filas ou conjuntos.
+
+Nesta aula veremos outros tipos de estruturas. À medida em que interagimos com algum sistema, por exemplo no site do Alura, ganhamos pontos e experiência, para mostrar que estamos nos desenvolvendo.
+
+Existem maneiras subjetivas de mostrar isso: "Você concluiu o curso!". E maneiras mais objetivas: "Você subiu de nível!".
+
+Queremos armazenar todos esses usuários, cada um com sua pontuação, no Redis. Com isso podemos mostrar tais informações de forma otimizada e rápida com os elementos rankeados, ordenados.
+
+O primeiro passo é, de fato, armazenar a pontuação de todos os usuários. Precisamos definir o tipo do dado, seu nome (que deve ser único) e sua pontuação, ou seja, o valor atrelado ao dado. Como o id do usuário deve ser único, vamos simplesmente definí-lo com um número.
+
+```
+SET "jogador:1" 50076
+OK
+```
+
+Então o jogador 1 tem 50076 pontos e, realmente, ele foi armazenado:
+
+```
+GET "jogador: 1"
+"50076"
+```
+
+Na hora de mostrarmos a pontuação do usuário, seria interessante ela vir com seu nome, e não apenas um número. Para sabermos o tipo da chave, no caso "jogador:1", fazemos:
+
+```
+TYPE "jogador:1"
+string
+```
+
+O tipo é string. Mas, como queremos armazenar mais de um tipo de dado, devemos usar o HSET. Então vamos deletar a informação e setar o hash:
+
+```
+DEL "jogador:1"
+(integer) 1
+
+HSET "jogador:1" "nome" "guilherme"
+(integer) 1
+HSET "jogador:1" "pontos" 50076
+(integer) 1
+```
+
+Vamos setar outro jogador:
+
+```
+HSET "jogador:2" "nome" "carlos"
+(integer) 1
+HSET "jogador:2" "pontos" 76564
+(integer) 1
+```
+
+Para verificarmos se todos os dados de cada jogador foram inputados:
+
+```
+HGETALL "jogador:1"
+1) "nome"
+2) "guilheme"
+3) "pontos"
+4) "50076"
+
+HGETALL "jogador:1"
+1) "nome"
+2) "carlos"
+3) "pontos"
+4) "76564"
+```
+
+O HSET e o HGET nós já conhecíamos. As novidades aqui foram o TYPE - para sabermos o tipo da chave - e o HGETALL - para trazer todos os dados da hash.
+
+O que nos falta aqui é ordenar essas chaves usando sua pontuação, para tal usamos a ideia de lista que daqui a pouco veremos. Primeiramente vamos pensar como podemos aumentar a pontuação dos jogadores. Se usarmos simplesmente o comando INCR, não irá funcionar, uma vez que o tipo não é mais string e sim hash, logo HINCRBY:
+
+```
+HINCRBY "jogador:1" "pontos" 10
+(integer) 50086
+```
+
+Também temos o HINCRBYFLOAT, para incrementarmos com números decimais.
+
+Agora sim vamos pensar como ordenar um conjunto de jogadores. Ora, criamos então este conjunto (sem repetição de elementos) usando o ZADD (o "Z" é para não repetir os "SS" de Sorted Set). Após o comando, escrevemos o nome do conjunto que armazenará todas as pontuações, depois vêm a informação que queremos ordenar seguida do nome do jogador. Então temos:
+
+```
+ZADD pontuacoes 50076 guilherme
+(integer) 1
+ZADD pontuacoes 65543 carlos
+(integer) 1
+ZADD pontuacoes 33786 daniela
+(integer) 1
+ZADD pontuacoes 8754 paulo
+(integer) 1
+```
+
+Na chave "pontuacoes" guardamos os jogadores com seus pontos e nomes, respectivamente. Vamos ver qual o tipo da chave "pontuacoes":
+
+```
+TYPE pontuacoes
+zset
+```
+
+Ou seja, é um conjunto ordenado. E para saber a sua cardinalidade:
+
+```
+ZCARD pontuacoes
+(integer) 4
+```
+
+De fato, o conjunto contém 4 elementos.
+
+Para visualizarmos os elementos do conjunto ordenado, fazemos:
+
+```
+ZRANGE pontuacoes 0 3
+1) "paulo"
+2) "daniela"
+3) "guilherme"
+4) "carlos"
+```
+
+De fato, os elementos estão ordenados. Porém perceba que o conjunto está em ordem crescente. O que queremos é o inverso (reverted), em ordem descrecente, para que o jogador com mais pontos fique em primeiro lugar. Para tal, fazemos:
+
+```
+ZREVRANGE pontuacoes 0 3
+1) "carlos"
+2) "guilherme"
+3) "daniela"
+4) "paulo"
+```
+
+Mais para frente veremos como fazer algumas operações com conjuntos ordenados, mas agora já sabemos como montá-los.
+
+```
+SET "jogador:1" 50076
+GET "jogador:1"
+HSET "jogador:1" nome "guilherme"
+TYPE "jogador:1"
+DEL "jogador:1"
+TYPE "jogador:1"
+HSET "jogador:1" nome "guilherme"
+HSET "jogador:1" pontos 50076
+HSET "jogador:2" nome "carlos"
+HSET "jogador:2" pontos 76564
+HGET "jogador:1" nome
+HGETALL "jogador:1"
+HGETALL "jogador:2"
+TYPE "jogador:1"
+HGETALL "jogador:1"
+HINCRBY "jogador:1" "pontos" 1
+HINCRBY "jogador:1" "pontos" 10
+HINCRBYFLOAT "jogador:1" "pontos" 10.5
+HINCRBYFLOAT "jogador:1" "pontos" 10.5
+# SortedSet
+ZADD "pontuacoes" 50076 "guilherme"
+ZADD "pontuacoes" 65543 "carlos"
+ZADD "pontuacoes" 33786 "daniela"
+ZADD "pontuacoes" 8754 "paulo"
+TYPE "pontuacoes"
+ZCARD "pontuacoes"
+ZADD "pontuacoes" 63786 "daniela"
+ZCARD "pontuacoes"
+ZRANGE "pontuacoes" 0 3
+ZREVRANGE "pontuacoes" 0 3
+```
+
+
+
+### Entendendo mais sobre a ordenação com o zrange wishscores e usando numeros negativos
+
+- Posição de um elemento com um zscore e zrank
+- Armazenando somente o id e fazendo uma busca extra
+
+Fomos capazes de criar um conjunto que indicava quantos pontos os usuários possuiam e apresentava essas pontuações em ordem crescente (ZRANGE) ou decrescente (ZREVRANGE). Em qualque um dos dois comandos podemos passar opcionalmente um novo argumento chamado WITHSCORES, o quê retorna:
+
+```
+ZREVRANGE pontuacoes 0 3 WITHSCORES
+1) "carlos"
+2) "65543"
+3) "guilherme"
+4) "50076"
+5) "daniela"
+6) "33786"
+7) "paulo"
+8) "8754"
+```
+
+Lembremos que os comandos são atômicos e poderíamos ter problemas de pedir, por exemplo, que sejam mostrados os elementos de 0 a 3, por exemplo, sendo que o conjunto pode modificar-se. Então, para pedimos que retorne todos os elementos, sem precisar passar o range, fazemos
+
+```
+ZREVRANGE pontuacoes 0 -1 WITHSCORES
+```
+
+Dessa maneira temos certeza de que retornará todo o conjunto, sem faltar ninguém. O "-1" significa o último elemento. Consequentemente, "-2" é o penúltimo, "-3" o antepenúltimo e assim por diante. Poderíamos fazer o mesmo para iniciar o pedaço do conjunto que nos interessa:
+
+```
+ZREVRANGE pontuacoes -3 -1 WITHSCORES
+```
+
+Aqui percorremos do antepenúltimo ao último elemento.
+
+Uma pergunta tradicional de ser feita em relação aos rankings é sobre a posição de determinado elemento. Para isso vamos usar o ZSCORE para sabermos sua pontuação:
+
+```
+ZSCORE pontuacoes guilherme
+"50076"
+```
+
+Para sabermos o rank, em ordem crescente, do usuário fazemos:
+
+```
+ZRANK pontuacoes guilherme
+(integer) 1
+```
+
+O Guilherme está na posição 1, ou seja, em segundo lugar. No ranking reverso, em ordem descrescente:
+
+```
+ZREVRANK pontuacoes guilherme
+(integer) 3
+```
+
+Ou seja, em quarto lugar.
+
+Para somarmos pontos para um usuário usamos o comando ZINCR
+
+```
+ZINCRBY pontuacoes 50000 guilherme
+"100076"
+```
+
+E, se chamarmos o ZRANGE:
+
+```
+ZRANGE pontuacoes 0 -1
+1) "paulo"
+2) "daniela"
+3) "carlos"
+4) "guilherme"
+```
+
+Até agora nosso conjunto ordenado foi criado utilizando o ZADD + pontos + nome do usuário. O problema é que dessa forma só poderá haver usuários com nomes diferentes. Precisamos de um identificador único, então é muito comum que no lugar do nome, coloquemos o id. Então vamos apagar o nosso conjunto ordenado "pontuacoes:
+
+```
+DEL pontuacoes
+```
+
+E criá-lo do início, fazendo:
+
+```
+ZADD pontuacoes 50000 55
+(integer) 1
+ZADD pontuacoes 30000 35
+(integer) 1
+ZADD pontuacoes 300000 65
+(integer) 1
+```
+
+Se chamarmos o ZRANGE:
+
+```
+ZRANGE pontuacoes 0 -1
+1) "35"
+2) "55"
+3) "65"
+```
+
+No mesmo, ou em um outro banco de dados, buscamos os nomes dos usuários atrelados aos ids.
+
+```
+ZREVRANGE pontuacoes 0 3 WITHSCORES
+ZRANGE pontuacoes 0 3 WITHSCORES
+ZRANGE pontuacoes 1 2 WITHSCORES
+ZREVRANGE pontuacoes 1 2 WITHSCORES
+ZCARD pontuacoes
+ZADD pontuacoes 90000 "ana"
+ZREVRANGE pontuacoes 0 3 WITHSCORES
+ZCARD pontuacoes
+
+ZREVRANGE pontuacoes 0 -1 WITHSCORES
+ZREVRANGE pontuacoes 0 -2 WITHSCORES
+ZREVRANGE pontuacoes 0 -3 WITHSCORES
+ZREVRANGE pontuacoes 0 -4 WITHSCORES
+ZREVRANGE pontuacoes 0 -5 WITHSCORES
+ZREVRANGE pontuacoes -3 -1 WITHSCORES
+ZREVRANGE pontuacoes 0 2 WITHSCORES
+
+ZSCORE pontuacao guilherme
+ZRANGE pontuacoes 0 -1
+ZRANK pontuacoes guilherme
+ZRANK pontuacoes paulo
+ZREVRANK pontuacoes guilherme
+ZREVRANK pontuacoes guilherme2
+ZRANGE pontuacoes 0 -1
+# ZSCORE pontuacoes guilherme
+# ZADD pontuacoes guilherme 100076
+ZINCRBY pontuacoes 50000 guilherme
+ZRANGE pontuacoes 0 -1
+
+DEL pontuacoes
+ZADD pontuacoes 50000 55
+ZADD pontuacoes 50000 35
+ZADD pontuacoes 50000 65
+ZRANGE pontuacoes 0 -1
+ZRANGE pontuacoes 0 -1 WITHSCORES
+HSET "usuarios" 55 guilherme
+HSET "usuarios" 35 ana
+HSET "usuarios" 65 daniela
+HGET usuarios 35
+```
+
+
+
+### Complexidade e velocidade dos algoritmos e estruturas de dados no redis
+
+- Parabéns
+
+Vimos durante as aulas anteriores diversos comandos do Redis que poderemos usar no dia-a-dia. Quando armazenamos dados na memória, o banco de dados é capaz de executar tais comandos em uma velocidade muito rápida. Vamos discutir aqui quão rápidos são esses comandos.
+
+Para analisar a velocidade de um algoritmo, o executamos diversas vezes e observamos o quão devagar ele fica, é a análise assintótica. Nós temos aqui no Alura um curso específico para isso.
+
+No site do Redis (redis.io) temos todas as informações sobre todos seus comandos. Vamos pegar um comando bem básico como exemplo, o HSET. Temos a informação de que sua complexidade é O(1), ou seja, ele possui velocidade constante, é muito rápido. A mesma velocidade para o SET, o GET e o HGET.
+
+Porém temos também operações não tão rápidas, como HGETALL, que tem complexidade O(N), ou seja, é linear, dependendo da quantidade de elementos que constituem o hash.
+
+A complexidade do ZRANGE é na ordem de O(log(N)+M), sendo N o número de elementos no conjunto ordenado e M o número de elementos retornados. Este cresce de maneira otimizada também, sendo mais rápido que os lineares.
+
+Estamos terminando nosso curso de introdução ao Redis. Aqui vimos como utilizar a linha de comando para conectarmos ao servidor remoto de dados, o qual é um dicionário do tipo chave-valor. O valor não precisa necessariamente ser uma string ou um número, ele pode ser um hash, uma lista, trabalharmos a lista como fila ou como conjunto, que por sua vez pode ser ordenado.
+
+Vimos inúmeras situações em que o Redis pode estar presente para solucionar problemas de relatórios, contatos, rankings com seus algoritmos. Se seu interesse é entender como funciona por baixo dos panos diversos tipos de algoritmos e estruturas de dados, existem cursos específicos para isso. As áreas de aplicação são múltiplas. Boa sorte na sua joranda e até o próximo curso!
+
+
+
+
+
+PostgreSQL I : Primeiros passos com suas consultas
+----------
+
+Desenvolvedores (ou pessoas de qualquer outra área) que querem aprender SQL.
+
+- Realize consultas com SELECT
+- Filtre os seus registros com WHERE
+- Adicionando dados no banco com o INSERT
+- Atuaiize e apague dados com UPDATE e DELETE
+- Ordene os seus dados usando o ORDER BY
+- Junte registros de tabelas com INNER JOIN
+
+
+
+### Atualizando e removendo linhas da nossa tabela
+
+- Instalando o postgreSQL e criando nosso ambiente de trabalho
+- Como selecionar elementos em nossa tabela
+- Atualizando valores, corrigindo erros
+- Deletando valores
+- Selecionando intervalos de data
+- Selecionando ano, mes ou dia de uma data
+
+
+
+### Alterando a estrutura da tabela
+
+- Alterando as restrições de valore em uma coluna
+- Restringindo valores nulos
+- Restringindo texto em uma coluna
+
+
+
+### Título Fazendo operações com os valores da nossa tabela
+
+- Somando os valores de uma coluna
+- Contendo o número de elementos na tabela
+- Calculando a média dos valores de uma tabela
+- Ordenando e agrupando os resultados
+
+
+
+### Título Fazendo relacionamento entre tabelas
+
+- Criando a tabela de lojas
+- Chave estrangeira (Foreign key)
+- Buscas utilizando o join
+- Select múltiplo X Join
+
+
+
+
+
+MongoDB: Uma alternativa aos bancos relacionais tradicionais
+==========
+
+### Criando e inserindo em uma coleção
+
+- Introdução ao MongoDB
+- Criando e inserindo numa coleção
+- Removendo dados e inserindo mais alunos
+- Comparando MongoDB e SQL
+
+SQL
+
+```
+CREATE TABLE alunos (id INTEGER AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(255), data_nascimento DATE);
+INSERT INTO alunos VALUES (1, "Felipe", "19940226");
+
+CREATE TABLE cursos (id INTERGER AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(255));
+
+CREATE TABLE alunos (id INTEGER AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(255), curso_id INTEGER, data_nascimentos DATE);
+
+CREATE TABLE notas (id INTEGER AUTO_INCREMENT PRIMARY KEY, nota DECIMAL(3,2), aluno_id INTEGER);
+
+CREATE TABLE habilidades (id INTEGER AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(255), nivel VARCHAR(255), aluno_id INTEGER);
+```
+
+MongoDB
+
+```
+db.createCollection("alunos");
+db.alunos.insert({
+  "nome": "Felipe",
+  "data_nascimento": new Date(1994,02,26),
+  "curso" : {
+    "nome": "Sistemas de informação"
+  },
+  "notas": [10.0, 9.0, 4.5],
+  "habilidades": [
+    {
+      "nome": "inglês",
+      "nível": "avançado"
+    },
+    {
+      "nome": "taekwondo",
+      "nível": "básico"
+    }
+  ]
+});
+db.alunos.find({});
+db.alunos.remove({
+  "_id": ObjectId("5716bf48c031e0e024931e69")
+});
+db.alunos.find({});
+db.alunos.insert({
+  "nome": "Julio",
+  "data_nascimento": new Date(1972,08,30),
+  "curso" : {
+    "nome": "Medicina"
+  },
+  "habilidades": [
+    {
+      "nome": "inglês",
+      "nível": "avançado"
+    }
+  ]
+});
+db.alunos.insert({
+  nome: "Alberto",
+  data_nascimento: new Date(1972,09,30),
+  curso : {
+    nome: "Engenharia Química"
+  },
+  "habilidades": [
+    {
+      nome: "inglês",
+      nível: "avançado"
+    }
+  ]
+});
+db.alunos.find({});
+db.alunos.insert({
+  nome: "Daniela",
+  data_nascimento: new Date(1995,09,30),
+  curso : {
+    nome: "Moda"
+  },
+  "habilidades": [
+    {
+      nome: "alemão",
+      nível: "básico"
+    }
+  ]
+});
+db.alunos.find({});
+```
+
+
+
+### Consultando os dados
+
+- Navegando em um documento
+- Clausula AND
+- Clausula OR
+- Clausula IN
+
+```
+db.alunos.find();
+db.alunos.find().pretty();
+db.alunos.find({
+  nome : "Felipe"
+});
+db.alunos.find({
+  nome : "Felipe"
+}).pretty();
+db.alunos.insert({
+  "nome": "Felipe",
+  "curso": {
+    "nome": "Sistemas de informação"
+  }
+});
+db.alunos.find({
+  nome : "Felipe"
+}).pretty();
+db.alunos.remove({
+  "_id": ObjectId("5716db37c031e0e024931e6d")
+});
+db.alunos.find();
+db.alunos.find({
+  "nome": "Felipe"
+});
+
+db.alunos.find({
+  "habilidades.nome": "inglês"
+});
+db.alunos.find();
+
+db.alunos.find({
+  "nome": "Felipe",
+  "habilidades.nome": "inglês"
+});
+
+db.alunos.find({
+  "nome": "Felipe"
+}).pretty();
+```
+
+
+
+### Atualizando os dados
+
+- Operador $set
+- Operador $multi
+- Atualizando arrays
+
+
+
+### Ordenando e limitando dados
+
+- Buscando um único elemento
+- O método limit
+- O método sort
+
+
+
+### Busca por proximidade
+
+- A importancia das posições geograficas
+- Armazenando as localizações geograficas
+- Pesquisando por proximidade
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
