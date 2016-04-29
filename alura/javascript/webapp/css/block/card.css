@@ -1,3 +1,19 @@
+[data-color="first"] {
+  background-color: #45aaee;
+}
+
+[data-color="second"] {
+  background-color: #ff1010;
+}
+
+[data-color="third"] {
+  background-color: #76ef40;
+}
+
+[data-color="fourth"] {
+  background-color: #ebef40;
+}
+
 .card {
   position: relative;
   display: inline-block;
@@ -6,29 +22,13 @@
   box-sizing: border-box;
 }
 
-.card_colorFirst {
-  background-color: #45aaee;
-}
-
-.card_colorSecond {
-  background-color: #ff1010;
-}
-
-.card_colorThird {
-  background-color: #76ef40;
-}
-
-.card_colorFourth {
-  background-color: #ebef40;
-}
-
 .wrap-card-colors {
   position: absolute;
   top: -16px;
   left: 0;
 }
 
-.card-colors {
+.card-options {
   display: inline-block;
   width: 32px;
   height: 32px;
@@ -36,20 +36,9 @@
   border: 2px solid rgba(0, 0, 0, .5);
   border-radius: 50%;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
-.card-colors_colorFirst {
-  background-color: #45aaee;
-}
-
-.card-colors_colorSecond {
-  background-color: #ff1010;
-}
-
-.card-colors_colorThird {
-  background-color: #76ef40;
-}
-
-.card-colors_colorFourth {
-  background-color: #ebef40;
+.card-colors.isActive {
+  border-width: 4px;
 }
