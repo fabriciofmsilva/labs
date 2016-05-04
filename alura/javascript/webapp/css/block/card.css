@@ -6,10 +6,17 @@
   box-sizing: border-box;
 }
 
+.card:hover .wrap-card-colors {
+  opacity: 1;
+}
+
 .wrap-card-colors {
   position: absolute;
   top: -16px;
   left: 0;
+  opacity: 0;
+
+  transition: opacity .2s linear;
 }
 
 .card-options {
@@ -24,6 +31,7 @@
   border-radius: 50%;
   overflow: hidden;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .card_delete {

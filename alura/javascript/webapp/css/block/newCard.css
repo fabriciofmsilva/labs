@@ -1,0 +1,35 @@
+.newCard {
+  margin-bottom: 40px;
+  padding: 24px 126px;
+  background-color: #c5c5c5;
+}
+
+.newCard-content {
+  display: block;
+  width: 560px;
+  height: 24px;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #fff;
+  transition: heigth .2s linear,
+              border-color .5s linear;
+}
+
+.newCard-content:focus {
+  height: 150px;
+  border: 1px solid #555;
+}
+
+.newCard-action {
+  display: block;
+  width: 84px;
+  height: 34px;
+  margin-top: 20px;
+  margin-right: auto;
+  margin-left: auto;
+  font-size: 16px;
+  background-color: #8272c7;
+  cursor: pointer;
+}

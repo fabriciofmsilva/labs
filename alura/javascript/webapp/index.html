@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/block/header.css">
     <link rel="stylesheet" href="css/block/card.css">
+    <link rel="stylesheet" href="css/block/newCard.css">
   </head>
   <body>
     <header class="header container">
@@ -25,8 +26,13 @@
       </nav>
     </header>
 
+    <form class="newCard" action="">
+      <textarea class="newCard-content" name="" id="" cols="30" rows="10" placeholder="Digite aqui o conteudo do seu cartão"></textarea>
+      <input class="newCard-action" type="submit" value="Salvar">
+    </form>
+
     <section class="container">
-      <ol>
+      <ol class="wrap-card">
         <li class="card" data-color="first">
           <nav class="wrap-card-colors">
             <ul>
@@ -131,5 +137,6 @@
     </section>
 
     <script src="javascript/block/card.js"></script>
+    <script src="javascript/block/newCard.js"></script>
   </body>
 </html>
