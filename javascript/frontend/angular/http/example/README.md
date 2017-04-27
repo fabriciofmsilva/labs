@@ -1,4 +1,4 @@
-# Example
+# Labs | JavaScript | Angular | Http | Example
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.1.
 
@@ -26,3 +26,7 @@ Before running the tests make sure you are serving the app via `ng serve`.
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Resources
+
+- [What’s new in the HTTP module of Angular 2](http://restlet.com/company/blog/2016/08/29/whats-new-in-the-http-module-of-angular-2/)

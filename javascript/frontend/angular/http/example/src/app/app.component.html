@@ -1,3 +1,9 @@
 <h1>
-  {{title}}
+  {{ title }}
 </h1>
+
+<button (click)="createContact()">Create a contact</button>
+
+<button (click)="getContacts()">Get contacts</button>
+
+<p>{{ contacts | json }}</p>
